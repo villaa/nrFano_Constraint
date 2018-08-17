@@ -1,5 +1,7 @@
 #this file gives some functions for computation of Lindhard function 
 import numpy as np
+import dataPython as dp #my text file library
+import scipy.interpolate as inter
 
 
 #try to make a version of f(t^1/2) because I'll need it
@@ -12,5 +14,38 @@ def getft12(version='s2'):
     f = lambda x: 1.43*x**0.35
   else:
     raise ValueError('getft12: invalid request for stopping funtion')
+
+  return f
+#try to get the Thomas-Fermi potential in several limits 
+#return a callable
+def getphi0(version='LT',file=None):
+
+  p0pr = -1.5880464 #seen N-MISC-18-001
+
+  if version=='LT':
+    f = lambda x: 1 + p0pr*x + (4/3)*x**(3/2) + (2/5)*p0pr*x**(5/2) \
+         + (1/3)*x**3 + (3/70)*p0pr**2*x**(7/2) + (2/15)*p0pr*x**4 \
+         + (4/63)*((7/6)-(1/16)*p0pr**3)*x**(9/2)
+  elif version=='HT' :
+    f = lambda x: 144/x**3 
+  elif version=='numeric':
+    #get the data
+    if(file==None) :
+      raise ValueError('getphi0: data file does not exist')
+      return None
+
+    data = dp.getXYdata(file)
+    print(data.keys())
+
+    #convert to numpy arrays
+    data['xx']= np.asarray(data['xx'])
+    data['yy']= np.asarray(data['yy'])
+
+    print(np.min(data['yy']))
+
+    #spline fit
+    f = inter.InterpolatedUnivariateSpline (data['xx'], data['yy'], k=3)
+  else:
+    raise ValueError('getphi0: invalid request for stopping funtion')
 
   return f
