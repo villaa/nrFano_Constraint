@@ -20,9 +20,9 @@ combined = np.vstack((Enr, Yield)).T\
 #print(combined)
 
 
-a,b,c,d,e,f,g = np.array_split(combined,7) # about 50keV each 
+a,b,c,d,e,f,g = np.array_split(combined,8) # about 50keV each 
 
-#print(test)
+#print(test)f
 
 
 df = pd.DataFrame(data=combined)
