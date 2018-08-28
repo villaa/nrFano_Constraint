@@ -2,6 +2,7 @@
 import numpy as np
 import dataPython as dp #my text file library
 import scipy.interpolate as inter
+import scipy.integrate as integrate
 
 
 #try to make a version of f(t^1/2) because I'll need it
@@ -35,13 +36,13 @@ def getphi0(version='LT',file=None):
       return None
 
     data = dp.getXYdata(file)
-    print(data.keys())
+    #print(data.keys())
 
     #convert to numpy arrays
     data['xx']= np.asarray(data['xx'])
     data['yy']= np.asarray(data['yy'])
 
-    print(np.min(data['yy']))
+    #print(np.min(data['yy']))
 
     #spline fit
     f = inter.InterpolatedUnivariateSpline (data['xx'], data['yy'], k=3)
@@ -64,3 +65,17 @@ def getgradphi0(version='LT',file=None):
   fpr = inter.InterpolatedUnivariateSpline (X, y, k=3)
 
   return fpr
+#calculate the function g(xi) see N-MISC-18-002 pg 21
+def g(xi=1,version='LT'):
+
+  #get u and derivative
+  f = getphi0(version,'data/phi0_NACI_format_mod.txt')
+  fpr = getgradphi0(version,'data/phi0_NACI_format_mod.txt')
+
+  #make a callable for integrand
+  integrand = lambda x: np.cos(x)*(f(xi/np.cos(x)) - (xi/np.cos(x))*fpr(xi/np.cos(x)))
+
+  #integrate
+  result = integrate.quad(integrand, 0.01, np.pi/2.0,epsrel=0.01)
+
+  return result
