@@ -76,6 +76,6 @@ def g(xi=1,version='LT'):
   integrand = lambda x: np.cos(x)*(f(xi/np.cos(x)) - (xi/np.cos(x))*fpr(xi/np.cos(x)))
 
   #integrate
-  result = integrate.quad(integrand, 0.01, np.pi/2.0,epsrel=0.01)
+  result = integrate.quad(integrand, 0.0, np.pi/2.0,epsrel=0.01)
 
   return result
