@@ -49,3 +49,18 @@ def getphi0(version='LT',file=None):
     raise ValueError('getphi0: invalid request for stopping funtion')
 
   return f
+#try to get the Thomas-Fermi potential's derivative 
+#return a callable
+def getgradphi0(version='LT',file=None):
+
+  f = getphi0(version,'data/phi0_NACI_format_mod.txt')
+
+  #make a grid of x, and calculate the derivative on the grid
+  dx=0.001
+  X  = np.arange(0.001,1000,dx)
+  y = np.gradient(f(X))
+
+  #spline fit
+  fpr = inter.InterpolatedUnivariateSpline (X, y, k=3)
+
+  return fpr
