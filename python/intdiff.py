@@ -3,6 +3,7 @@ import numpy as np
 import dataPython as dp #my text file library
 import scipy.interpolate as inter
 import scipy.integrate as integrate
+import scipy.optimize as so
 
 
 #try to make a version of f(t^1/2) because I'll need it
@@ -66,7 +67,7 @@ def getgradphi0(version='LT',file=None):
 
   return fpr
 #calculate the function g(xi) see N-MISC-18-002 pg 21
-def g(xi=1,version='LT'):
+def g(xi,version='LT'):
 
   #get u and derivative
   f = getphi0(version,'data/phi0_NACI_format_mod.txt')
@@ -79,3 +80,12 @@ def g(xi=1,version='LT'):
   result = integrate.quad(integrand, 0.0, np.pi/2.0,epsrel=0.01)
 
   return result
+#construct the function G(t^1/2)
+def G(t12,a=3,version='LT')
+
+  gxi = lambda x: g(x,version)[0]
+  func = t12 - (a/x)*gxi(x/a)
+
+  root = so.brentq(func,0,50000,rtol=0.001,maxiter=100) #come within 1% of exact root
+
+  return a**2*root
