@@ -4,6 +4,8 @@ import dataPython as dp #my text file library
 import scipy.interpolate as inter
 import scipy.integrate as integrate
 import scipy.optimize as so
+import scipy.special as special
+from scipy.signal import savgol_filter
 
 
 #try to make a version of f(t^1/2) because I'll need it
@@ -30,6 +32,18 @@ def getphi0(version='LT',file=None):
          + (4/63)*((7/6)-(1/16)*p0pr**3)*x**(9/2)
   elif version=='HT' :
     f = lambda x: 144/x**3 
+  elif version=='matched' :
+    fl = getphi0('LT')
+    fh = getphi0('HT')
+    xi = 200 
+    xip = 200 
+    sig = 100 
+    sigp = 100
+    #f = lambda x: fl(x)*special.erf((xi-x)/(np.sqrt(2)*sig)) + fh(x)*special.erf((x-xip)/(np.sqrt(2)*sig))
+    f1 = lambda x: fl(x)*((1/2) + (1/2)*special.erf((xi-x)/(np.sqrt(2)*sig))) 
+    f2 = lambda x: fh(x)*((1/2) + (1/2)*special.erf((x-xip)/(np.sqrt(2)*sigp))) 
+    #f = lambda x: (fl(x)*special.erf((xi-x)/(np.sqrt(2)*sig)) + fh(x)*special.erf((x-xip)/(np.sqrt(2)*sig)))
+    f = lambda x: f1(x) + f2(x)
   elif version=='numeric':
     #get the data
     if(file==None) :
@@ -46,7 +60,10 @@ def getphi0(version='LT',file=None):
     #print(np.min(data['yy']))
 
     #spline fit
-    f = inter.InterpolatedUnivariateSpline (data['xx'], data['yy'], k=3)
+    #f = inter.InterpolatedUnivariateSpline (data['xx'], data['yy'], k=2)
+    #f = inter.UnivariateSpline (data['xx'], data['yy'], k=3,s=0)
+    yhat = savgol_filter(data['yy'], 3, 2) # window size 51, polynomial order 2
+    f = inter.UnivariateSpline (data['xx'], yhat, k=3,s=0)
   else:
     raise ValueError('getphi0: invalid request for stopping funtion')
 
@@ -55,15 +72,29 @@ def getphi0(version='LT',file=None):
 #return a callable
 def getgradphi0(version='LT',file=None):
 
+  p0pr = -1.5880464 #seen N-MISC-18-001
+
+  if version=='HT':
+    fpr = lambda x: -144*3*(1/x**4)
+    return fpr
+  elif version=='LT':
+    fpr = lambda x: p0pr + (2)*x**(1/2) + p0pr*x**(3/2) \
+         + x**2 + (3/20)*p0pr**2*x**(5/2) + (8/15)*p0pr*x**3 \
+         + (18/63)*((7/6)-(1/16)*p0pr**3)*x**(7/2)
+    return fpr
+
   f = getphi0(version,'data/phi0_NACI_format_mod.txt')
 
   #make a grid of x, and calculate the derivative on the grid
-  dx=0.001
+  dx=2
   X  = np.arange(0.001,1000,dx)
+  #X  = np.logspace(0.001,1000,1000)
+  #print(X)
   y = np.gradient(f(X))
 
   #spline fit
-  fpr = inter.InterpolatedUnivariateSpline (X, y, k=3)
+  fpr = inter.InterpolatedUnivariateSpline (X, y, k=1)
+  #fpr = inter.UnivariateSpline (X, y, k=5,s=9)
 
   return fpr
 #calculate the function g(xi) see N-MISC-18-002 pg 21
@@ -86,6 +117,6 @@ def lam(t12,version='LT'):
   gxi = lambda x: g(x,version)[0]
   func = lambda x: t12 - 1/x*gxi(x)
 
-  root = so.brentq(func,1e-6,5,rtol=0.001,maxiter=100) #come within 1% of exact root
+  root = so.brentq(func,1e-6,2.5,rtol=0.001,maxiter=100) #come within 1% of exact root
 
   return root
