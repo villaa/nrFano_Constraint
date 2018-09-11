@@ -117,6 +117,6 @@ def lam(t12,version='LT'):
   gxi = lambda x: g(x,version)[0]
   func = lambda x: t12 - 1/x*gxi(x)
 
-  root = so.brentq(func,1e-6,2.5,rtol=0.001,maxiter=100) #come within 1% of exact root
+  root = so.brentq(func,1e-6,100,rtol=0.001,maxiter=100) #come within 1% of exact root
 
   return root
