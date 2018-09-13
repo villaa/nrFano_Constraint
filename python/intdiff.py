@@ -120,3 +120,23 @@ def lam(t12,version='LT'):
   root = so.brentq(func,1e-6,100,rtol=0.001,maxiter=100) #come within 1% of exact root
 
   return root
+
+#construct f(t^1/2)
+def ft12(version='LT'):
+
+  lam2 = lambda x: lam(x,version)**2
+
+  #calc derivative
+  #make a grid of x, and calculate the derivative on the grid
+  dx=1e-3
+  X  = np.arange(0.001,10,dx)
+  lam2v = np.vectorize(lam2)
+  y = np.gradient(lam2v(X))
+
+  #spline fit
+  lam2pr = inter.InterpolatedUnivariateSpline (X, y, k=1)
+
+  f = lambda x:-(x**2/np.pi)*lam2pr(x)
+  
+
+  return f
