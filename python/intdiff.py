@@ -98,11 +98,19 @@ def getgradphi0(version='LT',file=None):
 
   return fpr
 #calculate the function g(xi) see N-MISC-18-002 pg 21
-def g(xi,version='LT'):
+def g(xi,version='LT',sol=None):
 
   #get u and derivative
-  f = getphi0(version,'data/phi0_NACI_format_mod.txt')
-  fpr = getgradphi0(version,'data/phi0_NACI_format_mod.txt')
+  if version!='smooth':
+    f = getphi0(version,'data/phi0_NACI_format_mod.txt')
+    fpr = getgradphi0(version,'data/phi0_NACI_format_mod.txt')
+  elif sol is None:
+    sol = getTFScreeningFunction()
+    f = lambda x: sol(x)[0]
+    fpr = lambda x: sol(x)[1]
+  else:
+    f = lambda x: sol(x)[0]
+    fpr = lambda x: sol(x)[1]
 
   #make a callable for integrand
   integrand = lambda x: np.cos(x)*(f(xi/np.cos(x)) - (xi/np.cos(x))*fpr(xi/np.cos(x)))
@@ -112,24 +120,24 @@ def g(xi,version='LT'):
 
   return result
 #construct the function lambda(t^1/2) see N-MISC-18-002 pg 25
-def lam(t12,version='LT'):
+def lam(t12,version='LT',sol=None):
 
-  gxi = lambda x: g(x,version)[0]
-  func = lambda x: t12 - 1/x*gxi(x)
+  gxi = lambda x: g(x,version,sol)[0]
+  func = lambda x: t12 - 1/(2*x)*gxi(x)
 
   root = so.brentq(func,1e-6,100,rtol=0.001,maxiter=100) #come within 1% of exact root
 
   return root
 
 #construct f(t^1/2)
-def ft12(version='LT'):
+def ft12(version='LT',sol=None,xmin=0.001,dx=1e-2):
 
-  lam2 = lambda x: lam(x,version)**2
+  lam2 = lambda x: lam(x,version,sol)**2
 
   #calc derivative
   #make a grid of x, and calculate the derivative on the grid
-  dx=1e-3
-  X  = np.arange(0.001,10,dx)
+  dx=1e-2
+  X  = np.arange(xmin,10,dx)
   lam2v = np.vectorize(lam2)
   y = np.gradient(lam2v(X))
 
@@ -140,3 +148,47 @@ def ft12(version='LT'):
   
 
   return f
+
+#solve for the TF screening function with solve_bvp
+#define the mesh
+xmax = 10000
+dx = 0.1
+xmesh = np.arange(1e-3,xmax,dx)
+
+def getTFScreeningFunction():
+
+  y1 = getgradphi0('numeric','data/phi0_NACI_format_mod.txt')
+  y0 = getphi0('numeric','data/phi0_NACI_format_mod.txt')
+  y1v = np.vectorize(y0)
+  y0v = np.vectorize(y1)
+  yguess = np.stack((np.asarray(y0(xmesh),dtype=np.float64),np.asarray(y1(xmesh),dtype=np.float64)),axis=0)
+
+  a = integrate.solve_bvp(TFdiffeqsys,TFbc,xmesh,yguess,max_nodes=500000,verbose=1)
+  print(a.status)
+  print(a.success)
+
+
+  return a.sol
+
+
+def TFdiffeqsys(x,y):
+  
+  x = np.asarray(x,dtype=np.complex)
+  y = np.asarray(y,dtype=np.complex)
+  trow = y[1]
+  brow = y[0]**(3/2)*x**(-1/2)
+  trow=np.real(trow)
+  brow=np.real(brow)
+  out = np.stack((trow,brow))
+  
+  return out
+
+def TFbc(ya,yb):
+
+  y1 = getgradphi0('numeric','data/phi0_NACI_format_mod.txt')
+  y0 = getphi0('numeric','data/phi0_NACI_format_mod.txt')
+  y1v = np.vectorize(y0)
+  y0v = np.vectorize(y1)
+  out = np.asarray([ya[0]-y0(xmesh[0]),yb[0]-(144/xmax**3)],dtype=np.float64)
+    
+  return out
