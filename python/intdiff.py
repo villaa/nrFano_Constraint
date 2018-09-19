@@ -90,7 +90,7 @@ def getgradphi0(version='LT',file=None):
   X  = np.arange(0.001,1000,dx)
   #X  = np.logspace(0.001,1000,1000)
   #print(X)
-  y = np.gradient(f(X))
+  y = np.gradient(f(X),dx)
 
   #spline fit
   fpr = inter.InterpolatedUnivariateSpline (X, y, k=1)
@@ -136,15 +136,15 @@ def ft12(version='LT',sol=None,xmin=0.001,dx=1e-2):
 
   #calc derivative
   #make a grid of x, and calculate the derivative on the grid
-  dx=1e-2
+  #dx=1e-2
   X  = np.arange(xmin,10,dx)
   lam2v = np.vectorize(lam2)
-  y = np.gradient(lam2v(X))
+  y = np.gradient(lam2v(X),dx)
 
   #spline fit
   lam2pr = inter.InterpolatedUnivariateSpline (X, y, k=1)
 
-  f = lambda x:-(x**2/np.pi)*lam2pr(x)
+  f = lambda x:-(x**2)*lam2pr(x)
   
 
   return f
