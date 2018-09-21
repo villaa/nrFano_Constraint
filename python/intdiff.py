@@ -116,7 +116,7 @@ def g(xi,version='LT',sol=None):
   integrand = lambda x: np.cos(x)*(f(xi/np.cos(x)) - (xi/np.cos(x))*fpr(xi/np.cos(x)))
 
   #integrate
-  result = integrate.quad(integrand, 0.0, np.pi/2.0,epsrel=0.01)
+  result = integrate.quad(integrand, 0.0, np.pi/2.0,epsrel=0.001)
 
   return result
 #construct the function lambda(t^1/2) see N-MISC-18-002 pg 25
@@ -137,9 +137,15 @@ def ft12(version='LT',sol=None,xmin=0.001,dx=1e-2):
   #calc derivative
   #make a grid of x, and calculate the derivative on the grid
   #dx=1e-2
-  X  = np.arange(xmin,10,dx)
+  #X  = np.arange(xmin,10,dx)
+  X  = np.logspace(np.log10(xmin),np.log10(10),np.int(10/dx))
+ 
+  #print(X)
+  #print(np.int(10/dx))
+  #print(np.logspace(np.log10(xmin),np.log10(10),np.int(10/dx)))
   lam2v = np.vectorize(lam2)
-  y = np.gradient(lam2v(X),dx)
+  #y = np.gradient(lam2v(X),dx)
+  y = np.gradient(lam2v(X),X)
 
   #spline fit
   lam2pr = inter.InterpolatedUnivariateSpline (X, y, k=1)
@@ -163,7 +169,7 @@ def getTFScreeningFunction():
   y0v = np.vectorize(y1)
   yguess = np.stack((np.asarray(y0(xmesh),dtype=np.float64),np.asarray(y1(xmesh),dtype=np.float64)),axis=0)
 
-  a = integrate.solve_bvp(TFdiffeqsys,TFbc,xmesh,yguess,max_nodes=500000,verbose=1)
+  a = integrate.solve_bvp(TFdiffeqsys,TFbc,xmesh,yguess,max_nodes=5000000,verbose=1)
   print(a.status)
   print(a.success)
 
