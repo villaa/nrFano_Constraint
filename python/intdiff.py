@@ -122,9 +122,17 @@ def g(xi,version='LT',sol=None):
 #construct the function lambda(t^1/2) see N-MISC-18-002 pg 25
 def lam(t12,version='LT',sol=None):
 
-  gxi = lambda x: g(x,version,sol)[0]
-  func = lambda x: t12 - 1/(2*x)*gxi(x)
+  if version!='gotg':
+    gxi = lambda x: g(x,version,sol)[0]
+  elif sol is not None:
+    gxi = lambda x: sol(x)
+  else:
+    raise ValueError('lam: invalid input for g(xi)')
+   
+  #print(np.shape(gxi(1)))
+  func = lambda x: t12 - 1/(2*x)*np.float(gxi(x))
 
+  #print(np.shape(func(1)))
   root = so.brentq(func,1e-6,100,rtol=0.001,maxiter=100) #come within 1% of exact root
 
   return root
@@ -145,10 +153,13 @@ def ft12(version='LT',sol=None,xmin=0.001,dx=1e-2):
   #print(np.logspace(np.log10(xmin),np.log10(10),np.int(10/dx)))
   lam2v = np.vectorize(lam2)
   #y = np.gradient(lam2v(X),dx)
-  y = np.gradient(lam2v(X),X)
+  #print(np.shape(X))
+  fval = lam2v(X)
+  #print(np.shape(fval))
+  y = np.gradient(fval,X)
 
   #spline fit
-  lam2pr = inter.InterpolatedUnivariateSpline (X, y, k=1)
+  lam2pr = inter.UnivariateSpline (X, y, k=3,s=0)
 
   f = lambda x:-(x**2)*lam2pr(x)
   
