@@ -1,0 +1,39 @@
+== Summary
+:stem: latexmath
+
+Edelweiss published a paper detailing the resolution of their detectors and also the width of their electron and nuclear recoil bands (https://doi.org/10.1016/j.nima.2004.04.218).  
+
+I suggest we use their model for detector GGA3, for which all of the constants needed for their parametrization of the measured band widths are given.
+
+== Band Widths
+Edelweiss parametrizes their band widths for all detectors (see eq'ns 9, 10, and 11 from the above paper).  Although the band widths are denoted with stem:[\sigma], these bands contain 90% of the events.
+
+[stem]
+++++
+\sigma_{Q\gamma} = \frac{1 + V/3}{E_R}\sqrt{\sigma_I^2 + \sigma_H^2}\\
+
+\sigma_{Qn} = \sqrt{C^2 + \frac{1}{E_R}\sqrt{(1+\frac{V}{3}\langle Q_n\rangle)^2\sigma_I^2 + (1+\frac{V}{3})^2\langle Q_n\rangle^2\sigma_H^2}}
+++++
+
+where
+
+[stem]
+++++
+\langle Q_n \rangle = 0.16 E_R^{0.18} \\
+\sigma_I(E) = \sqrt{(\sigma_I^0)^2 + (a_I E)^2} \\
+\sigma_H(E) = \sqrt{(\sigma_H^0)^2 + (a_H E)^2}
+++++
+
+and stem:[\sigma_I^0 = \sqrt{(\sigma_{center}^0)^2 + (\sigma_{guard}^0)^2}].  The quantities stem:[\sigma_{center}^0], stem:[\sigma_{guard}^0], and stem:[\sigma_H^0] can be found from Table 2, which gives the FWHM at 0 keV of the center and guard ionization signals and heat signal.
+
+The quantity stem:[a_I] is fixed by requiring that stem:[\sigma_I(122 keV) = \sqrt{(\sigma_I^0)^2 + (a_I*122 keV)^2}]; the FWHM of the ionization signal at 122 keV is also given in Table 2.
+
+The quantity stem:[a_H] would be determined like stem:[a_I] above, but for 252Cf calibrations (and also 60Co calibrations), they found they needed to make stem:[a_H] larger to account for the width of the electron-recoil band.  They hypothesize that this is due to position-dependence of the resolution.
+
+The quantity C is also determined from data; C is varied to fit the width of the neutron band from 252Cf calibrations and is typically 0.04. 
+
+For detector GGA3, the voltage is -4 V, a_H is 0.035, and C is 0.04.  stem:[\sigma_I^0] is 0.843 keVee, stem:[\sigma_H^0] is 0.171 keVee, and stem:[a_I] is 0.0083.  The voltage, stem:[a_H], and C are given directly in the paper; the other quantities are calculated from Table 2.
+
+== Cross-check on stem:[a_H]: Heat resolution of GGAl10
+
+== Cross-check: ER and NR bands of GGA1
