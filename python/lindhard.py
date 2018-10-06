@@ -1,4 +1,3 @@
-
 #this file gives some functions for computation of Lindhard function 
 import numpy as np
 
