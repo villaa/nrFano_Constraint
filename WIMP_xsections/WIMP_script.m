@@ -5,15 +5,15 @@ M_GeV = 0.1;
 
 %% good limits for 1 GeV
 %step_keV = 1E-6;
-%Erecoil_keV = [1E-3:step_keV:1000E-3]';
+%Erecoil_keV = [1E-4:step_keV:1000E-3]';
 
 %% good limits for 0.5 GeV
 %step_keV = 1E-6;
-%Erecoil_keV = [1E-3:step_keV:1000E-3]';
+%Erecoil_keV = [1E-4:step_keV:1000E-3]';
 
 %% good limits for 0.1 GeV
 step_keV = 1E-6;
-Erecoil_keV = [1E-4:step_keV:50E-4]';
+Erecoil_keV = [0:step_keV:50E-4]';
 
 % sigma is required - although it doesn't matter since we're normalizing
 sigma = 1E-41;
