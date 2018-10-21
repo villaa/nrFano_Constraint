@@ -1,11 +1,11 @@
 %% this script calls drdq_corr() to get the WIMP differential rate
 %% and saves the result to a text file.
 A = 'Si';
-M_GeV = 0.5;
+M_GeV = 1;
 
 %% good limits for 1 GeV
-%step_keV = 1E-6;
-%Erecoil_keV = [0:step_keV:1000E-3]';
+step_keV = 0.5E-4;
+Erecoil_keV = [0:step_keV:500E-3]';
 
 %% good limits for 0.5 GeV
 %step_keV = 1E-5;
