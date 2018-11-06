@@ -6,6 +6,23 @@ from scipy.stats import norm
 import matplotlib.mlab as mlab
 from scipy.optimize import curve_fit
 
+
+
+k = 0.157 # from lindhard
+q = 1.602*10**-19 #electron charge 
+V = 4.0 # voltage Bias
+eps = .0033 #keV
+
+#for detector 1.
+
+p_alpha = 0.155393
+p_beta = 0 #9.60343*10**(-11)
+p_gamma = 0.000506287
+
+q_alpha = 0.166004
+q_beta = 0 #0.00233716
+q_gamma = 9.52576*10**(-5)
+'--------------------------'
 ER = []
 Yield = []
 PtNr = []
@@ -21,34 +38,19 @@ N_e_h = []
 QNR=[]
 PT1 = []
 fano = []
+'---------------------------'
 
-k = 0.157 # from lindhard
-q = 1.602*10**-19 #electron charge 
-V = 4.0 # voltage Bias
-eps = .0033 #keV
 
-#for detector 1
-p_alpha = 0.155393
-p_beta = 0 #9.60343*10**(-11)
-p_gamma = 0.000506287
 
-q_alpha = 0.166004
-q_beta = 0 #0.00233716
-q_gamma = 9.52576*10**(-5)
-
-def Yield_NR(N):
-    
+def Yield_NR(N,Er):
     import sys
     sys.path.insert(0,'/Users/Mitch 1/Desktop/nrFano_Constraint/python')
     import lindhard as lind
     lpar = lind.getLindhardPars('Ge',True)
 
-    N = 10000
-    Er = np.random.uniform(0,200,N)
-    #Er = np.random.exponential(40,np.uint32(N*0.3))
-
+    
     for i in np.arange(0,N):
-
+    
         Enr = np.random.choice(Er)
 
         a = 0.16
@@ -70,11 +72,14 @@ def Yield_NR(N):
 
         F = c**2/((eps*a/(A))+(2*V*a**2/(B*1000))+(2*(V/1000)**2*a**3/(eps*C)))
 
+
         #Constant Fano
-        #F = 50
+        #F = 0
 
         Neh = Y(Enr*1000)*Enr/eps #number of electron-hole pairs. 
+
         N_eh = Neh + np.random.normal(0,np.sqrt(F*Neh))
+
 
         Ptnr = Enr+(V/1000)*N_eh #central value of Pt
         Qnr = N_eh*eps
@@ -90,22 +95,44 @@ def Yield_NR(N):
 
 
         Ptnr1 = Ptnr + Fnr 
+
         Qnr1 = Qnr + Fq 
+
         Ernr = Ptnr1 - (V/(eps*1000))*Qnr1 #Meaured ER
-        yield1 = Qnr1 / Ernr #Measured Yieldf
+
+        yield1 = Qnr1 / Ernr #Measured Yield 
 
 
 
-        #Store Stuff 
+        #Derivatives for Fano
+        U_1 = Ptnr/(Ptnr-Qnr1*(V/(eps*1000)))**2 #derivative with respect to Qnr1
+        U_2 = -Qnr1/(Ptnr1 -(Qnr1*V/(eps*1000)))**2      #derivative with respect to Ptnf
+
+
+
+        #Store Shit 
+        ENR.append(Enr)
+        N_e_h.append(Neh)
+        sigQ.append(sig_q)
+        sigP.append(sig_p)
+        PT1.append(Ptnr1)
+        QNR.append(Qnr1)
         ER.append(Ernr)
         Yield.append(yield1)
-     
-        
-    return ER, Yield 
+        U1.append(U_1)
+        U2.append(U_2)
+        fano.append(F)
 
-def Yield_er(N):
+        
+    return ENR,N_e_h,sigQ,sigP,PT1,QNR,ER,Yield,U1,U2,fano
+
+
+def Yield_ER(N):
+    
     Yield_er = []
     ERer = []
+    #x = np.arange(0,2000,0.1)
+    #E1er = 82*np.exp(-x/304) #For ER from Kennedy Thesis
     E1er = np.random.uniform(0,200,N) #from anthony, Er's are close enough to randomly distributed. 
 
     QER = []
@@ -139,4 +166,4 @@ def Yield_er(N):
         Yield2 = Qer/Erer
         Yield_er.append(Yield2)
         
-    return ERer, Yield_er 
+    return Yield_er, ERer 
