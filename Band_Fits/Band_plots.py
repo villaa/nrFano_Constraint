@@ -23,10 +23,15 @@ def NR_band_plot(Enr,a):
     X = np.sort(X)
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
-
+    
+    
     ax1.plot(Enr,a,'+',color='b',linewidth=2,markersize=3)
+    
+    ax1.plot(X,ynr_muv(X),color='yellow',linestyle='--',label = 'Mean')
     ax1.plot(X,ynr_mu(X)+1*ynr_sig(X),'r-',label = '1 $\sigma$')
     ax1.plot(X,ynr_mu(X)-1*ynr_sig(X),'r-')
+    
+    
 
     ax1.plot(X,ynr_mu(X)+2*ynr_sig(X),'m-',label = '2 $\sigma$')
     ax1.plot(X,ynr_mu(X)-2*ynr_sig(X),'m-')
@@ -56,8 +61,12 @@ def ER_band_plot(Erer,b):
     Y = np.sort(Y)
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
+    
 
     ax1.plot(Erer,b,'+',color='b',linewidth=2,markersize=3)
+    
+    ax1.plot(Y,yer_muv(Y),color='yellow',linestyle='--',label = 'Mean')
+    
     ax1.plot(Y,yer_mu(Y)+1*yer_sig(Y),'r-',label = '1 $\sigma$')
     ax1.plot(Y,yer_mu(Y)-1*yer_sig(Y),'r-')
 

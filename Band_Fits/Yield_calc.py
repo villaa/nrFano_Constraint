@@ -40,7 +40,7 @@ def Yield_NR(N):
     
 
     import sys
-    sys.path.insert(0,'/Users/Mitch/Desktop/nrFano_Constraint/python')
+    sys.path.insert(0,'/Users/Mitch 1/Desktop/nrFano_Constraint/python')
     import lindhard as lind
     lpar = lind.getLindhardPars('Ge',True)
 
