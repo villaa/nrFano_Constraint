@@ -40,7 +40,7 @@ def NR_band_plot(Enr,a):
     ax1.plot(X,ynr_mu(X)-3*ynr_sig(X),'k-')
 
     ax1.plot()
-    ax1.set_ylim(0,1)
+    ax1.set_ylim(0,.8)
     ax1.set_xlim(0,200)
     
     
@@ -77,7 +77,7 @@ def ER_band_plot(Erer,b):
     ax1.plot(Y,yer_mu(Y)-3*yer_sig(Y),'k-')
 
     ax1.plot()
-    ax1.set_ylim(0,1.6)
+    ax1.set_ylim(0,1.7)
     ax1.set_xlim(0,200)
     
     

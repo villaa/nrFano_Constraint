@@ -15,7 +15,7 @@ yer_sig = rfr.makeBFunc(bpar_er[1]['sig'],True) #sets uncertainty
 yer_sigv = np.vectorize(yer_sig) #puts uncertainty into 1D array
 
 
-def band_check_nr(a,N,s,X):
+def band_check_nr(a,s,X):
     upper = ynr_mu(X)+s*ynr_sigv(X)
     lower = ynr_mu(X)-s*ynr_sigv(X)
     count = []
@@ -50,7 +50,7 @@ def band_check_nr(a,N,s,X):
             #print(x)
             num1.append(i)     
             
-
+    N= len(a)
     percent = 100*(N - np.abs(len(num)+len(num1)))/N
     print('For',N,'number of data points')
     print('Perecnt of data in nuclear band for',s,'simga =',percent)
@@ -58,7 +58,7 @@ def band_check_nr(a,N,s,X):
     print('-----------------------------------------------------------')
     
     
-def band_check_er(b,N,s,Y):
+def band_check_er(b,s,Y):
     upper = yer_mu(Y)+s*yer_sigv(Y)
     lower = yer_mu(Y)-s*yer_sigv(Y)
     count = []
@@ -93,7 +93,7 @@ def band_check_er(b,N,s,Y):
             #print(x)
             num1.append(i)     
             
-
+    N = len(b)
     percent = 100*(N - np.abs(len(num)+len(num1)))/N
     print('For',N,'number of data points')
     print('Perecnt of data in electron band for',s,'simga =',percent)
