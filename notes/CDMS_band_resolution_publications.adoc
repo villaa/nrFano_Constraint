@@ -1,3 +1,12 @@
+== Dedicated Searches For Low And High Mass Wimps With The SuperCDMS Soudan iZIP Detectors
+Thesis, Brad Welliver
+
+* T3Z1 bands shown in fig 4-3, unclear if parameterization given
+* states typical range for noise resolution of ionization channels 
+* plots phonon-channel noise resolution as a function of time for T2Z2
+* mentions that phonon noise resolution varies by 20% from run to run
+* No obvious discussion/reporting of charge of phonon resolution of CDMSII or SuperCDMS detectors
+
 == TESTING AND CHARACTERIZATION OF SUPERCDMS DARK MATTER DETECTORS
 Thesis, Benjamin Shank
 
