@@ -33,11 +33,11 @@ def bin_check(s,N,ER,Yield):
     
     df = pd.DataFrame(Data1)
 
-    bins  = [10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110,150,200]
+    bins  = [10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110,150]
 
     df1 = pd.cut(df[0],bins, labels = False)
 
-    for q in np.arange(0,9):
+    for q in np.arange(0,10): # q is the bin number. 
 
         count = []
         num = []
@@ -45,9 +45,9 @@ def bin_check(s,N,ER,Yield):
         num1 = []
 
 
-        x = np.array(df[1].loc[df1 == q])
-        y = np.array(df[2].loc[df1 == q])
-        z = np.array(df[3].loc[df1 == q])
+        x = np.array(df[1].loc[df1 == q]) #yield
+        y = np.array(df[2].loc[df1 == q]) #upper band
+        z = np.array(df[3].loc[df1 == q]) #lower band 
 
 
         for i,j in zip(x,y):
@@ -61,7 +61,7 @@ def bin_check(s,N,ER,Yield):
 
         for i in count: 
             if i == 1:
-                num.append(i) 
+                num.append(i) #number of times the data point is outside upper band
 
 
         for i,j in zip(x,z):
@@ -75,7 +75,7 @@ def bin_check(s,N,ER,Yield):
 
         for i in count: 
             if i == 1:
-                num1.append(i)
+                num1.append(i) #number of times the data point is outside lower band
 
 
         N= len(x)
@@ -87,7 +87,7 @@ def bin_check(s,N,ER,Yield):
     print('--------------------------------------------')  
     print(s,"SIGMA NUCLEAR RECOIL BAND")
     print('--------------------------------------------')  
-    bin_spacing = '10.4-13.4','13.4-18.1','18.1-24.5','24.5-33.1','33.1-44.8','44.8-60.6','60.6-80.2','80.2-110','110-150','150-200'
+    bin_spacing = '10-13.4','13.4-18.1','18.1-24.5','24.5-33.1','33.1-44.8','44.8-60.6','60.6-80.2','80.2-110','110-150'
 
     print("Bin Spacing (keV)", '\t', "Percent in band")     #table column headings
     print("--------------", '\t', '\t' "-------------------")

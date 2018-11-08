@@ -61,10 +61,10 @@ def band_check_nr(a,s,X):
 def band_check_er(b,s,Y):
     upper = yer_mu(Y)+s*yer_sigv(Y)
     lower = yer_mu(Y)-s*yer_sigv(Y)
-    count = []
-    count1 = [] 
-    num = []
-    num1 = [] 
+    counte = []
+    counte1 = [] 
+    nume = []
+    nume1 = [] 
     
 
     for x,y in zip(b, upper): 
@@ -72,30 +72,30 @@ def band_check_er(b,s,Y):
             n = 1
         else:
             n = 0 
-        count.append(n)
+        counte.append(n)
     
     for x,y in zip(b,lower):
         if x <= y:
             n = 1
         else:
             n = 0
-        count1.append(n)       
+        counte1.append(n)       
         
         
-    for i in count: 
+    for i in counte: 
         if i == 1:
             #print(x)
-            num.append(i)     
+            nume.append(i)     
 
     
-    for i in count1: 
+    for i in counte1: 
         if i == 1:
             #print(x)
-            num1.append(i)     
+            nume1.append(i)     
             
     N = len(b)
-    percent = 100*(N - np.abs(len(num)+len(num1)))/N
+    percent = 100*(N - np.abs(len(nume)+len(nume1)))/N
     print('For',N,'number of data points')
     print('Perecnt of data in electron band for',s,'simga =',percent)
-    print('Number of data points outside bands is:',len(num)+len(num1))
+    print('Number of data points outside bands is:',len(nume)+len(nume1))
     print('-----------------------------------------------------------')

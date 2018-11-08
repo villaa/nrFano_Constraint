@@ -41,7 +41,7 @@ def NR_band_plot(Enr,a):
 
     ax1.plot()
     ax1.set_ylim(0,.8)
-    ax1.set_xlim(0,200)
+    ax1.set_xlim(0,160)
     
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')
@@ -78,7 +78,7 @@ def ER_band_plot(Erer,b):
 
     ax1.plot()
     ax1.set_ylim(0,1.7)
-    ax1.set_xlim(0,200)
+    ax1.set_xlim(0,160)
     
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')

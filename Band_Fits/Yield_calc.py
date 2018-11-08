@@ -74,7 +74,7 @@ def Yield_NR(N):
         F = c**2/((eps*a/(A))+(2*V*a**2/(B*1000))+(2*(V/1000)**2*a**3/(eps*C)))
 
         #Constant Fano
-       # F = 0
+        #F = 0
 
         Neh = Y(Enr*1000)*Enr/eps #number of electron-hole pairs. 
         N_eh = Neh + np.random.normal(0,np.sqrt(F*Neh))
