@@ -1,0 +1,8 @@
+== TESTING AND CHARACTERIZATION OF SUPERCDMS DARK MATTER DETECTORS
+Thesis, Benjamin Shank
+
+* No bands
+* No obvious discussion/reporting of charge of phonon resolution of CDMSII or SuperCDMS detectors
+* Focuses more on simulating processes in detector, TES response
+
+
