@@ -1,5 +1,13 @@
 import numpy as np
 
+
+import sys
+import warnings
+
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+
+
 """read resolution functions from text files"""
 def getRFunc(infile):
 
