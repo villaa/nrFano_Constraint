@@ -19,11 +19,10 @@ yer_sig = rfr.makeBFunc(bpar_er[1]['sig'],True) #sets uncertainty
 yer_sigv = np.vectorize(yer_sig)
 
 
-def bin_check(s,N):
+def bin_check(s,N,ER,Yield):
     
     Percent = []
-    ER, Yield = Yield_NR(N)
-    Erer, Yield_er = Yield_Er(N)
+
 
     #for nuclear recoils 
     upper = ynr_mu(ER)+s*ynr_sigv(ER)
@@ -83,16 +82,19 @@ def bin_check(s,N):
         percent = 100*(N - np.abs(len(num)+len(num1)))/N
 
         Percent.append(percent)
+        
+    
     print('--------------------------------------------')  
+    print(s,"SIGMA NUCLEAR RECOIL BAND")
     print('--------------------------------------------')  
     bin_spacing = '10.4-13.4','13.4-18.1','18.1-24.5','24.5-33.1','33.1-44.8','44.8-60.6','60.6-80.2','80.2-110','110-150','150-200'
 
-    print("Bin Spacing (keV)", '\t', "Percent in",s,"sigma")     #table column headings
+    print("Bin Spacing (keV)", '\t', "Percent in band")     #table column headings
     print("--------------", '\t', '\t' "-------------------")
 
 
     for x,y in zip(bin_spacing,Percent):
-        print(x, '\t','\t', y)
+        print(x, '\t','\t', '{0:1.2f}'.format(y))
             
     print('--------------------------------------------')       
             
