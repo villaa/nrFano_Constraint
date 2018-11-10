@@ -25,14 +25,14 @@ def band_check_nr(a,s,X):
     
 
     for x,y in zip(a, upper): 
-        if x >= y:
+        if x > y:
             n = 1
         else:
             n = 0 
         count.append(n)
     
     for x,y in zip(a,lower):
-        if x <= y:
+        if x < y:
             n = 1
         else:
             n = 0

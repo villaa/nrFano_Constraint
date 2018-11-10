@@ -19,7 +19,7 @@ yer_sig = rfr.makeBFunc(bpar_er[1]['sig'],True) #sets uncertainty
 yer_sigv = np.vectorize(yer_sig)
 
 
-def bin_check(s,N,ER,Yield):
+def bin_check_NR(s,N,ER,Yield):
     
     Percent = []
 
@@ -37,7 +37,7 @@ def bin_check(s,N,ER,Yield):
 
     df1 = pd.cut(df[0],bins, labels = False)
 
-    for q in np.arange(0,10): # q is the bin number. 
+    for q in np.arange(0,9): # q is the bin number. 
 
         count = []
         num = []
@@ -51,7 +51,7 @@ def bin_check(s,N,ER,Yield):
 
 
         for i,j in zip(x,y):
-            if i >= j:
+            if i > j:
                 n = 1
             else: 
                 n = 0 
@@ -65,7 +65,7 @@ def bin_check(s,N,ER,Yield):
 
 
         for i,j in zip(x,z):
-            if i <= j:
+            if i < j:
                 n = 1
             else: 
                 n = 0 

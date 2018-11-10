@@ -8,19 +8,6 @@ from scipy.optimize import curve_fit
 
 ER = []
 Yield = []
-PtNr = []
-QR = []
-sigQ = []
-sigP = []
-sigQ1 = []
-sigP1 = []
-ENR = []
-U1 = []
-U2 = []
-N_e_h = []
-QNR=[]
-PT1 = []
-fano = []
 
 k = 0.157 # from lindhard
 q = 1.602*10**-19 #electron charge 
