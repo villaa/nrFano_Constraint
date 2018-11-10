@@ -1,0 +1,29 @@
+== Low-Mass Dark Matter Search Results and Radiogenic Backgrounds for the Cryogenic Dark Matter Search
+Thesis, Mark Pepin
+
+* phonon resolution information for CDMSlite R2 detector
+* information on **projected** SNOLAB resolutions 
+* cites resolution fits by D. Moore in ebook, D. Moore, Low Threshold Analysis Cuts and Eciencies," CDMS Intern. Run 123 Anal. Eb. (2009).
+* gives functional form of efficiency fit in eq'n 7.1, page 135
+* figure with ER, NR bands for unspecified CDMSII detector, fig 4.11 pg. 90
+
+== Simulating The Supercdms Dark Matter Detector Response And Readout
+Thesis, Allison Kennedy
+
+== Dedicated Searches For Low And High Mass Wimps With The SuperCDMS Soudan iZIP Detectors
+Thesis, Brad Welliver
+
+* T3Z1 bands shown in fig 4-3, unclear if parameterization given
+* states typical range for noise resolution of ionization channels 
+* plots phonon-channel noise resolution as a function of time for T2Z2
+* mentions that phonon noise resolution varies by 20% from run to run
+* No obvious discussion/reporting of charge of phonon resolution of CDMSII or SuperCDMS detectors
+
+== TESTING AND CHARACTERIZATION OF SUPERCDMS DARK MATTER DETECTORS
+Thesis, Benjamin Shank
+
+* No bands
+* No obvious discussion/reporting of charge of phonon resolution of CDMSII or SuperCDMS detectors
+* Focuses more on simulating processes in detector, TES response
+
+

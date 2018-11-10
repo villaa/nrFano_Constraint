@@ -18,6 +18,10 @@ legend_font = {'fontname':'Arial', 'size':'22'}
 #fonts global settings
 mpl.rc('font',family=legend_font['fontname'])
 
+#NOTE that we should have the following environmental variable set
+#in ~/.bashrc (or ~/.bash_profile)
+#export PYTHONSTARTUP=~/.python3rc.py
+
 #NOTE we should have the following file:
 #~/.python3rc as follows:
 #import os.path
