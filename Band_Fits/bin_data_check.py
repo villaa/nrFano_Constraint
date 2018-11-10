@@ -35,19 +35,10 @@ def bin_check(Yield,Er,s,band_func):
         y = np.array(df[2].loc[df1 == q])
         z = np.array(df[3].loc[df1 == q])
 
-        
-        up = np.sum(x>y)
-        
-        low = np.sum(x<z)
-        
-        
 
+        up,down,N = compare(x,y,z)
 
-        N= len(x)
-        #print(N,up,low)
-        
-        percent = 100*(N - (up+low))/N
-      
+        percent = 100*(N - (up+down))/N
 
         Percent.append(percent)
         

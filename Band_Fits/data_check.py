@@ -19,26 +19,38 @@ def band_nr(Er,s):
     upper = ynr_mu(Er)+s*ynr_sigv(Er)
     lower = ynr_mu(Er)-s*ynr_sigv(Er)
     
-    return "Nuclear",upper,lower
+    return "NUCLEAR",upper,lower
     
 def band_er(Er,s):
     upper = yer_mu(Er)+s*yer_sigv(Er)
     lower = yer_mu(Er)-s*yer_sigv(Er) 
     
-    return "Electron",upper, lower 
+    return "ELECTRON",upper, lower 
+
+
+
+def compare(Yield,upper,lower):
+    up = np.sum(Yield>upper)
+    down = np.sum(Yield<lower)
+    N = len(Yield)
+    
+    return up,down,N
+
 
 def band_check(Yield,Er,s,band_func):
     
     recoil_type, upper,lower = band_func(Er,s)
     
- 
-    up = np.sum(Yield>upper)
-    down = np.sum(Yield<lower)
-     
-            
-    N = len(Yield)
+    up,down,N = compare(Yield,upper,lower)
+    
     percent = 100*(N - np.abs(up+down))/N
+    
+    
     print('For',N,'number of data points')
     print('Perecnt of data in', recoil_type, 'for',s,'simga =',percent)
     print('Number of data points outside bands is:', up+down)
     print('-----------------------------------------------------------')
+
+    
+
+    
