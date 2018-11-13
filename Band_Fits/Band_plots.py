@@ -75,10 +75,12 @@ def ER_band_plot(Erer,b):
 
     ax1.plot(Y,yer_mu(Y)+3*yer_sig(Y),'k-',label = '3 $\sigma$')
     ax1.plot(Y,yer_mu(Y)-3*yer_sig(Y),'k-')
+    
+    plt.axvline(10, color='r', linestyle='-')
 
     ax1.plot()
     ax1.set_ylim(0,1.7)
-    ax1.set_xlim(0,160)
+    ax1.set_xlim(0,150)
     
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')
@@ -90,4 +92,6 @@ def ER_band_plot(Erer,b):
     
 
     ax1.legend(loc=1,prop={'size':12})
+    plt.savefig('figures/ERer_Band_fits_fano_shifted.png')
     plt.show()
+    

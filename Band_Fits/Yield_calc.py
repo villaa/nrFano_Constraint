@@ -9,6 +9,9 @@ from scipy.optimize import curve_fit
 ER = []
 Yield = []
 
+f = 1.5
+fp = .75
+
 k = 0.157 # from lindhard
 q = 1.602*10**-19 #electron charge 
 V = 4.0 # voltage Bias
@@ -16,11 +19,11 @@ eps = .0033 #keV
 
 #for detector 1
 p_alpha = 0.155393
-p_beta = 0 #9.60343*10**(-11)
+p_beta = 9.60343*10**(-11)
 p_gamma = 0.000506287
 
 q_alpha = 0.166004
-q_beta = 0 #0.00233716
+q_beta = 0#0.00233716
 q_gamma = 9.52576*10**(-5)
 
 def Yield_NR(N):
@@ -104,29 +107,30 @@ def Yield_Er(N):
 
         Eer = np.random.choice(E1er) #randomly sample from Energy dist 
 
-        Pter = (1+(V/eps/1000))*Eer
+        Pter1 = (1+(V/eps/1000))*Eer
 
         N_e = Eer/eps 
-        N_er = np.random.normal(0,np.sqrt(0.1*N_e)) + N_e
-
-
-        sig_pee = np.sqrt(p_alpha + p_beta*Pter + p_gamma*(Pter**2)) #Phonon uncertainty 
+        N_er = np.random.normal(0,np.sqrt(0.13*N_e)) + N_e  # 0.13 is the fano factor for germainium 
+       # N_er = N_e
+        Pter = Eer+(V/1000)*N_er
+        
+        sig_pee = np.sqrt(p_alpha + p_beta*Pter1 + p_gamma*(Pter1**2)) #Phonon uncertainty 
         sig_qee = np.sqrt(q_alpha + q_beta*Eer + q_gamma*(Eer**2)) #Charge uncertainty 
 
         Fer = np.random.normal(0.0,sig_pee) #Random energy assuming phonon variance 
         Fqe = np.random.normal(0.0,sig_qee) #Random assuming charge variane
 
 
-        Pter = Eer+(V/1000)*N_er
+        
         Pter = Pter + Fer
         Qer = N_er*eps
         Qer = Qer + Fqe
-        QER.append(Qer)
+     
 
         Erer = Pter - (V/eps/1000)*Qer
         ERer.append(Erer)
 
-        Yield2 = Qer/Erer
+        Yield2 = Qer/Erer +0.01
         Yield_er.append(Yield2)
         
     return ERer, Yield_er 
