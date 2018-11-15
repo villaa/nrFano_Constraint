@@ -15,87 +15,42 @@ yer_sig = rfr.makeBFunc(bpar_er[1]['sig'],True) #sets uncertainty
 yer_sigv = np.vectorize(yer_sig) #puts uncertainty into 1D array
 
 
-def band_check_nr(a,s,X):
-    upper = ynr_mu(X)+s*ynr_sigv(X)
-    lower = ynr_mu(X)-s*ynr_sigv(X)
-    count = []
-    count1 = [] 
-    num = []
-    num1 = [] 
+def band_nr(Er,s):
+    upper = ynr_mu(Er)+s*ynr_sigv(Er)
+    lower = ynr_mu(Er)-s*ynr_sigv(Er)
     
+    return "NUCLEAR",upper,lower
+    
+def band_er(Er,s):
+    upper = yer_mu(Er)+s*yer_sigv(Er)
+    lower = yer_mu(Er)-s*yer_sigv(Er) 
+    
+    return "ELECTRON",upper, lower 
 
-    for x,y in zip(a, upper): 
-        if x > y:
-            n = 1
-        else:
-            n = 0 
-        count.append(n)
-    
-    for x,y in zip(a,lower):
-        if x < y:
-            n = 1
-        else:
-            n = 0
-        count1.append(n)       
-        
-        
-    for i in count: 
-        if i == 1:
-            #print(x)
-            num.append(i)     
 
+
+def compare(Yield,upper,lower):
+    up = np.sum(Yield>upper)
+    down = np.sum(Yield<lower)
+    N = len(Yield)
     
-    for i in count1: 
-        if i == 1:
-            #print(x)
-            num1.append(i)     
-            
-    N= len(a)
-    percent = 100*(N - np.abs(len(num)+len(num1)))/N
+    return up,down,N
+
+
+def band_check(Yield,Er,s,band_func):
+    
+    recoil_type, upper,lower = band_func(Er,s)
+    
+    up,down,N = compare(Yield,upper,lower)
+    
+    percent = 100*(N - np.abs(up+down))/N
+    
+    
     print('For',N,'number of data points')
-    print('Perecnt of data in nuclear band for',s,'simga =',percent)
-    print('Number of data points outside bands is:',len(num)+len(num1))
+    print('Perecnt of data in', recoil_type, 'for',s,'simga =',percent)
+    print('Number of data points outside bands is:', up+down)
     print('-----------------------------------------------------------')
-    
-    
-def band_check_er(b,s,Y):
-    upper = yer_mu(Y)+s*yer_sigv(Y)
-    lower = yer_mu(Y)-s*yer_sigv(Y)
-    counte = []
-    counte1 = [] 
-    nume = []
-    nume1 = [] 
-    
-
-    for x,y in zip(b, upper): 
-        if x >= y:
-            n = 1
-        else:
-            n = 0 
-        counte.append(n)
-    
-    for x,y in zip(b,lower):
-        if x <= y:
-            n = 1
-        else:
-            n = 0
-        counte1.append(n)       
-        
-        
-    for i in counte: 
-        if i == 1:
-            #print(x)
-            nume.append(i)     
 
     
-    for i in counte1: 
-        if i == 1:
-            #print(x)
-            nume1.append(i)     
-            
-    N = len(b)
-    percent = 100*(N - np.abs(len(nume)+len(nume1)))/N
-    print('For',N,'number of data points')
-    print('Perecnt of data in electron band for',s,'simga =',percent)
-    print('Number of data points outside bands is:',len(nume)+len(nume1))
-    print('-----------------------------------------------------------')
+
+    
