@@ -13,7 +13,9 @@ from tabulate import tabulate
 def bin_check(Yield,Er,s,band_func):
     
     
-    Percent = []
+    Percent1 = []
+    Percent2 = []
+    Percent3 = []
     
     recoil_type, upper,lower = band_func(Er,s)
 
@@ -38,9 +40,13 @@ def bin_check(Yield,Er,s,band_func):
 
         up,down,N = compare(x,y,z)
 
-        percent = 100*(N - (up+down))/N
-
-        Percent.append(percent)
+        percent1 = 100*(N - (up+down))/N
+        percent2 = 100*(N - (2*up))/N
+        percent3 = 100*(N - (2*down))/N
+        
+        Percent1.append(percent1)
+        Percent2.append(percent2)
+        Percent3.append(percent3)
         
     
     print('--------------------------------------------')  
@@ -48,12 +54,12 @@ def bin_check(Yield,Er,s,band_func):
     print('--------------------------------------------')  
     bin_spacing = '10-13.4','13.4-18.1','18.1-24.5','24.5-33.1','33.1-44.8','44.8-60.6','60.6-80.2','80.2-110','110-150'
 
-    print("Bin Spacing (keV)", '\t', "Percent in band")     #table column headings
-    print("--------------", '\t', '\t' "-------------------")
+    print("Bin Spacing (keV)", '\t', "Percent in band", '\t', "Percent from high", '\t', "Percent from low")     #table column headings
+    print("--------------", '\t', '\t' "-------------------", '\t' "-------------------", '\t' "-------------------")
 
 
-    for x,y in zip(bin_spacing,Percent):
-        print(x, '\t','\t', '{0:1.2f}'.format(y))
+    for x,y,z,q in zip(bin_spacing,Percent1,Percent2,Percent3):
+        print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','\t','\t','\t' '{0:1.2f}'.format(z), '\t','\t','\t', '{0:1.2f}'.format(q))
             
     print('--------------------------------------------')
     
