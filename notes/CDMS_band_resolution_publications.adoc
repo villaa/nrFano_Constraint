@@ -10,6 +10,31 @@ Thesis, Mark Pepin
 == Simulating The Supercdms Dark Matter Detector Response And Readout
 Thesis, Allison Kennedy
 
+* oZIP bands, fig 2.14.  Figure from Anthony, so maybe re-analysis fig?
+* nice description of optimal filter
+* charge resolutions for 100-mm G106a given for 0, 10.4, 59.5, 356 keV at detector bias of 4V
+* states that Soudan iZIP resolutions vary from 291 eV to 455 eV, cites Dan Jardin's note
+* states that Soudan fits used peaks up to 511 keV, cites D. Jardin's note, pg. 201
+* plots resultion of 10.36 keV for multiple bias voltages (not clear it's for G106a?)
+* charge resolutions for 100-mm G106a given for 0, 10.4, 59.5, 356 keV at detector bias of 4V, table 5.2, pg. 193
+* plots phonon resultion of 10.36 keV for multiple bias voltages (not clear it's for G106a?), pg. 194, mentions plot includes Luke gain?
+* plots phonon resultion of 10.36 keV for multiple bias voltages again. pg. 205, without Luke-gain warning
+* functional form of resolution given in eq. 5.2, pg 198, final fit parameters not given (I don't think)
+* G106a with 4V bias phonon and charge resolution fits shown in fig. 5.28, pg. 201
+* G106a phonon and charge resolution shown against ALL R133 resolutions, fig 5.29 pg. 202.  Upper part of curves severely obscured by legend.
+* R129 bands given for T1Z2, fig 5.30 pg. 204, cites internal note
+* G106a with 4V bias bands are shown on pg. 205, pg. 208 with band-fit information
+* functional forms of ER and NR bands given, pg. 207
+* fit range and energy binning for ER, NR bands given (pg. 206) but not final fit parameters (?)
+* PDFs for NR and ER recoil energy for simulated bands for G106a given, as well as yield model, pg. 202, 203
+* gives total number of events in bands (I think) on pg. 213
+* Gaussian-Cauchy distribution is mentioned in checks on leakage, pg. 209
+
+image:cdms_bands\G106a_resolutionFits.PNG[My picture,width=70,link="cdms_bands\G106a_resolutionFits.PNG"]
+image:cdms_bands\G106a_vs_Soudan_resolutions.PNG[My picture,width=100,link="cdms_bands\G106a_vs_Soudan_resolutions.PNG"]
+image:cdms_bands\G106a_noFit.PNG[My picture,width=137,link="cdms_bands\G106a_noFit.PNG"]
+image:cdms_bands\G106a_fit.PNG[My picture,width=52,link="cdms_bands\G106a_fit.PNG"]
+
 == Dedicated Searches For Low And High Mass Wimps With The SuperCDMS Soudan iZIP Detectors
 Thesis, Brad Welliver
 
