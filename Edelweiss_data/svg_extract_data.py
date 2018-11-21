@@ -170,4 +170,33 @@ def get_calib_func(user_arr, svg_arr):
         plt.show()
         
     return fit_fn
+       
+
+def get_calib_fn (doc, graph_points):
+    xmin, xmax, ymin, ymax = get_dimensions(doc)
+
+    width = xmax - xmin
+    height = ymax - ymin
+    #height = 147.37939999999998 - 2.5768999999999664
+    #width = 175.0608 - 34.730800000000016
+
+    xaxes, yaxes = get_axes(doc, width, height)
+    #print (xaxes, yaxes)
+
+    svg_calibPoints = np.array(get_calib_points(doc, (xaxes, yaxes)))
+    print("svg calibration points:")
+    print(svg_calibPoints)
+
+    #print (graph_points)
+    xcalib_fn, ycalib_fn = calib(graph_points, svg_calibPoints)
+    
+    return xcalib_fn, ycalib_fn 
+
+def get_points_from_path(path, t_arr, xcalib_fn, ycalib_fn):
+    #print (path)
+    point_arr = []
+    for t in t_arr:
+        point = (xcalib_fn(path.point(t).real), ycalib_fn(path.point(t).imag))
+        point_arr.append(point)
         
+    return np.array(point_arr)
