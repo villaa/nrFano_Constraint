@@ -27,7 +27,7 @@ def get_axes(doc, width, height): # edited
     and also largest x and y value among all paths"""
     yaxes = []
     xaxes = []
-    tol = 0.01
+    tol = 0.05
     
     for element in doc:
         # first see if there's an axis
@@ -53,7 +53,9 @@ def get_axes(doc, width, height): # edited
 def get_calib_points(doc, axes):
     yaxes, xaxes = axes
     calib_points = []
-    
+    calib_xlines = []
+    calib_ylines = []
+ 
     for element in doc:
         # first see if there's an axis
         # if not, return
@@ -72,10 +74,7 @@ def get_calib_points(doc, axes):
             isShort = line.length() < yaxes[0].length()/10
             
             if isVertical and (isStartOnAxis or isEndOnAxis) and isShort:
-                if isStartOnAxis:
-                    calib_points.append((line.start.real, line.start.imag))
-                elif isEndOnAxis:
-                    calib_points.append((line.start.real, line.end.imag))
+                calib_xlines.append(line)
                     
             # now see if it's a tick mark on the y-axis
             # test if it's horizontal
@@ -90,11 +89,41 @@ def get_calib_points(doc, axes):
             isShort = line.length() < xaxes[0].length()/10
             
             if isHorizontal and (isStartOnAxis or isEndOnAxis) and isShort:
+                calib_ylines.append(line)
+                print("line length ", line.length())
                 if isStartOnAxis:
                     calib_points.append((line.start.real, line.start.imag))
                 elif isEndOnAxis:
                     calib_points.append((line.end.real, line.start.imag))
     
+    # need to deal with minor, major tick marks
+    thresh = 0.5
+    x_lengths = [line.length() for line in calib_xlines]
+    x_lengths = np.sort(x_lengths)
+    min_xlengths = [group.min() for group in np.split(x_lengths, np.where(np.diff(x_lengths) > thresh)[0]+1)]
+    print (min_xlengths)
+
+    x_lengths = [line.length() for line in calib_xlines]
+    x_lengths = np.sort(x_lengths)
+    min_xlengths = [group.min() for group in np.split(x_lengths, np.where(np.diff(x_lengths) > thresh)[0]+1)]
+    print (min_xlengths)
+
+    for line in calib_xlines:
+        # test if the starting y-coordinate is on any xaxis
+        # can use axis.start.imag or axis.end.imag interchangeably
+        isStartOnAxis = any(math.isclose(line.start.imag, axis.start.imag) for axis in xaxes)
+        # test if the end y-coordinate is on any xaxis
+        # can use axis.start.imag or axis.end.imag interchangeably
+        isEndOnAxis = any(math.isclose(line.end.imag, axis.start.imag) for axis in xaxes)
+        # test if the line is a major tick
+        isMajor = line.length() >= max(min_xlengths)
+        
+        if isVertical and (isStartOnAxis or isEndOnAxis) and isMajor:
+            if isStartOnAxis:
+                calib_points.append((line.start.real, line.start.imag))
+            elif isEndOnAxis:
+                calib_points.append((line.start.real, line.end.imag))
+
     # call set to get rid of non-unique points
     return (list(set(calib_points)))
     
@@ -156,7 +185,8 @@ def get_calib_func(user_arr, svg_arr):
     fit_goodness = []
     fit_arr = []
     for svg_arr in svg_arr_list:
-        fit, res, rank, sing, thresh = np.polyfit(svg_arr,user_arr, 1, full=True)
+        print(svg_arr, user_arr)
+        fit, res, rank, sing, thresh = np.polyfit(svg_arr, user_arr, 1, full=True)
         #print("res: ", res)
         fit_goodness.append(res)
         fit_arr.append(np.poly1d(fit))
@@ -181,7 +211,7 @@ def get_calib_fn (doc, graph_points):
     #width = 175.0608 - 34.730800000000016
 
     xaxes, yaxes = get_axes(doc, width, height)
-    #print (xaxes, yaxes)
+    print (xaxes, yaxes)
 
     svg_calibPoints = np.array(get_calib_points(doc, (xaxes, yaxes)))
     print("svg calibration points:")
