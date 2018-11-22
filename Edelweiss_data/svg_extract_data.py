@@ -90,11 +90,7 @@ def get_calib_points(doc, axes):
             
             if isHorizontal and (isStartOnAxis or isEndOnAxis) and isShort:
                 calib_ylines.append(line)
-                print("line length ", line.length())
-                if isStartOnAxis:
-                    calib_points.append((line.start.real, line.start.imag))
-                elif isEndOnAxis:
-                    calib_points.append((line.end.real, line.start.imag))
+                #print("line length ", line.length())
     
     # need to deal with minor, major tick marks
     thresh = 0.5
@@ -103,10 +99,10 @@ def get_calib_points(doc, axes):
     min_xlengths = [group.min() for group in np.split(x_lengths, np.where(np.diff(x_lengths) > thresh)[0]+1)]
     print (min_xlengths)
 
-    x_lengths = [line.length() for line in calib_xlines]
-    x_lengths = np.sort(x_lengths)
-    min_xlengths = [group.min() for group in np.split(x_lengths, np.where(np.diff(x_lengths) > thresh)[0]+1)]
-    print (min_xlengths)
+    y_lengths = [line.length() for line in calib_ylines]
+    y_lengths = np.sort(y_lengths)
+    min_ylengths = [group.min() for group in np.split(y_lengths, np.where(np.diff(y_lengths) > thresh)[0]+1)]
+    print (min_ylengths)
 
     for line in calib_xlines:
         # test if the starting y-coordinate is on any xaxis
@@ -118,11 +114,28 @@ def get_calib_points(doc, axes):
         # test if the line is a major tick
         isMajor = line.length() >= max(min_xlengths)
         
-        if isVertical and (isStartOnAxis or isEndOnAxis) and isMajor:
+        if (isStartOnAxis or isEndOnAxis) and isMajor:
             if isStartOnAxis:
                 calib_points.append((line.start.real, line.start.imag))
             elif isEndOnAxis:
                 calib_points.append((line.start.real, line.end.imag))
+
+    for line in calib_ylines:
+        # test if the starting x-coordinate is on any yaxis
+        # can use axis.start.real or axis.end.real interchangeably
+        isStartOnAxis = any(math.isclose(line.start.real, axis.start.real) for axis in yaxes)
+        # test if the end y-coordinate is on any xaxis
+        # can use axis.start.imag or axis.end.imag interchangeably
+        isEndOnAxis = any(math.isclose(line.end.real, axis.start.real) for axis in yaxes)
+        # test if the line is short
+        isMajor = line.length() >= max(min_xlengths)
+        
+        if (isStartOnAxis or isEndOnAxis) and isMajor:
+            #print("line length ", line.length())
+            if isStartOnAxis:
+                calib_points.append((line.start.real, line.start.imag))
+            elif isEndOnAxis:
+                calib_points.append((line.end.real, line.start.imag))
 
     # call set to get rid of non-unique points
     return (list(set(calib_points)))
