@@ -33,7 +33,7 @@ $$
 
 Similar to how we find $N_{e/h}$, we smear the charge and phonon energy by the detector resolutions to find the measured quantities $Pter$ and $Q_{er}$. 
 
-$$ pt = E_{er} + \frac{V}{\epsilon} N_{e/h}\\
+$$ pt = E_{er} + Vq_{er}\\
 q_{er} = N_{e/h}\epsilon\\$$
 $$
 Pter = pt + randnormal(0,\sigma_P)\\
@@ -51,7 +51,7 @@ Here is a plot of the simulated electron recoil data. The band fits shown are 1,
 
 <img src="figures/ERer_Band_fits.png"  width="450" height="450">
 
-To check how well the bands fit the data, we compared how much data lies within each of the 1,2,3 sigma bands. 
+To check how well the bands fit the data, we compared how much data lies within each of the 1,2,3 sigma bands. This is done by binning the data into the same spacing as in note: High Threshold Analysis, 303, Rob Calkins:
 
 ![Fit Table](figures/fit_table.png)
 
@@ -74,7 +74,7 @@ $$ N_{e/h} = N_{e/h} + randnormal(0,FN_{e/h}) $$
 
 The Fano factor for germanium is $0.13$ and $0.115$ for silicon.
 The phonon energy is now dependent upon this variation in electron-hole pair production, as well as the phonon resolution.
-$$ pt = E_{er} + \frac{V}{\epsilon} N_{e/h}$$
+$$ pt = E_{er} + V N_{e/h}$$
 
 $$ \sigma_P = \sqrt{\alpha_p + \gamma_p pt^2} $$
 
@@ -89,3 +89,22 @@ The next plot and table show the simulation run with the fano factor and the add
 
 <img src="figures/ERer_Band_fits_fano_shifted.png"  width="450" height="450">
 <img src="figures/fit_table_fano_shifter.png" >
+
+
+##Density Plot With Error in Calculations. 
+
+Show below is a density plot of the electron recoil band, and a table showing the percent of data in each band with the associated error in each of those calculations. The error in each calculation was found by using the equations for the standard error in a binomial distribution.
+
+$$ P_{up} = \frac{up}{N}\\
+Q_{up} = 1- P_{up}$$
+Where $up$ is the number of data points that lye outside the upper band. $N$ is the number of data points in each bin. 
+$$error_{up} = \sqrt{\frac{P_{up}Q_{up}}{N}}
+$$
+Similarly for the amount of data below the fits:
+$$error_{down} = \sqrt{\frac{P_{down}Q_{down}}{N}}$$
+The total error in each bin is then: 
+$$error_{t} = error_{up}+error_{down}$$
+
+
+<img src="figures/ERer_Band_fits_fano_shifted_linear_density.png"  width="450" height="450">
+<img src="figures/fit_table_fano_shifted_linear_error.png" >
