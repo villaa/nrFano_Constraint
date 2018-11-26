@@ -209,3 +209,11 @@ def TFbc(ya,yb):
   out = np.asarray([ya[0]-y0(xmesh[0]),yb[0]-(144/xmax**3)],dtype=np.float64)
     
   return out
+
+def error(f,g,x):
+
+  #check for vectorization
+  fv = np.vectorize(f)
+  gv = np.vectorize(g)
+
+  return np.sum((fv(x)-gv(x))**2)
