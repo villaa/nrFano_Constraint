@@ -1,10 +1,10 @@
 
 
 
-# Recoil Band Simulation
+# Electron Recoil Band Simulation
 
 
-### Electron Recoils 
+ 
  To simulate the bands, we need an initial **simulated** recoil energy., or "true" recoil energy. The energy is found by randomly drawning from a uniform distribution. This energy, $E_{er}$, is used to calculate the true phonon energy $pt$ and the number of electron-hole pairs produced : 
 
  $$ N_{e/h} = \frac{E_{er}}{\epsilon}$$
