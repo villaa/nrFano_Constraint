@@ -44,7 +44,7 @@ def Hist(data):
         #sns.set_style('darkgrid')
         #sns.set_style("ticks", {"xtick.major.size": 8, "ytick.major.size": 8})
         
-        sns.distplot(x,bins = 50,color="blue",fit=stats.norm, kde=False,hist_kws={"histtype": "step", "linewidth": 3,"alpha": 1, "color": "r"})
+        sns.distplot(x,bin,color="blue",fit=stats.norm, kde=False,hist_kws={"histtype": "step", "linewidth": 3,"alpha": 1, "color": "r"})
         #sns.distplot(x,color="blue",fit=stats.gennorm,norm_hist = True, kde=False,)
 
 
@@ -52,9 +52,11 @@ def Hist(data):
         
         ax1.set_yscale('log')
         ax1.set_xlabel('Yield',size = '18')
-        #ax1.set_ylabel('Counts',size = '1')
+        ax1.set_ylabel('Counts',size = '1')
         ax1.set_title('Yield for the ' + str(bins[i])+ 'keV Bin',size ='20')
         ax1.grid(True)
+        ax1.set_xlim(0.7,1.3)
+        ax1.set_ylim(10**-3,10)
         ax1.yaxis.grid(True,which='minor',linestyle='--')
         #ax1.legend(loc=1,prop={'size':18})
         ax1.tick_params(axis='both', labelsize = '20')
