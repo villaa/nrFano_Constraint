@@ -50,18 +50,21 @@ def NR_band_plot(Enr,a):
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')
     ax1.set_ylabel('Yield',size = '18')
-    ax1.set_title('Data Check NR Band', size = '20')
+    ax1.set_title('Data Check NR Band C = 0.04', size = '20')
     ax1.tick_params(axis='both', labelsize = '20')
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     
 
     ax1.legend(loc=1,prop={'size':12})
-    #plt.savefig('figures/ENr_band_edelweissfano.png')
+    plt.savefig('figures/ENr_band_edelweissfano1.png')
     plt.show()
     
     
 def ER_band_plot(Erer,b,N):
+    import time
+    start_time = time.time()
+    
     Y = Erer
     Y = np.sort(Y)
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
@@ -75,6 +78,7 @@ def ER_band_plot(Erer,b,N):
     #ax1.hist2d(a, b, (50, 50), cmap=plt.cm.jet)
     
     
+     
     ax1.plot(Y,yer_muv(Y),color='blue',linestyle='--',label = 'Mean')
     
     ax1.plot(Y,yer_mu(Y)+1*yer_sig(Y),'r-',label = '1 $\sigma$')
@@ -85,6 +89,7 @@ def ER_band_plot(Erer,b,N):
 
     ax1.plot(Y,yer_mu(Y)+3*yer_sig(Y),'k-',label = '3 $\sigma$')
     ax1.plot(Y,yer_mu(Y)-3*yer_sig(Y),'k-')
+    
     
     
     '''
@@ -99,8 +104,8 @@ def ER_band_plot(Erer,b,N):
     ax1.plot(Y,1-2*yer_sig(Y),'m-')
 
     ax1.plot(Y,1+3*yer_sig(Y),'k-',label = '3 $\sigma$')
-    ax1.plot(Y,1-3*yer_sig(Y),'k-')'''
-    
+    ax1.plot(Y,1-3*yer_sig(Y),'k-')
+    '''
     
     
     
@@ -114,7 +119,7 @@ def ER_band_plot(Erer,b,N):
 
     ax1.plot()
     ax1.set_ylim(0.7,1.3)
-    ax1.set_xlim(0,115)
+    ax1.set_xlim(0,165)
     
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')
@@ -129,6 +134,8 @@ def ER_band_plot(Erer,b,N):
     #fig.colorbar(cax)
     #plt.savefig('figures/ERer_Band_')
     plt.show()
+    
+    print("My program took", (time.time() - start_time)/60, " mintues to run")
     
 
 def NR_ER_plot(Enr,Erer,a,b):
@@ -188,5 +195,21 @@ def NR_ER_plot(Enr,Erer,a,b):
     plt.show()
     
     
-    
+def EP_EQ_plot(EP,EQ):
+    fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
+    ax1 = axes
+    xy = np.vstack([EP,EQ])
+    z = gaussian_kde(xy)(xy)
+
+    #ax1.plot(Erer,b,'+',color='b',linewidth=2,markersize=3,alpha = 0.5)
+    cm = plt.cm.get_cmap('nipy_spectral')
+    cax = ax1.scatter(EP, EQ, c=z, s=10, cmap = cm)
+
+    ax1.set_xlabel('$E_P$ (keV)',size = '18')
+    ax1.set_ylabel('$E_Q$ (keV)',size = '18')
+    ax1.set_title('EQ - EP Space', size = '20')
+    ax1.tick_params(axis='both', labelsize = '20')
+    ax1.grid(True)
+    ax1.yaxis.grid(True,which='minor',linestyle='-')
+    #fig.colorbar()
     

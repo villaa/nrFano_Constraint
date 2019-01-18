@@ -10,9 +10,8 @@ from matplotlib.ticker import FuncFormatter
 
 from tabulate import tabulate
 
-
-
-
+    
+        
 def bin_check(Yield,Er,s,band_func):
     
     
