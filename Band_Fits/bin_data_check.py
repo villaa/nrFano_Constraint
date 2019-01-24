@@ -5,6 +5,8 @@ from Yield_calc import *
 import pandas as pd 
 from data_check import *
 from matplotlib.ticker import FuncFormatter
+from prob_dist import * 
+from Dist_check import * 
 
 
 
@@ -12,9 +14,10 @@ from tabulate import tabulate
 
     
         
-def bin_check(Yield,Er,s,band_func):
+def bin_check(Yield,Er,s,band_func,EP,EQ,sigp,sigq):
     
-    
+    V = 4
+    eps = 0.0033
     Percent1 = []
     Percent2 = []
     Percent3 = []
@@ -24,7 +27,7 @@ def bin_check(Yield,Er,s,band_func):
     
     recoil_type, upper,lower = band_func(Er,s)
 
-    Data = np.vstack((Er,Yield,upper,lower)).T
+    Data = np.vstack((Er,Yield,upper,lower,EP,EQ,sigp,sigq)).T
     Data1 = Data[np.argsort(Data[:, 0])]
     
     df = pd.DataFrame(Data1)
@@ -37,11 +40,30 @@ def bin_check(Yield,Er,s,band_func):
 
     
      
-        x = np.array(df[1].loc[df1 == q])
-        y = np.array(df[2].loc[df1 == q])
+        x = np.array(df[1].loc[df1 == q]) # Yield 
+        y = np.array(df[2].loc[df1 == q]) 
         z = np.array(df[3].loc[df1 == q])
-
-
+        P = np.array(df[4].loc[df1 == q])
+        Q = np.array(df[5].loc[df1 == q])
+        Sp = np.array(df[6].loc[df1 == q])
+        Sq = np.array(df[7].loc[df1 == q])
+        
+        #print(x)
+        
+        #look at distributions graphically 
+        k= (V/eps/1000)
+        u = np.arange(0,2,0.02)
+        prob = dist_check(u,P,Q,Sp,Sq,k)
+        
+        plt.figure()
+        plt.plot(u,prob)
+        plt.hist(x,normed = True)
+        plt.xlim(0.75,1.5)
+        plt.show()
+        
+        
+        
+        
         up,down,N = compare(x,y,z) # up and down are the number of data points OUTSIDE the bands. 
 
         percent1 = 100*(N - (up+down))/N
@@ -90,7 +112,7 @@ def bin_check(Yield,Er,s,band_func):
         Percent2.append(percent2)
         Percent3.append(percent3)
         
-        print(up,down,N)
+        #print(up,down,N)
     
     print('--------------------------------------------')  
     print(s,"SIGMA",recoil_type, "RECOIL BAND")
@@ -127,3 +149,5 @@ def bin_check(Yield,Er,s,band_func):
     
 
     return df
+
+

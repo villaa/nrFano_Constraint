@@ -47,7 +47,7 @@ def Corr(EP,EQ):
 
     #print(Coeff)
 
-    print('CORRELATION COEFFICENT FOR EQ AND EP')
+    print('CORRELATION COEFFICENT FOR EP AND EQ')
     print('---------------------------------------------------------------')
     print('Bin(keV)','\t', "Numpy Coefficient", '\t', 'Brute Force Check')
     print('---------------------------------------------------------------')

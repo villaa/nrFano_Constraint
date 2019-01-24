@@ -79,6 +79,7 @@ def ER_band_plot(Erer,b,N):
     
     
      
+    '''   
     ax1.plot(Y,yer_muv(Y),color='blue',linestyle='--',label = 'Mean')
     
     ax1.plot(Y,yer_mu(Y)+1*yer_sig(Y),'r-',label = '1 $\sigma$')
@@ -89,10 +90,11 @@ def ER_band_plot(Erer,b,N):
 
     ax1.plot(Y,yer_mu(Y)+3*yer_sig(Y),'k-',label = '3 $\sigma$')
     ax1.plot(Y,yer_mu(Y)-3*yer_sig(Y),'k-')
-    
-    
-    
     '''
+    
+    
+    
+    
     x = np.ones(len(Y))
     
     ax1.plot(Y,x,color='blue',linestyle='--',label = 'Mean')
@@ -105,7 +107,7 @@ def ER_band_plot(Erer,b,N):
 
     ax1.plot(Y,1+3*yer_sig(Y),'k-',label = '3 $\sigma$')
     ax1.plot(Y,1-3*yer_sig(Y),'k-')
-    '''
+    
     
     
     
@@ -212,4 +214,6 @@ def EP_EQ_plot(EP,EQ):
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     #fig.colorbar()
+    
+    plt.savefig('figures/EQ_EP_space')
     

@@ -117,6 +117,8 @@ def Yield_Er(N):
     ERer = []
     EQ = []
     EP = []
+    sig_p = []
+    sig_q = []
     bins  = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
     #E1er = np.random.uniform(10,150,N)#from anthony, Er's are close enough to randomly distributed. 
     E1er = (bins[:-1] + bins[1:]) / 2
@@ -133,13 +135,16 @@ def Yield_Er(N):
         #More physical 
         
         N_e = Eer/eps 
-        N_er = np.random.normal(0,np.sqrt(0.13*N_e)) + N_e  # 0.13 is the fano factor for germainium 
+        Er_fano = 0#0.13
+        N_er = np.random.normal(0,np.sqrt(Er_fano *N_e)) + N_e  # 0.13 is the fano factor for germainium 
         #N_er = N_e
         Pter = Eer+(V/1000)*N_er
         
         sig_pee = np.sqrt(p_alpha + p_beta*Pter + p_gamma*(Pter**2)) #Phonon uncertainty 
         sig_qee = np.sqrt(q_alpha + q_beta*Eer + q_gamma*(Eer**2)) #Charge uncertainty
-
+        
+        sig_p.append(sig_pee)
+        sig_q.append(sig_qee)
         
         #For Linear Fit Model
         '''
@@ -153,21 +158,17 @@ def Yield_Er(N):
         
         
         
-        
-        Fer = np.random.normal(0.0,sig_pee) #Random energy assuming phonon variance 
-        Fqe = np.random.normal(0.0,sig_qee) #Random assuming charge variane
+               
 
+        Pter1 = np.random.normal(Pter,sig_pee)
+      
+        Qer = np.random.normal(Eer,sig_qee)
 
-        
-        Pter = Pter + Fer
-        #Qer = N_er*eps
-        Qer = Eer
-        Qer = Qer + Fqe
         EQ.append(Qer)
-        EP.append(Pter)
+        EP.append(Pter1)
      
 
-        Erer = Pter - (V/eps/1000)*Qer
+        Erer = Pter1 - (V/eps/1000)*Qer
         ERer.append(Erer)
 
         Y_er = yer_mu(Erer)
@@ -175,4 +176,6 @@ def Yield_Er(N):
         Yield2 = Qer/Erer
         Yield_er.append(Yield2)
         
-    return ERer, Yield_er, EQ, EP
+    return ERer, Yield_er, EQ, EP, sig_p, sig_q
+
+
