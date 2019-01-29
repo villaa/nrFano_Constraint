@@ -53,6 +53,7 @@ def bin_check(Yield,Er,s,band_func,EP,EQ,sigp,sigq):
         #look at distributions graphically 
         k= (V/eps/1000)
         u = np.arange(0,2,0.02)
+        
         prob = dist_check(u,P,Q,Sp,Sq,k)
         
         plt.figure()
@@ -61,6 +62,17 @@ def bin_check(Yield,Er,s,band_func,EP,EQ,sigp,sigq):
         plt.xlim(0.75,1.5)
         plt.show()
         
+        u = np.mean(x) + np.std(x)
+        print(np.mean(x))
+        l = np.mean(x) - np.std(x)
+        print(u)
+        print(l)
+        
+
+        v = np.linspace(l,u,100)
+        g = np.trapz(prob,v)
+        
+        print('Area under curve is:',g)
         
         
         
