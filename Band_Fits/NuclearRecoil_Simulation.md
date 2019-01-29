@@ -74,7 +74,7 @@ For specific detail on where this fano factor came from. See Amy's note: "**edel
 
 The Fano factor from Edelweiss is: 
 
-$$F = \frac{C^2}{\frac{\epsilon a}{E_{nr}^{1-b}} + \frac{2Va^2}{E_{nr}^{1-2b}}+ \frac{2*a^3}{\epsilon E_{nr}^{1-3b}}}$$
+$$F = \frac{C^2}{\frac{\epsilon a}{E_{nr}^{1-b}} + \frac{2Va^2}{E_{nr}^{1-2b}}+ \frac{2a^3}{\epsilon E_{nr}^{1-3b}}}$$
 $$
 a = 0.16\\
 b = 0.18\\
