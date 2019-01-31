@@ -7,6 +7,7 @@ from data_check import *
 from matplotlib.ticker import FuncFormatter
 from prob_dist import * 
 from Dist_check import * 
+from scipy import integrate 
 
 
 
@@ -14,7 +15,7 @@ from tabulate import tabulate
 
     
         
-def bin_check(Yield,Er,s,band_func,EP,EQ,sigp,sigq):
+def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq):
     
     V = 4
     eps = 0.0033
@@ -25,36 +26,39 @@ def bin_check(Yield,Er,s,band_func,EP,EQ,sigp,sigq):
     sig_high = []
     sig_low = []
     
-    recoil_type, upper,lower = band_func(Er,s)
+   # print("before sort Er_true is:",Er_true)
+    recoil_type, upper,lower = band_func(Er_true,s)
 
-    Data = np.vstack((Er,Yield,upper,lower,EP,EQ,sigp,sigq)).T
+    Data = np.vstack((Er,Yield,upper,lower,EP,EQ,sigp,sigq,Er_true)).T
     Data1 = Data[np.argsort(Data[:, 0])]
     
     df = pd.DataFrame(Data1)
 
-    bins  = [10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110]
+    #bins  = [10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110] #use 8
+    bins = [9,16,25.2,40.3,75.2]
 
     df1 = pd.cut(df[0],bins, labels = False)
 
-    for q in np.arange(0,8):
+    for q in np.arange(0,4):
 
     
-     
+        E = np.array(df[0].loc[df1 == q])
         x = np.array(df[1].loc[df1 == q]) # Yield 
-        y = np.array(df[2].loc[df1 == q]) 
-        z = np.array(df[3].loc[df1 == q])
-        P = np.array(df[4].loc[df1 == q])
-        Q = np.array(df[5].loc[df1 == q])
-        Sp = np.array(df[6].loc[df1 == q])
-        Sq = np.array(df[7].loc[df1 == q])
+        y = np.array(df[2].loc[df1 == q]) #upper bound
+        z = np.array(df[3].loc[df1 == q]) #lower bound
+        P = np.array(df[4].loc[df1 == q]) #EP
+        Q = np.array(df[5].loc[df1 == q]) #EQ
+        Sp = np.array(df[6].loc[df1 == q]) #Sigma_p
+        Sq = np.array(df[7].loc[df1 == q]) #Sigma_q
+        Er_true = np.array(df[8].loc[df1 == q])
         
         #print(x)
         
         #look at distributions graphically 
         k= (V/eps/1000)
-        u = np.arange(0,2,0.02)
+        u = np.arange(0,2,0.002)
         
-        prob = dist_check(u,P,Q,Sp,Sq,k)
+        prob = dist_check(u,P,Q,Sp,Sq,k) #amy's defined PDF 
         
         plt.figure()
         plt.plot(u,prob)
@@ -62,20 +66,7 @@ def bin_check(Yield,Er,s,band_func,EP,EQ,sigp,sigq):
         plt.xlim(0.75,1.5)
         plt.show()
         
-        u = np.mean(x) + np.std(x)
-        print(np.mean(x))
-        l = np.mean(x) - np.std(x)
-        print(u)
-        print(l)
-        
-
-        v = np.linspace(l,u,100)
-        g = np.trapz(prob,v)
-        
-        print('Area under curve is:',g)
-        
-        
-        
+  
         up,down,N = compare(x,y,z) # up and down are the number of data points OUTSIDE the bands. 
 
         percent1 = 100*(N - (up+down))/N
@@ -87,11 +78,19 @@ def bin_check(Yield,Er,s,band_func,EP,EQ,sigp,sigq):
         #Error_up = np.sqrt((N*p_up*q_up)) 
         
         p_down = N-down/N
-        #q_down = 1-p_down
-        #Error_down = np.sqrt((N*p_down*q_down)) 
         
-        #error = np.sqrt((up/N)**2*(Error_up)**2 + (down/N)**2*(Error_down)**2)
+       
+        print("Er is:",Er_true)
+        print("number of oddball entries",np.sum(Er_true > 12),len(Er_true))
+        print("Yield is:",x,"Yield is centered at:",np.mean(x))
+        print("lower is: ", z)
+        print("Upper is:", y)
         
+        
+        #v = np.linspace(np.mean(z),np.mean(y),1000)
+       # g = np.trapz(prob,v)
+        g = integrate.quad(lambda x: dist_check(x,P,Q,Sp,Sq,k),np.mean(z),np.mean(y) )
+        print('Area under curve is:',g)
         
         
         n = (N-up-down)

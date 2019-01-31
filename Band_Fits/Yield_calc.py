@@ -115,19 +115,23 @@ def Yield_NR(N):
 def Yield_Er(N):
     Yield_er = []
     ERer = []
+    Er_true =[]
     EQ = []
     EP = []
     sig_p = []
     sig_q = []
     bins  = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
     #E1er = np.random.uniform(10,150,N)#from anthony, Er's are close enough to randomly distributed. 
-    E1er = (bins[:-1] + bins[1:]) / 2
+    #E1er = (bins[:-1] + bins[1:]) / 2
+    E1er = np.array([10.7,25.2,40.3,75.2])
+    print("Bin center is:", E1er)
 
     QER = []
  
     for i in np.arange(N):
 
         Eer = np.random.choice(E1er) #randomly sample from Energy dist 
+        Er_true.append(Eer)
         #Eer = 40
 
        # Pter = (1+(V/eps/1000))*Eer
@@ -171,11 +175,11 @@ def Yield_Er(N):
         Erer = Pter1 - (V/eps/1000)*Qer
         ERer.append(Erer)
 
-        Y_er = yer_mu(Erer)
+       # Y_er = yer_mu(Erer)
         
         Yield2 = Qer/Erer
         Yield_er.append(Yield2)
         
-    return ERer, Yield_er, EQ, EP, sig_p, sig_q
+    return Er_true,ERer, Yield_er, EQ, EP, sig_p, sig_q
 
 

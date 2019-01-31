@@ -24,9 +24,12 @@ def band_nr(Er,s):
 def band_er(Er,s):
     #upper = yer_mu(Er)+s*yer_sigv(Er)
     #lower = yer_mu(Er)-s*yer_sigv(Er) 
+
     upper = 1+s*yer_sigv(Er)
     lower = 1-s*yer_sigv(Er)
-    
+    #print("S should be:",s)
+    #print("The True Er should be:",Er)
+    #print("in function upper value is:",upper)
     return "ELECTRON",upper, lower 
 
 

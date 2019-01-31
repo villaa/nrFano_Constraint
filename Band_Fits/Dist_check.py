@@ -21,7 +21,7 @@ def dist_check(Yield,EP,EQ,sigP,sigQ,k):
 
     
 
-    print(res_p,res_q,r)
+    #print(res_p,res_q,r)
 
     
     prob = ratio_dist(Yield, res_p, res_q, r, k)
