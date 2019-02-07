@@ -8,8 +8,7 @@ from scipy.optimize import curve_fit
 from data_check import * 
 from bin_data_check import *
 
-ER = []
-Yield = []
+
 
 f = 1.5
 fp = .75
@@ -38,22 +37,30 @@ q_alpha = 0.126
 q_beta = 0.0066
 q_gamma = 7.8*10**-5
 '''
-def Yield_NR(N):
+def Yield_NR(Er_true):
     
     import sys
     sys.path.insert(0,'/Users/Mitch 1/Desktop/nrFano_Constraint/python')
     import lindhard as lind
     lpar = lind.getLindhardPars('Ge',True)
-
+    
+    ER = []
+    Yield = []
+    sigp_nr = []
+    sigq_nr = []
+    EPnr = []
+    EQnr = []
+    Enr_true = []
     
     #Er = np.random.uniform(10,200,N)
-    Er = np.random.exponential(40,np.uint32(N*0.3))
-    Er = Er[Er<=150]
-    Er = Er[Er>=10]
+    #Er = np.random.exponential(40,np.uint32(N*0.3))
+    #Er = Er[Er<=150]
+    #Er = Er[Er>=10]
+    #E1nr = E_true
+    for Enr in Er_true:
 
-    for i in np.arange(0,N):
-
-        Enr = np.random.choice(Er)
+        #Enr = np.random.choice(E1nr)
+        Enr_true.append(Enr)
         
 
         a = 0.16
@@ -90,7 +97,8 @@ def Yield_NR(N):
        #With Fano Factor. 
         sig_p = np.sqrt(p_alpha + p_beta*Ptnr + p_gamma*(Ptnr**2))  #Phonon uncertainty (energy dependent)
         sig_q = np.sqrt(q_alpha + q_beta*Qnr + q_gamma*(Qnr**2)) #Charge uncertainty 
-
+        sigp_nr.append(sig_p)
+        sigq_nr.append(sig_q)
 
         Fnr = np.random.normal(0.0,sig_p) #random sample assuming phonon variance 
         Fq = np.random.normal(0.0,sig_q) #random sampel assuming charge variance 
@@ -101,18 +109,20 @@ def Yield_NR(N):
         Ernr = Ptnr1 - (V/(eps*1000))*Qnr1 #Meaured ER
         yield1 = Qnr1 / Ernr  #Measured Yieldf
 
-
+        EPnr.append(Ptnr1)
+        EQnr.append(Qnr1)
 
         #Store Stuff 
         ER.append(Ernr)
+       
         Yield.append(yield1)
      
         
-    return ER, Yield 
+    return  Enr_true, ER, Yield, EQnr,EPnr,sigp_nr,sigq_nr 
 
 
 
-def Yield_Er(N):
+def Yield_Er(Er_True):
     Yield_er = []
     ERer = []
     Er_true =[]
@@ -120,17 +130,19 @@ def Yield_Er(N):
     EP = []
     sig_p = []
     sig_q = []
-    bins  = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
-    #E1er = np.random.uniform(10,150,N)#from anthony, Er's are close enough to randomly distributed. 
+   # bins  = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
+    #E1er = np.random.uniform(10,150,N)#from anthony, Er's are close enough to randomly distributed.
+    #Eer = np.random.choice(E1er,N)
     #E1er = (bins[:-1] + bins[1:]) / 2
-    E1er = np.array([10.7,25.2,40.3,75.2])
+    #E1er = np.array([10.7,25.2,40.3,75.2])
+    E1er = Er_True
     print("Bin center is:", E1er)
 
     QER = []
  
-    for i in np.arange(N):
+    for Eer in Er_True:
 
-        Eer = np.random.choice(E1er) #randomly sample from Energy dist 
+
         Er_true.append(Eer)
         #Eer = 40
 
