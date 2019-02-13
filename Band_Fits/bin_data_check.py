@@ -8,7 +8,7 @@ from matplotlib.ticker import FuncFormatter
 from prob_dist import * 
 from Dist_check import * 
 from scipy import integrate 
-
+from Hist_plot import * 
 
 
 from tabulate import tabulate
@@ -85,12 +85,11 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
            # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
             prob = dist_check(u,P,Q,Sp,Sq,k) #amy's defined PDF 
+            
+            
+         
+            hist_plot(x,prob,u,bin_name)  
 
-            plt.figure()
-            plt.plot(u,prob)
-            plt.hist(x,normed=True)
-            plt.xlim(-0.2,1.5)
-            plt.show()
 
 
             up,down,N = compare(x,y,z) # up and down are the number of data points OUTSIDE the bands. 
@@ -116,9 +115,10 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
 
 
             #v = np.linspace(np.mean(z),np.mean(y),1000)
-           # g = np.trapz(prob,v)
+            #g = np.trapz(prob,v)
             g = integrate.quad(lambda x: dist_check(x,P,Q,Sp,Sq,k),np.mean(z),np.mean(y) )
             H =g[0]*100
+            #H = g*500
            # print('Area under curve is:',g)
             expected.append(H)
 
@@ -158,11 +158,11 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
     print('--------------------------------------------')  
     print(s,"SIGMA",recoil_type, "RECOIL BAND")
     print('--------------------------------------------')  
-    bin_spacing = np.array(bin_names).astype(str)#'10-13.4','13.4-18.1','18.1-24.5','24.5-33.1','33.1-44.8','44.8-60.6','60.6-80.2','80.2-110','110-150'
+    #'10-13.4','13.4-18.1','18.1-24.5','24.5-33.1','33.1-44.8','44.8-60.6','60.6-80.2','80.2-110','110-150'
 
     print("Bin Spacing (keV)", '\t', "Percent in band",'\t', "Expected",'\t', '\t', "Percent from high", '\t', "Percent from low")     #table column headings
     print("--------------", '\t', '\t' "-------------------", '\t' "-------------------", '\t' "-------------------", '\t' "-------------------")
-
+    bin_spacing = np.array(bin_names).astype(str)
 
     for x,y,e,h,z,q,t,l in zip(bin_spacing,Percent1,Error,expected,Percent2,Percent3,sig_high,sig_low):
         print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','±','{0:1.2f}'.format(e),'%', '\t','{0:1.2f}'.format(h), '\t','\t','\t','{0:1.2f}'.format(z), '\t','±','{0:1.2f}'.format(t),'\t', '{0:1.2f}'.format(q), '\t','±','{0:1.2f}'.format(l))
