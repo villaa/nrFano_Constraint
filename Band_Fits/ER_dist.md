@@ -34,7 +34,10 @@ When fitting the data from CDMS, the collaboration assumed that the distribution
 
 The bands that CDMS use are generated under this assumption. However, if we look at the containment fractions for the $1\sigma$ CDMS bands with simulated data, we see that the assumption of normality isn't correct:
 
-<img src="figures/ER_containment1.png" width ="400" height="200" >
+
 
 ## Expected Distribution (Ratio of Gaussians)
 
+<p align ="center" >
+    <img src="figures/ER_containment1 .png" width ="500" height="200"  >
+</p>
