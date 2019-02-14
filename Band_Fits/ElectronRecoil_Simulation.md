@@ -91,7 +91,7 @@ The next plot and table show the simulation run with the fano factor and the add
 <img src="figures/fit_table_fano_shifter.png" >
 
 
-##Error In Data Check Calculations. 
+## Error In Data Check Calculations. 
 
 Show below is a density plot of the electron recoil band, and a table showing the percent of data in each band with the associated error in each of those calculations. The error in each calculation was found by using the equations for the standard error in a binomial distribution.
 

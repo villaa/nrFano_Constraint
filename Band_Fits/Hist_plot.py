@@ -21,12 +21,13 @@ def hist_plot(data,prob,array,bins):
 
     ax1.set_xlabel('Yield',size = '18')
     ax1.set_ylabel('Count',size = '18')
-    ax1.set_title("Electron Recoil Yield Distribution " + str(bin_center) + ' keV')
+    ax1.set_title("Electron Recoil Yield Distribution " + str(bins) + ' keV')
     ax1.set_xlim(xmin, xmax)
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='--')
     ax1.legend(loc=1,prop={'size':18})
     ax1.tick_params(axis='both', labelsize = '20')
+    plt.savefig('figures/Dist_fits/'+ str(bin_center)+'.png')
 
 
     plt.show()

@@ -30,14 +30,18 @@ $$Y = \frac{E_{q_m}}{Er_m}$$
 
 When fitting the data from CDMS, the collaboration assumed that the distribution for electron recoils is normally distributed:
 
-<img src="figures/CDMS_fit.png" width="350" height="300" >
+<p align = "center" >
+    <img src="figures/CDMS_fit.png" width="350" height="300" >
+</p>
 
 The bands that CDMS use are generated under this assumption. However, if we look at the containment fractions for the $1\sigma$ CDMS bands with simulated data, we see that the assumption of normality isn't correct:
-
-
-
-## Expected Distribution (Ratio of Gaussians)
 
 <p align ="center" >
     <img src="figures/ER_containment1 .png" width ="500" height="200"  >
 </p>
+
+One can see that there is two much data in the $1\sigma$ recoil band. If the yield distribution was normal, we would see that the percent of data in the band for each bin is $68\%$.
+
+## Expected Distribution (Ratio of Gaussians)
+
+
