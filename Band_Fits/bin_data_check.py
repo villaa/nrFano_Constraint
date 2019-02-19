@@ -182,8 +182,8 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
 
-    ax1.scatter(bin_center,Percent1,label = "Percent in Band")
-    plt.plot(bin_center,expected,label = "expected")
+    ax1.scatter(bin_center,Percent1,label = "Simulated")
+    plt.plot(bin_center,expected,label = "Expected")
     plt.errorbar(bin_center,Percent1,yerr=Error,fmt ='o',label = 'Error', ecolor = 'purple', Linestyle = 'None', capsize=5, capthick=0.5)
     plt.axhline(68, color='r', linestyle='--',Label = "68%")
     ax1.set_xlabel('Bin Centers [keV]',size = '18')
@@ -193,7 +193,7 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     ax1.legend(loc=1,prop={'size':12})
-    plt.savefig('figures/Eer_Error_with_expected .png')
+    plt.savefig('figures/Eer_Error.png')
     plt.show()
     
 
