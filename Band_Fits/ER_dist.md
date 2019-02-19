@@ -42,6 +42,7 @@ The bands that CDMS use are generated under this assumption. However, if we look
 
 One can see that there is two much data in the $1\sigma$ recoil band. If the yield distribution was normal, we would see that the percent of data in the band for each bin is $68\%$.
 
-## Expected Distribution (Ratio of Gaussians)
+## 
 
 
+$E_{{\gamma}'}  = \frac{E_\gamma }{1\ +\ \frac{2\, E\gamma}{m\,c^2}} \ \ \ \ \ \ \ \mbox{(4)} \ \ \mbox{Backscatter Peak}$

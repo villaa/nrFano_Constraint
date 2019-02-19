@@ -15,43 +15,69 @@
   <H1>Electron Recoil Band Distribution</H1>
   <H2>Theory</H2>
  In the current model, the yield for the electron recoil band is being 
- simulated assuming that the charge energy \(E_q\) and the phonon energy \(E_p\) are independent.
+ calculated assuming that the measureed charge energy \(E_{q_m}\) and phonon energy \(E_{p_m}\) are independent.
+To do so, we  randomly draw from a distribution of known recoil energies \(E_{er}\). Using \(E_{er}\), the true phonon energy, \(E_p\), is calculated:
+
 
 $$E_p = E_{er} + VN_{eh}$$
-Where 
+
 $$N_{eh} = \frac{E_{er}}{\epsilon}$$
 
-To make sure that the measured values for \(E_p\) and \(E_q\) are generated independently, we randomly sample from distributions for \(E_p\) and \(E_q\) that were generated using the phonon and charge resolutions from cdms:
+Where \(N_{eh}\) is the average number of electron hole pairs produced, V is the applied detetcor voltage, and \(\epsilon\) is the amount of energy needed to 
+liberate 1 electron hole pair. 
+ <br />
+
+The meausred charge \(E_{q_m}\) and phonon energy \(E_{p_m}\) are calculated by drawing from normal distributions formed using \(E_p\) and \(E_{er}\) and detector 
+resolutions from CDMS:  \(\sigma_p\) and \(\sigma_q\). 
 
 $$E_{p_{m}} = random.normal(E_p,\sigma_p)$$
 $$E_{q_{m}} = random.normal(E_{er},\sigma_q)$$
-Where \(E_{p_m}\) and \(E_{q_m}\) are the <b> measured</b> values.
 
-The measured recoil energy is then: 
+These are then used to calculate the measured recoil energy: 
 
 $$Er_{m} = E_{p_m} - \frac{E_{q_m}V}{\epsilon} $$
  <br />
 
-The yield is therefore:
+With that, we can calculated the yield:
 
 $$Y = \frac{E_{q_m}}{Er_m}$$
 
 <H2>Expected Distribution (CDMS)</H2>
 When fitting the data from CDMS, the collaboration assumed that the distribution for electron recoils is normally distributed:
 
-<p align = "center" >
-    <img src="figures/CDMS_fit.png" width="450" height="400" >
-</p>
 
-The bands that CDMS use are generated under this assumption. However, if we look at the containment fractions for the 
-\(1\sigma\) CDMS bands with simulated data, we see that the assumption of normality isn't correct:
-  
+  <figure>
+  <div class="row">
+  <div class="column">
+      <img src="figures/CDMS_bandfit.png" style="width:90%">
+    </div>
+    <div class="column">
+      <img src="figures/CDMS_fit.png" style="width:90%">
+    </div>
+  </div>
   <p align ="center" >
-    <img src="figures/ER_containment1.png" width="1000" height="300"  >
+    <figcaption>
+    Figure 1: Plots from High Threshold Analysis Note 303. Plot on right: 1,2,3 \(\sigma\) band fits to electron recoil band. Left Plot: Gaussain fit to 
+    yield for electron recoils of 24.5-33.1keV. 
+    </figcaption>
+  </p>
+  </figure>
 </p>
 
-Looking at the amount of data in each energy bin, we can see that the amount of data in each bin, "Percent in band", is to high. If they were normally distributed,
-we would expect to see \(68\%\) in each bin. The distribution in each bin is also postivly skewed. This can been see by the "percent from high" and "percent from low"
+
+
+The  1, 2 and 3\(\sigma\) bands that CDMS use are generated under this assumption. However, if we look at the containment fractions for the 
+\(1\sigma\) CDMS bands for simulated data, we see that the assumption of normality isn't correct:
+  
+<figure>
+    <img src="figures/ER_containment1.png"  style="width:90%" >
+    <figcaption>
+    Table1: 1\(\sigma\) containment fractions for simulated electron recoil data. 
+</figure>
+
+
+Looking at the amount of data in each energy bin,"Percent in band" we can see that the amount of data is to high. If the yield in each bin were normally distributed,
+we would expect to see \(68\%\). The distribution in each bin is also postivly skewed. This can been see by the "percent from high" and "percent from low"
 catagories. 
 
 <H2>Expected Probability Distribution (Ratio of Gaussians)</H2>
@@ -62,8 +88,8 @@ As a reminder, the Yield for the electron recoil band is:
 
 $$ Y = \frac{E_{q_m}}{Er_m} = \frac{E_{q_m}}{E_{p_m} - \frac{E_{q_m}V}{\epsilon}} $$
 
-It tuns out that the pdf for the yield is quite complicated. If we let \(x = E_q\) and \(y = E_p-kE_q\), then our variable of interest is \(z = \frac{x}{y}\)
-We first need the joint Probability distribution for \(x\) and \(y\):
+It tuns out that the pdf for the yield is quite complicated. If we let \(x = E_q\) and \(y = E_p-kE_q\), then our variable of interest is \(z = \frac{x}{y}\).
+To find \(z\), we first need the joint probability distribution for \(x\) and \(y\):
 
 $$X_{pdf}(x) = \frac{1}{\delta_x\sqrt{2\pi}}e^{-\frac{(x-\mu_x)^2}{2(\delta_x)^2}} 
 \\
@@ -81,7 +107,7 @@ The pdf for \(z\) is:
 $$ Z_{pdf}(z) = \int_{-\infty}^{\infty}|t|XY_{pdf}(zt,t)dt $$
 
 $$ XY_{pdf} = \frac{1}{2\pi\delta_p\delta_x} e^{-c(x,y)} \rightarrow Z_{pdf}(z) = \frac{1}{2\pi\delta_p\delta_x}\int_{-\infty}^{\infty}|t|e^{-c(zt,t)}dt  $$
-(NEED TO TALK TO ARVIND ABOUT THE DUMMY VARIABLES)
+(NEED TO TALK TO ARVIND ABOUT TRANSFORMATIOn)
 
 <br/>
 The details of evaluating the integral for \(Z_{pdf}(z)\) can be found in Arvind's note. see: (). The soultion for \(Z_{pdf}(z)\) is:
