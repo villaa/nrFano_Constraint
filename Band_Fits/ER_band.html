@@ -133,6 +133,9 @@ $$ D = \frac{z\frac{\mu_x}{\delta_x} + (1+kz)\frac{\mu_p}{\delta_p}\frac{\delta_
 
 <h3>Expected Distribution</h3>
 
+Shown in the plots below is a histogram of the simulated yield data in each energy bin overlaied with the expected distribution \(P_z(z,\mu_p,\mu_x,\delta_p,\delta_x)\).
+ <br />
+
 <div class="tab">
   <button class="tablinks" onclick="openPlot(event, '1')">1</button>
   <button class="tablinks" onclick="openPlot(event, '2')">2</button>
@@ -208,10 +211,6 @@ $$ D = \frac{z\frac{\mu_x}{\delta_x} + (1+kz)\frac{\mu_p}{\delta_p}\frac{\delta_
   </p>
 </div>
 
-
-
-
-
 <script>
 function openPlot(evt, cityName) {
   var i, tabcontent, tablinks;
@@ -228,7 +227,18 @@ function openPlot(evt, cityName) {
 }
 </script>
 
+By eye, the expected distribution fits well with the simultated data.
 
+ <br/>
+ <br/>
+Figure 2 shows the expected and simulated electron recoil band yield containment fractions. As shown, with high enough statisitcs, the simulated (percent in band) and expected 
+containment fractions agree.  
+
+<figure>
+    <img src="figures/Eer_Error_with expected.png"  style="width:50%" >
+    <figcaption>
+    Figure 2: Expected and simulated 1\(\sigma\) containment fractions for electron recoil yield. 
+</figure>
 
 
 </p>
