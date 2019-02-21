@@ -124,6 +124,11 @@ and for silicon:
 \begin{equation}
 \epsilon_{Si} = \mathrm{0.02432} \cdot E_{Si} \mathrm{(keV)},
 \end{equation}
+<p>
+These definitions seem to match the Sorensen paper [<a
+	href="https://journals.aps.org/prd/abstract/10.1103/PhysRevD.91.083509">Sor15</a>],
+because $\epsilon$=0.1 corresponds to 28.3&nbsp;keV and 4.11&nbsp; for germanium and silicon
+respectively. This correspondence is confirmed by Figures&nbsp;1&amp;3 of that paper respectively.
 <br>
 <b>Variance in Ionization Production and the Effective Fano Factor:</b>
 <br>
@@ -213,6 +218,9 @@ simple filter used is:
 \end{equation}
 <p>
 where $n$ was specifically chosen for each neutron energy to emphasize the inflection point.
+</p>
+<p>
+Table&nbsp;1 shows the relevant data from the Dougherty paper.
 </p>
 
 <br>
@@ -342,19 +350,27 @@ where $n$ was specifically chosen for each neutron energy to emphasize the infle
 <h3 id="furtherwork">4. further work</h3>
 
 <p>
+This note is pretty simple and self-contained. The technique is interesting and that might be good
+to study more in the future, but is not relevant on the short timescale. Here are some areas of
+further work related to this:
 </p>
 <ol>
-
+ <li>Try to get better specifications of the Lindhard and Dougherty curves for the theoretical
+	 predictions for the ionization variance (and therefore the effective Fano factor too).
+ </li>
+ <br>
+ <li>Get a double-check on the conversion from ionization variance to the effective Fano factor.</li> 
 </ol>
 <br>
-<p>
-Still, there are details that could change the logistics of doing such a calibration drastically
-and they still need to be addressed.
-</p>
 <br>
 <h3 id="conclusion">5. conclusions</h3>
 
 <p>
+I was able to extract the data from the Dougherty paper and convert it to the effective Fano
+factor. Furthermore, I was able to match the theoretical predictions from the Dougherty paper
+where he quoted the Lindhard predictions, by taking the original predictions from that paper and
+converting the energy scale ($\epsilon$ relations in Sec.&nbsp;1) and converting to the
+appropriate percent scale that Dougherty used for the "excess" ionization variance. 
 </p>
 <ol>
 </ol>
