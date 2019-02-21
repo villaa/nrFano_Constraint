@@ -67,6 +67,9 @@ theoretically [<a href="papers/Lindhard2.pdf">Lind63a</a>, <a
 </ol>
 
 <h3 id="epsilon">1. Lindhard energy definition</h3>
+<br>
+<b>Energy Definition:</b>
+<br>
 <p>
 Lindhard [<a href="papers/Lindhard3.pdf">Lind63b</a>] defines the dimensionless energy as follows. 
 </p>
@@ -121,6 +124,52 @@ and for silicon:
 \begin{equation}
 \epsilon_{Si} = \mathrm{0.02432} \cdot E_{Si} \mathrm{(keV)},
 \end{equation}
+<br>
+<b>Variance in Ionization Production and the Effective Fano Factor:</b>
+<br>
+<p>
+Using this non-dimensional energy, Lindhard et al. parameterize the energy deposition balance for a nuclear recoil as:
+</p>
+\begin{equation}
+\epsilon = \nu(\epsilon) + \eta(\epsilon),
+\end{equation}
+<p>
+where $\nu$ is the energy given to the lattice (phonons) and $\eta$ is the energy given to the
+electron system (e/h pairs). The total energy deposited is fixed and assumed to be equal to the
+incoming energy, but the sharing of energy can be a function of the incoming energy. This makes
+the standard definition of "ionization yield:" $Y=\bar{\eta}/\epsilon$, where the bar
+indicates the average for many identical recoils. The variance in the energy given to the
+electronic system is denoted (following Lindhard) as $\Omega^2$. Note that due to the constrained
+total energy deposit this must also be the variance of the lattice energy.
+</p>
+<p>
+The standard Fano factor, F, is defined as follows:
+</p>
+\begin{equation}
+\sigma_N = \sqrt{F\bar{N}},
+\end{equation}
+<p>
+where $\sigma_N$ is the standard deviation of the number of ionization pairs produced, and $\bar{N}$
+is the average number of pairs produced. This equation basically is an analog to the
+counting-statistics variance from Poisson statistics; if the Fano factor is unity the distribution
+agrees with the Poisson distribution up to the second moment. 
+</p>
+<p>
+The fractional variance for the electronic energy is $\sigma_N/\bar{N}$ and in terms of Lindhard
+parameters this is $\Omega/\eta$. And, since $\bar{\eta} = Y\epsilon$, we can write the effective
+Fano factor like:
+</p>
+\begin{equation}
+\tilde{F} = \bar{N} \frac{1}{Y^2} \left(\frac{\Omega}{\epsilon}\right)^2.
+\end{equation}
+<p>
+The ratio of the variance in ionization production to the total energy of the recoil has been
+measured for silicon by Dougherty [<a
+	href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.45.2104">Doug91</a>]. And The
+ionization yield for silicon can be taken from the Lindhard paper with the parameter k=0.15. This
+will allow one to put Dougherty's measurements into the context of the effective Fano factor
+$\tilde{F}$. 
+</p>
 
 <!--<br>
 <button onclick="toggle_visibility('complex_kin');">show/hide more complex kinematics</button>
@@ -138,6 +187,14 @@ and for silicon:
 <br>
 <h3 id="dough">2. Dougherty paper</h3>
 <p>
+The measurement by Dougherty [<a
+	href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.45.2104">Doug91</a>] was done
+by using neutrons to scatter off of silicon and looking for features in the resulting recoil
+spectrum. The experiment used the $^7$Li(p,n)$^7$Be reaction to produce neutrons via a proton
+source of around 1.8&ndash;2.7&nbsp;MeV. Each proton energy produced a different maximum neutron
+energy. It was a "thick-target" experiment so the protons slowed to a stop in the
+neutron-production target and ensured that neutrons of all energies up to the maximum were
+produced. 
 </p>
 
 <h3 id="lindx">3. Lindhard extraction and plot </h3>
