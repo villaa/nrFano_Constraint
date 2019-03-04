@@ -1,0 +1,35 @@
+#make a generic generator
+/gps/particle neutron 
+#/gps/position 0.0 1197.31 -565.15 mm
+#updated position for in-barrel source
+#/gps/position 0.0 1197.31 -646.79 mm 
+/gps/position SOURCEPOSX SOURCEPOSY SOURCEPOSZ cm
+/gps/pos/type Point
+/gps/ang/type iso
+/gps/ene/type Arb 
+/gps/hist/type arb 
+/gps/hist/file sources/pube_skim.dat 
+/gps/hist/inter Lin
+#/gps/ene/mono 8 MeV
+
+#make a raytrace model
+#/vis/rayTracer/eyePosition 1 1 1 m
+#/vis/rayTracer/trace
+
+/CDMS/Zip1/IsGe False
+/CDMS/detector/activate Walls
+/CDMS/detector/activate Floor 
+/CDMS/detector/activate Frame 
+/CDMS/detector/activate IceBox 
+/CDMS/detector/activate PuBeSourceAndShield 
+/CDMS/PuBe/Barrel True 
+/CDMS/detector/activate Shields
+/CDMS/Shield/SouthNaI True
+/CDMS/updateGeometry
+
+#run naming stuff
+#/run/k100/uniqueID 160617_182500_365312119 # not implemented in the geant4 code
+/run/k100/OnlyNCapOut false 
+/run/k100/OFPrefix /data/chocula/villaa/k100Sim_Data/DATADIR/Run68_gdirect_bknd_RADSOURCE_THESETID_NEVHR_
+
+/run/beamOn NEVENTS 

@@ -1,0 +1,3570 @@
+k100_252Cf_neutrons_test1.mac
+Visualization Manager instantiating with verbosity "warnings (3)"...
+Visualization Manager initialising...
+Registering graphics systems...
+
+You have successfully registered the following graphics systems.
+Current available graphics systems are:
+  ASCIITree (ATree)
+  DAWNFILE (DAWNFILE)
+  G4HepRep (HepRepXML)
+  G4HepRepFile (HepRepFile)
+  OpenGLImmediateX (OGLI, OGLIX)
+  OpenGLStoredX (OGL, OGLS, OGLSX)
+  RayTracer (RayTracer)
+  VRML1FILE (VRML1FILE)
+  VRML2FILE (VRML2FILE)
+  gMocrenFile (gMocrenFile)
+
+Registering model factories...
+
+You have successfully registered the following model factories.
+Registered model factories:
+  generic
+  drawByCharge
+  drawByParticleID
+  drawByOriginVolume
+  drawByAttribute
+
+Registered filter factories:
+  chargeFilter
+  particleFilter
+  originVolumeFilter
+  attributeFilter
+
+You have successfully registered the following user vis actions.
+Run Duration User Vis Actions: none
+End of Event User Vis Actions: none
+End of Run User Vis Actions: none
+
+Some /vis commands (optionally) take a string to specify colour.
+Available colours:
+  black, blue, brown, cyan, gray, green, grey, magenta, red, white, yellow
+
+
+*************************************************************
+ Geant4 version Name: geant4-10-01-patch-02    (19-June-2015)
+                      Copyright : Geant4 Collaboration
+                      Reference : NIM A 506 (2003), 250-303
+                            WWW : http://cern.ch/geant4
+*************************************************************
+
+He isotope 1 is A = 3, relative abundance: 1.37e-06
+He isotope 2 is A = 4, relative abundance: 0.999999
+Is the He natural abundance distribution? 1
+G4Material WARNING: duplicate name of material Aluminum
+
+***** Table : Nb of materials = 40 *****
+
+ Material: Aluminum    density:  2.700 g/cm3   RadL:   8.893 cm   Nucl.Int.Length:  38.879 cm 
+                       Imean: 166.000 eV 
+
+   --->  Element: Aluminum (Al)   Z = 13.0   N =  27.0   A =  26.98 g/mole
+         --->  Isotope:  Al27   Z = 13   N =  27   A =  26.98 g/mole   abundance: 100.00 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: Aluminum    density:  2.670 g/cm3   RadL:   8.991 cm   Nucl.Int.Length:  39.312 cm 
+                       Imean: 166.000 eV 
+
+   --->  Element: Aluminum (Al)   Z = 13.0   N =  27.0   A =  26.98 g/mole
+         --->  Isotope:  Al27   Z = 13   N =  27   A =  26.98 g/mole   abundance: 100.00 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:     wood    density: 900.000 mg/cm3  RadL:  44.757 cm   Nucl.Int.Length:  82.069 cm 
+                       Imean:  67.200 eV 
+
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:   9.17 %  ElmAbundance  57.14 % 
+
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  36.31 %  ElmAbundance  14.29 % 
+
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:  54.52 %  ElmAbundance  28.57 % 
+
+
+ Material:  Silicon    density:  2.330 g/cm3   RadL:   9.368 cm   Nucl.Int.Length:  45.663 cm 
+                       Imean: 173.000 eV 
+
+   --->  Element: Silicon (Si)   Z = 14.0   N =  28.1   A =  28.09 g/mole
+         --->  Isotope:  Si28   Z = 14   N =  28   A =  27.98 g/mole   abundance:  92.23 %
+         --->  Isotope:  Si29   Z = 14   N =  29   A =  28.98 g/mole   abundance:   4.68 %
+         --->  Isotope:  Si30   Z = 14   N =  30   A =  29.97 g/mole   abundance:   3.09 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: Germanium    density:  5.323 g/cm3   RadL:   2.301 cm   Nucl.Int.Length:  27.431 cm 
+                       Imean: 350.000 eV 
+
+   --->  Element: Germanium (Ge)   Z = 32.0   N =  72.6   A =  72.61 g/mole
+         --->  Isotope:  Ge70   Z = 32   N =  70   A =  69.92 g/mole   abundance:  20.84 %
+         --->  Isotope:  Ge72   Z = 32   N =  72   A =  71.92 g/mole   abundance:  27.54 %
+         --->  Isotope:  Ge73   Z = 32   N =  73   A =  72.92 g/mole   abundance:   7.73 %
+         --->  Isotope:  Ge74   Z = 32   N =  74   A =  73.92 g/mole   abundance:  36.28 %
+         --->  Isotope:  Ge76   Z = 32   N =  76   A =  75.92 g/mole   abundance:   7.61 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:      NaI    density:  3.670 g/cm3   RadL:   2.586 cm   Nucl.Int.Length:  42.879 cm 
+                       Imean: 400.008 eV 
+
+   --->  Element: Sodium (Na)   Z = 11.0   N =  23.0   A =  22.99 g/mole
+         --->  Isotope:  Na23   Z = 11   N =  23   A =  22.99 g/mole   abundance: 100.00 %
+          ElmMassFraction:  15.34 %  ElmAbundance  50.00 % 
+
+   --->  Element: Iodine (I)   Z = 53.0   N = 126.9   A = 126.90 g/mole
+         --->  Isotope:  I127   Z = 53   N = 127   A = 126.90 g/mole   abundance: 100.00 %
+          ElmMassFraction:  84.66 %  ElmAbundance  50.00 % 
+
+
+ Material:   Copper    density:  8.920 g/cm3   RadL:   1.442 cm   Nucl.Int.Length:  15.658 cm 
+                       Imean: 322.000 eV 
+
+   --->  Element: Copper (Cu)   Z = 29.0   N =  63.5   A =  63.55 g/mole
+         --->  Isotope:  Cu63   Z = 29   N =  63   A =  62.93 g/mole   abundance:  69.17 %
+         --->  Isotope:  Cu65   Z = 29   N =  65   A =  64.93 g/mole   abundance:  30.83 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: Lead_brick    density: 11.350 g/cm3   RadL:   5.612 mm   Nucl.Int.Length:  18.247 cm 
+                       Imean: 823.000 eV 
+
+   --->  Element: Lead (Pb)   Z = 82.0   N = 207.2   A = 207.20 g/mole
+         --->  Isotope: Pb204   Z = 82   N = 204   A = 203.97 g/mole   abundance:   1.40 %
+         --->  Isotope: Pb206   Z = 82   N = 206   A = 205.97 g/mole   abundance:  24.10 %
+         --->  Isotope: Pb207   Z = 82   N = 207   A = 206.98 g/mole   abundance:  22.10 %
+         --->  Isotope: Pb208   Z = 82   N = 208   A = 207.98 g/mole   abundance:  52.40 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:   Sulfur    density:  2.070 g/cm3   RadL:   9.418 cm   Nucl.Int.Length:  53.717 cm 
+                       Imean: 180.000 eV 
+
+   --->  Element: Sulfur (S)   Z = 16.0   N =  32.1   A =  32.06 g/mole
+         --->  Isotope:   S32   Z = 16   N =  32   A =  31.97 g/mole   abundance:  94.93 %
+         --->  Isotope:   S33   Z = 16   N =  33   A =  32.97 g/mole   abundance:   0.76 %
+         --->  Isotope:   S34   Z = 16   N =  34   A =  33.97 g/mole   abundance:   4.29 %
+         --->  Isotope:   S36   Z = 16   N =  36   A =  35.97 g/mole   abundance:   0.02 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: Phosphorus    density:  1.823 g/cm3   RadL:  11.631 cm   Nucl.Int.Length:  60.292 cm 
+                       Imean: 173.000 eV 
+
+   --->  Element: Phosphorus (P)   Z = 15.0   N =  31.0   A =  30.97 g/mole
+         --->  Isotope:   P31   Z = 15   N =  31   A =  30.97 g/mole   abundance: 100.00 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:   Nickel    density:  8.908 g/cm3   RadL:   1.423 cm   Nucl.Int.Length:  15.269 cm 
+                       Imean: 311.000 eV 
+
+   --->  Element: Nickel (Ni)   Z = 28.0   N =  58.7   A =  58.69 g/mole
+         --->  Isotope:  Ni58   Z = 28   N =  58   A =  57.94 g/mole   abundance:  68.08 %
+         --->  Isotope:  Ni60   Z = 28   N =  60   A =  59.93 g/mole   abundance:  26.22 %
+         --->  Isotope:  Ni61   Z = 28   N =  61   A =  60.93 g/mole   abundance:   1.14 %
+         --->  Isotope:  Ni62   Z = 28   N =  62   A =  61.93 g/mole   abundance:   3.63 %
+         --->  Isotope:  Ni64   Z = 28   N =  64   A =  63.93 g/mole   abundance:   0.93 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: Chromium    density:  7.190 g/cm3   RadL:   2.079 cm   Nucl.Int.Length:  18.169 cm 
+                       Imean: 257.000 eV 
+
+   --->  Element: Chromium (Cr)   Z = 24.0   N =  52.0   A =  52.00 g/mole
+         --->  Isotope:  Cr50   Z = 24   N =  50   A =  49.95 g/mole   abundance:   4.34 %
+         --->  Isotope:  Cr52   Z = 24   N =  52   A =  51.94 g/mole   abundance:  83.79 %
+         --->  Isotope:  Cr53   Z = 24   N =  53   A =  52.94 g/mole   abundance:   9.50 %
+         --->  Isotope:  Cr54   Z = 24   N =  54   A =  53.94 g/mole   abundance:   2.37 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: Manganese    density:  7.210 g/cm3   RadL:   2.030 cm   Nucl.Int.Length:  18.454 cm 
+                       Imean: 272.000 eV 
+
+   --->  Element: Manganese (Mn)   Z = 25.0   N =  54.9   A =  54.94 g/mole
+         --->  Isotope:  Mn55   Z = 25   N =  55   A =  54.94 g/mole   abundance: 100.00 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:   Carbon    density:  2.267 g/cm3   RadL:  18.835 cm   Nucl.Int.Length:  35.357 cm 
+                       Imean:  81.000 eV 
+
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:     Iron    density:  7.874 g/cm3   RadL:   1.757 cm   Nucl.Int.Length:  16.990 cm 
+                       Imean: 286.000 eV 
+
+   --->  Element: Iron (Fe)   Z = 26.0   N =  55.8   A =  55.84 g/mole
+         --->  Isotope:  Fe54   Z = 26   N =  54   A =  53.94 g/mole   abundance:   5.84 %
+         --->  Isotope:  Fe56   Z = 26   N =  56   A =  55.93 g/mole   abundance:  91.75 %
+         --->  Isotope:  Fe57   Z = 26   N =  57   A =  56.94 g/mole   abundance:   2.12 %
+         --->  Isotope:  Fe58   Z = 26   N =  58   A =  57.93 g/mole   abundance:   0.28 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:     Zinc    density:  7.140 g/cm3   RadL:   1.741 cm   Nucl.Int.Length:  19.748 cm 
+                       Imean: 330.000 eV 
+
+   --->  Element: Zinc (Zn)   Z = 30.0   N =  65.4   A =  65.38 g/mole
+         --->  Isotope:  Zn64   Z = 30   N =  64   A =  63.93 g/mole   abundance:  48.63 %
+         --->  Isotope:  Zn66   Z = 30   N =  66   A =  65.93 g/mole   abundance:  27.90 %
+         --->  Isotope:  Zn67   Z = 30   N =  67   A =  66.93 g/mole   abundance:   4.10 %
+         --->  Isotope:  Zn68   Z = 30   N =  68   A =  67.92 g/mole   abundance:  18.75 %
+         --->  Isotope:  Zn70   Z = 30   N =  70   A =  69.93 g/mole   abundance:   0.62 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: Scintillator    density:  1.032 g/cm3   RadL:  42.541 cm   Nucl.Int.Length:  70.021 cm 
+                       Imean:  64.808 eV 
+
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:   8.47 %  ElmAbundance  52.38 % 
+
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:  91.53 %  ElmAbundance  47.62 % 
+
+
+ Material:      H2O    density:  1.000 g/cm3   RadL:  36.091 cm   Nucl.Int.Length:  75.355 cm 
+                       Imean:  68.998 eV 
+
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:  11.21 %  ElmAbundance  66.67 % 
+
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  88.79 %  ElmAbundance  33.33 % 
+
+
+ Material:      D2O    density:  1.110 g/cm3   RadL:  36.138 cm   Nucl.Int.Length:  60.853 cm 
+                       Imean:  68.998 eV 
+
+   --->  Element: Deuterium (D)   Z =  1.0   N =   2.0   A =   2.01 g/mole
+         --->  Isotope:    D1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    D2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:  20.11 %  ElmAbundance  66.67 % 
+
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  79.89 %  ElmAbundance  33.33 % 
+
+
+ Material:     SiO2    density:  2.196 g/cm3   RadL:  12.317 cm   Nucl.Int.Length:  43.652 cm 
+                       Imean: 125.663 eV 
+
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  53.25 %  ElmAbundance  66.67 % 
+
+   --->  Element: Silicon (Si)   Z = 14.0   N =  28.1   A =  28.09 g/mole
+         --->  Isotope:  Si28   Z = 14   N =  28   A =  27.98 g/mole   abundance:  92.23 %
+         --->  Isotope:  Si29   Z = 14   N =  29   A =  28.98 g/mole   abundance:   4.68 %
+         --->  Isotope:  Si30   Z = 14   N =  30   A =  29.97 g/mole   abundance:   3.09 %
+          ElmMassFraction:  46.75 %  ElmAbundance  33.33 % 
+
+
+ Material: SiO2BlastSand    density:  1.405 g/cm3   RadL:  19.245 cm   Nucl.Int.Length:  68.206 cm 
+                       Imean: 125.663 eV 
+
+   --->  Element: Oxygen (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  53.25 %  ElmAbundance  66.67 % 
+
+   --->  Element: Silicon (Si)   Z = 14.0   N =  28.1   A =  28.09 g/mole
+         --->  Isotope:  Si28   Z = 14   N =  28   A =  27.98 g/mole   abundance:  92.23 %
+         --->  Isotope:  Si29   Z = 14   N =  29   A =  28.98 g/mole   abundance:   4.68 %
+         --->  Isotope:  Si30   Z = 14   N =  30   A =  29.97 g/mole   abundance:   3.09 %
+          ElmMassFraction:  46.75 %  ElmAbundance  33.33 % 
+
+
+ Material:     Poly    density: 973.000 mg/cm3  RadL:  46.031 cm   Nucl.Int.Length:  69.475 cm 
+                       Imean:  56.518 eV 
+
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:  14.40 %  ElmAbundance  66.67 % 
+
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:  85.60 %  ElmAbundance  33.33 % 
+
+
+ Material:  MuMetal    density:  1.000 g/cm3   RadL:  12.884 cm   Nucl.Int.Length:   1.356 m  
+                       Imean: 306.183 eV 
+
+   --->  Element: Iron (Fe)   Z = 26.0   N =  55.8   A =  55.84 g/mole
+         --->  Isotope:  Fe54   Z = 26   N =  54   A =  53.94 g/mole   abundance:   5.84 %
+         --->  Isotope:  Fe56   Z = 26   N =  56   A =  55.93 g/mole   abundance:  91.75 %
+         --->  Isotope:  Fe57   Z = 26   N =  57   A =  56.94 g/mole   abundance:   2.12 %
+         --->  Isotope:  Fe58   Z = 26   N =  58   A =  57.93 g/mole   abundance:   0.28 %
+          ElmMassFraction:  19.00 %  ElmAbundance  19.78 % 
+
+   --->  Element: Nickel (Ni)   Z = 28.0   N =  58.7   A =  58.69 g/mole
+         --->  Isotope:  Ni58   Z = 28   N =  58   A =  57.94 g/mole   abundance:  68.08 %
+         --->  Isotope:  Ni60   Z = 28   N =  60   A =  59.93 g/mole   abundance:  26.22 %
+         --->  Isotope:  Ni61   Z = 28   N =  61   A =  60.93 g/mole   abundance:   1.14 %
+         --->  Isotope:  Ni62   Z = 28   N =  62   A =  61.93 g/mole   abundance:   3.63 %
+         --->  Isotope:  Ni64   Z = 28   N =  64   A =  63.93 g/mole   abundance:   0.93 %
+          ElmMassFraction:  81.00 %  ElmAbundance  80.22 % 
+
+
+ Material:    Brass    density:  8.200 g/cm3   RadL:   1.550 cm   Nucl.Int.Length:  17.089 cm 
+                       Imean: 324.788 eV 
+
+   --->  Element: Copper (Cu)   Z = 29.0   N =  63.5   A =  63.55 g/mole
+         --->  Isotope:  Cu63   Z = 29   N =  63   A =  62.93 g/mole   abundance:  69.17 %
+         --->  Isotope:  Cu65   Z = 29   N =  65   A =  64.93 g/mole   abundance:  30.83 %
+          ElmMassFraction:  65.00 %  ElmAbundance  65.64 % 
+
+   --->  Element: Zinc (Zn)   Z = 30.0   N =  65.4   A =  65.38 g/mole
+         --->  Isotope:  Zn64   Z = 30   N =  64   A =  63.93 g/mole   abundance:  48.63 %
+         --->  Isotope:  Zn66   Z = 30   N =  66   A =  65.93 g/mole   abundance:  27.90 %
+         --->  Isotope:  Zn67   Z = 30   N =  67   A =  66.93 g/mole   abundance:   4.10 %
+         --->  Isotope:  Zn68   Z = 30   N =  68   A =  67.92 g/mole   abundance:  18.75 %
+         --->  Isotope:  Zn70   Z = 30   N =  70   A =  69.93 g/mole   abundance:   0.62 %
+          ElmMassFraction:  35.00 %  ElmAbundance  34.36 % 
+
+
+ Material: liquidHelium    density: 141.200 mg/cm3  RadL:   6.681 m    Nucl.Int.Length:   3.936 m  
+                       Imean:  41.800 eV 
+
+   --->  Element: Helium (He)   Z =  2.0   N =   4.0   A =   4.00 g/mole
+         --->  Isotope:   He3   Z =  2   N =   3   A =   3.02 g/mole   abundance:   0.00 %
+         --->  Isotope:   He4   Z =  2   N =   4   A =   4.00 g/mole   abundance: 100.00 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: stillLiquid    density: 81.000 mg/cm3  RadL:   8.777 m    Nucl.Int.Length:   6.267 m  
+                       Imean:  41.800 eV 
+
+   --->  Element: Liquid3He (L3He)   Z =  2.0   N =   3.0   A =   3.02 g/mole
+         --->  Isotope:   3He   Z =  2   N =   3   A =   3.02 g/mole   abundance: 100.00 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: MCLiquid    density: 141.200 mg/cm3  RadL:   6.483 m    Nucl.Int.Length:   3.899 m  
+                       Imean:  41.800 eV 
+
+   --->  Element: MCLiquidHe (LHeMix)   Z =  2.0   N =   3.9   A =   3.88 g/mole
+         --->  Isotope:   3He   Z =  2   N =   3   A =   3.02 g/mole   abundance:  12.00 %
+         --->  Isotope:   4He   Z =  2   N =   4   A =   4.00 g/mole   abundance:  88.00 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    Steel    density:  8.030 g/cm3   RadL:   1.743 cm   Nucl.Int.Length:  16.554 cm 
+                       Imean: 280.335 eV 
+
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:   0.08 %  ElmAbundance   0.36 % 
+
+   --->  Element: Manganese (Mn)   Z = 25.0   N =  54.9   A =  54.94 g/mole
+         --->  Isotope:  Mn55   Z = 25   N =  55   A =  54.94 g/mole   abundance: 100.00 %
+          ElmMassFraction:   2.00 %  ElmAbundance   1.99 % 
+
+   --->  Element: Chromium (Cr)   Z = 24.0   N =  52.0   A =  52.00 g/mole
+         --->  Isotope:  Cr50   Z = 24   N =  50   A =  49.95 g/mole   abundance:   4.34 %
+         --->  Isotope:  Cr52   Z = 24   N =  52   A =  51.94 g/mole   abundance:  83.79 %
+         --->  Isotope:  Cr53   Z = 24   N =  53   A =  52.94 g/mole   abundance:   9.50 %
+         --->  Isotope:  Cr54   Z = 24   N =  54   A =  53.94 g/mole   abundance:   2.37 %
+          ElmMassFraction:  19.00 %  ElmAbundance  19.94 % 
+
+   --->  Element: Nickel (Ni)   Z = 28.0   N =  58.7   A =  58.69 g/mole
+         --->  Isotope:  Ni58   Z = 28   N =  58   A =  57.94 g/mole   abundance:  68.08 %
+         --->  Isotope:  Ni60   Z = 28   N =  60   A =  59.93 g/mole   abundance:  26.22 %
+         --->  Isotope:  Ni61   Z = 28   N =  61   A =  60.93 g/mole   abundance:   1.14 %
+         --->  Isotope:  Ni62   Z = 28   N =  62   A =  61.93 g/mole   abundance:   3.63 %
+         --->  Isotope:  Ni64   Z = 28   N =  64   A =  63.93 g/mole   abundance:   0.93 %
+          ElmMassFraction:   9.25 %  ElmAbundance   8.60 % 
+
+   --->  Element: Silicon (Si)   Z = 14.0   N =  28.1   A =  28.09 g/mole
+         --->  Isotope:  Si28   Z = 14   N =  28   A =  27.98 g/mole   abundance:  92.23 %
+         --->  Isotope:  Si29   Z = 14   N =  29   A =  28.98 g/mole   abundance:   4.68 %
+         --->  Isotope:  Si30   Z = 14   N =  30   A =  29.97 g/mole   abundance:   3.09 %
+          ElmMassFraction:   1.00 %  ElmAbundance   1.94 % 
+
+   --->  Element: Phosphorus (P)   Z = 15.0   N =  31.0   A =  30.97 g/mole
+         --->  Isotope:   P31   Z = 15   N =  31   A =  30.97 g/mole   abundance: 100.00 %
+          ElmMassFraction:   0.04 %  ElmAbundance   0.08 % 
+
+   --->  Element: Sulfur (S)   Z = 16.0   N =  32.1   A =  32.06 g/mole
+         --->  Isotope:   S32   Z = 16   N =  32   A =  31.97 g/mole   abundance:  94.93 %
+         --->  Isotope:   S33   Z = 16   N =  33   A =  32.97 g/mole   abundance:   0.76 %
+         --->  Isotope:   S34   Z = 16   N =  34   A =  33.97 g/mole   abundance:   4.29 %
+         --->  Isotope:   S36   Z = 16   N =  36   A =  35.97 g/mole   abundance:   0.02 %
+          ElmMassFraction:   0.03 %  ElmAbundance   0.05 % 
+
+   --->  Element: Iron (Fe)   Z = 26.0   N =  55.8   A =  55.84 g/mole
+         --->  Isotope:  Fe54   Z = 26   N =  54   A =  53.94 g/mole   abundance:   5.84 %
+         --->  Isotope:  Fe56   Z = 26   N =  56   A =  55.93 g/mole   abundance:  91.75 %
+         --->  Isotope:  Fe57   Z = 26   N =  57   A =  56.94 g/mole   abundance:   2.12 %
+         --->  Isotope:  Fe58   Z = 26   N =  58   A =  57.93 g/mole   abundance:   0.28 %
+          ElmMassFraction:  68.59 %  ElmAbundance  67.03 % 
+
+
+ Material: StandardSteel    density:  7.850 g/cm3   RadL:   1.775 cm   Nucl.Int.Length:  16.929 cm 
+                       Imean: 282.158 eV 
+
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:   1.00 %  ElmAbundance   4.49 % 
+
+   --->  Element: Iron (Fe)   Z = 26.0   N =  55.8   A =  55.84 g/mole
+         --->  Isotope:  Fe54   Z = 26   N =  54   A =  53.94 g/mole   abundance:   5.84 %
+         --->  Isotope:  Fe56   Z = 26   N =  56   A =  55.93 g/mole   abundance:  91.75 %
+         --->  Isotope:  Fe57   Z = 26   N =  57   A =  56.94 g/mole   abundance:   2.12 %
+         --->  Isotope:  Fe58   Z = 26   N =  58   A =  57.93 g/mole   abundance:   0.28 %
+          ElmMassFraction:  99.00 %  ElmAbundance  95.51 % 
+
+
+ Material:    Super    density: 694.500 mg/cm3  RadL:  45.012 cm   Nucl.Int.Length:   1.184 m  
+                       Imean:  92.577 eV 
+
+   --->  Element: Aluminum (Al)   Z = 13.0   N =  27.0   A =  26.98 g/mole
+         --->  Isotope:  Al27   Z = 13   N =  27   A =  26.98 g/mole   abundance: 100.00 %
+          ElmMassFraction:  50.00 %  ElmAbundance  14.77 % 
+
+   --->  Element: Hydrogen (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:   7.20 %  ElmAbundance  56.82 % 
+
+   --->  Element: Carbon (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:  42.80 %  ElmAbundance  28.41 % 
+
+
+ Material:   Vacuum    density:  0.000 kg/m3   RadL: 204727512.315 pc   Nucl.Int.Length: 113427275.267 pc 
+                       Imean:  19.200 eV   temperature:   2.73 K  pressure:   0.00 atm
+
+   --->  Element: H (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: G4_CONCRETE    density:  2.300 g/cm3   RadL:  11.553 cm   Nucl.Int.Length:  41.206 cm 
+                       Imean: 135.200 eV 
+
+   --->  Element: H (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:   1.00 %  ElmAbundance  16.88 % 
+
+   --->  Element: C (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:   0.10 %  ElmAbundance   0.14 % 
+
+   --->  Element: O (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  52.91 %  ElmAbundance  56.25 % 
+
+   --->  Element: Na (Na)   Z = 11.0   N =  23.0   A =  22.99 g/mole
+         --->  Isotope:  Na23   Z = 11   N =  23   A =  22.99 g/mole   abundance: 100.00 %
+          ElmMassFraction:   1.60 %  ElmAbundance   1.18 % 
+
+   --->  Element: Mg (Mg)   Z = 12.0   N =  24.3   A =  24.31 g/mole
+         --->  Isotope:  Mg24   Z = 12   N =  24   A =  23.98 g/mole   abundance:  78.99 %
+         --->  Isotope:  Mg25   Z = 12   N =  25   A =  24.99 g/mole   abundance:  10.00 %
+         --->  Isotope:  Mg26   Z = 12   N =  26   A =  25.98 g/mole   abundance:  11.01 %
+          ElmMassFraction:   0.20 %  ElmAbundance   0.14 % 
+
+   --->  Element: Al (Al)   Z = 13.0   N =  27.0   A =  26.98 g/mole
+         --->  Isotope:  Al27   Z = 13   N =  27   A =  26.98 g/mole   abundance: 100.00 %
+          ElmMassFraction:   3.39 %  ElmAbundance   2.14 % 
+
+   --->  Element: Si (Si)   Z = 14.0   N =  28.1   A =  28.09 g/mole
+         --->  Isotope:  Si28   Z = 14   N =  28   A =  27.98 g/mole   abundance:  92.23 %
+         --->  Isotope:  Si29   Z = 14   N =  29   A =  28.98 g/mole   abundance:   4.68 %
+         --->  Isotope:  Si30   Z = 14   N =  30   A =  29.97 g/mole   abundance:   3.09 %
+          ElmMassFraction:  33.70 %  ElmAbundance  20.41 % 
+
+   --->  Element: K (K)   Z = 19.0   N =  39.1   A =  39.10 g/mole
+         --->  Isotope:   K39   Z = 19   N =  39   A =  38.96 g/mole   abundance:  93.26 %
+         --->  Isotope:   K40   Z = 19   N =  40   A =  39.96 g/mole   abundance:   0.01 %
+         --->  Isotope:   K41   Z = 19   N =  41   A =  40.96 g/mole   abundance:   6.73 %
+          ElmMassFraction:   1.30 %  ElmAbundance   0.57 % 
+
+   --->  Element: Ca (Ca)   Z = 20.0   N =  40.1   A =  40.08 g/mole
+         --->  Isotope:  Ca40   Z = 20   N =  40   A =  39.96 g/mole   abundance:  96.94 %
+         --->  Isotope:  Ca42   Z = 20   N =  42   A =  41.96 g/mole   abundance:   0.65 %
+         --->  Isotope:  Ca43   Z = 20   N =  43   A =  42.96 g/mole   abundance:   0.14 %
+         --->  Isotope:  Ca44   Z = 20   N =  44   A =  43.96 g/mole   abundance:   2.09 %
+         --->  Isotope:  Ca46   Z = 20   N =  46   A =  45.95 g/mole   abundance:   0.00 %
+         --->  Isotope:  Ca48   Z = 20   N =  48   A =  47.95 g/mole   abundance:   0.19 %
+          ElmMassFraction:   4.40 %  ElmAbundance   1.87 % 
+
+   --->  Element: Fe (Fe)   Z = 26.0   N =  55.9   A =  55.85 g/mole
+         --->  Isotope:  Fe54   Z = 26   N =  54   A =  53.94 g/mole   abundance:   5.84 %
+         --->  Isotope:  Fe56   Z = 26   N =  56   A =  55.93 g/mole   abundance:  91.75 %
+         --->  Isotope:  Fe57   Z = 26   N =  57   A =  56.94 g/mole   abundance:   2.12 %
+         --->  Isotope:  Fe58   Z = 26   N =  58   A =  57.93 g/mole   abundance:   0.28 %
+          ElmMassFraction:   1.40 %  ElmAbundance   0.43 % 
+
+
+ Material:   G4_AIR    density:  1.205 mg/cm3  RadL: 303.921 m    Nucl.Int.Length: 710.137 m  
+                       Imean:  85.700 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: C (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:   0.01 %  ElmAbundance   0.02 % 
+
+   --->  Element: N (N)   Z =  7.0   N =  14.0   A =  14.01 g/mole
+         --->  Isotope:   N14   Z =  7   N =  14   A =  14.00 g/mole   abundance:  99.63 %
+         --->  Isotope:   N15   Z =  7   N =  15   A =  15.00 g/mole   abundance:   0.37 %
+          ElmMassFraction:  75.53 %  ElmAbundance  78.44 % 
+
+   --->  Element: O (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  23.18 %  ElmAbundance  21.07 % 
+
+   --->  Element: Ar (Ar)   Z = 18.0   N =  40.0   A =  39.95 g/mole
+         --->  Isotope:  Ar36   Z = 18   N =  36   A =  35.97 g/mole   abundance:   0.34 %
+         --->  Isotope:  Ar38   Z = 18   N =  38   A =  37.96 g/mole   abundance:   0.06 %
+         --->  Isotope:  Ar40   Z = 18   N =  40   A =  39.96 g/mole   abundance:  99.60 %
+          ElmMassFraction:   1.28 %  ElmAbundance   0.47 % 
+
+
+ Material: G4_SODIUM_IODIDE    density:  3.667 g/cm3   RadL:   2.588 cm   Nucl.Int.Length:  42.894 cm 
+                       Imean: 452.000 eV 
+
+   --->  Element: Na (Na)   Z = 11.0   N =  23.0   A =  22.99 g/mole
+         --->  Isotope:  Na23   Z = 11   N =  23   A =  22.99 g/mole   abundance: 100.00 %
+          ElmMassFraction:  15.34 %  ElmAbundance  50.00 % 
+
+   --->  Element: I (I)   Z = 53.0   N = 127.0   A = 126.90 g/mole
+         --->  Isotope:  I127   Z = 53   N = 127   A = 126.90 g/mole   abundance: 100.00 %
+          ElmMassFraction:  84.66 %  ElmAbundance  50.00 % 
+
+
+ Material: G4_POLYVINYL_CHLORIDE    density:  1.300 g/cm3   RadL:  19.626 cm   Nucl.Int.Length:  69.279 cm 
+                       Imean: 108.200 eV 
+
+   --->  Element: C (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:  38.44 %  ElmAbundance  33.33 % 
+
+   --->  Element: H (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:   4.84 %  ElmAbundance  50.00 % 
+
+   --->  Element: Cl (Cl)   Z = 17.0   N =  35.5   A =  35.45 g/mole
+         --->  Isotope:  Cl35   Z = 17   N =  35   A =  34.97 g/mole   abundance:  75.78 %
+         --->  Isotope:  Cl37   Z = 17   N =  37   A =  36.97 g/mole   abundance:  24.22 %
+          ElmMassFraction:  56.73 %  ElmAbundance  16.67 % 
+
+
+ Material: G4_POLYETHYLENE (C_2H_4)_N-Polyethylene   density: 940.000 mg/cm3  RadL:  47.632 cm   Nucl.Int.Length:  72.088 cm 
+                       Imean:  57.400 eV 
+
+   --->  Element: C (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:  85.63 %  ElmAbundance  33.33 % 
+
+   --->  Element: H (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:  14.37 %  ElmAbundance  66.67 % 
+
+
+ Material:    G4_Al    density:  2.699 g/cm3   RadL:   8.896 cm   Nucl.Int.Length:  38.877 cm 
+                       Imean: 166.000 eV 
+
+   --->  Element: Al (Al)   Z = 13.0   N =  27.0   A =  26.98 g/mole
+         --->  Isotope:  Al27   Z = 13   N =  27   A =  26.98 g/mole   abundance: 100.00 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: G4_PLEXIGLASS    density:  1.190 g/cm3   RadL:  34.075 cm   Nucl.Int.Length:  62.750 cm 
+                       Imean:  74.000 eV 
+
+   --->  Element: C (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:  59.98 %  ElmAbundance  33.33 % 
+
+   --->  Element: H (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:   8.05 %  ElmAbundance  53.33 % 
+
+   --->  Element: O (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  31.96 %  ElmAbundance  13.33 % 
+
+
+ Material: G4_PARAFFIN    density: 930.000 mg/cm3  RadL:  48.224 cm   Nucl.Int.Length:  72.482 cm 
+                       Imean:  55.900 eV 
+
+   --->  Element: C (C)   Z =  6.0   N =  12.0   A =  12.01 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance:  98.93 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:   1.07 %
+          ElmMassFraction:  85.14 %  ElmAbundance  32.47 % 
+
+   --->  Element: H (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:  14.86 %  ElmAbundance  67.53 % 
+
+
+ Material: G4_GYPSUM    density:  2.320 g/cm3   RadL:  10.609 cm   Nucl.Int.Length:  40.634 cm 
+                       Imean: 129.700 eV 
+
+   --->  Element: Ca (Ca)   Z = 20.0   N =  40.1   A =  40.08 g/mole
+         --->  Isotope:  Ca40   Z = 20   N =  40   A =  39.96 g/mole   abundance:  96.94 %
+         --->  Isotope:  Ca42   Z = 20   N =  42   A =  41.96 g/mole   abundance:   0.65 %
+         --->  Isotope:  Ca43   Z = 20   N =  43   A =  42.96 g/mole   abundance:   0.14 %
+         --->  Isotope:  Ca44   Z = 20   N =  44   A =  43.96 g/mole   abundance:   2.09 %
+         --->  Isotope:  Ca46   Z = 20   N =  46   A =  45.95 g/mole   abundance:   0.00 %
+         --->  Isotope:  Ca48   Z = 20   N =  48   A =  47.95 g/mole   abundance:   0.19 %
+          ElmMassFraction:  23.28 %  ElmAbundance   8.33 % 
+
+   --->  Element: S (S)   Z = 16.0   N =  32.1   A =  32.07 g/mole
+         --->  Isotope:   S32   Z = 16   N =  32   A =  31.97 g/mole   abundance:  94.93 %
+         --->  Isotope:   S33   Z = 16   N =  33   A =  32.97 g/mole   abundance:   0.76 %
+         --->  Isotope:   S34   Z = 16   N =  34   A =  33.97 g/mole   abundance:   4.29 %
+         --->  Isotope:   S36   Z = 16   N =  36   A =  35.97 g/mole   abundance:   0.02 %
+          ElmMassFraction:  18.62 %  ElmAbundance   8.33 % 
+
+   --->  Element: O (O)   Z =  8.0   N =  16.0   A =  16.00 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance:  99.76 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:   0.04 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:   0.20 %
+          ElmMassFraction:  55.76 %  ElmAbundance  50.00 % 
+
+   --->  Element: H (H)   Z =  1.0   N =   1.0   A =   1.01 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance:  99.99 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:   0.01 %
+          ElmMassFraction:   2.34 %  ElmAbundance  33.33 % 
+
+
+
+G4PhysListFactory::GetReferencePhysList <Shielding>  EMoption= 0
+<<< Geant4 Physics List simulation engine: Shielding 2.1
+
+<<< Reference Physics List Shielding is built
+
+
+----- HepJamesRandom engine status -----
+ Initial seed = 1551302218
+ u[] = 0.316213 0.922856 0.694806 0.528958 0.861325 0.20537 0.163912 0.146826 0.706815 0.52968 0.256719 0.219403 0.255949 0.118221 0.274038 0.81646 0.681964 0.1034 0.487202 0.124092 0.275398 0.286261 0.171033 0.198361 0.259594 0.506395 0.944737 0.64149 0.814644 0.503353 0.316536 0.596652 0.554874 0.391529 0.636786 0.32909 0.971199 0.00800002 0.37899 0.19786 0.663054 0.944766 0.700395 0.497808 0.638488 0.590161 0.411281 0.528478 0.0360655 0.782247 0.368071 0.893102 0.629124 0.431177 0.414534 0.534249 0.240127 0.389797 0.267056 0.283838 0.864909 0.316729 0.763247 0.946471 0.663912 0.235311 0.307814 0.138664 0.201188 0.328886 0.0355935 0.558264 0.10138 0.164849 0.175187 0.266681 0.0831511 0.991577 0.656146 0.305408 0.418457 0.796267 0.633634 0.0777085 0.681486 0.545824 0.626276 0.257684 0.156455 0.856894 0.659512 0.458824 0.358459 0.814769 0.793575 0.306964 0.986459 
+ c = 0.0216029, cd = 0.456233, cm = 1
+ i97 = 96, u[i97] = 0.986459
+ j97 = 32, u[j97] = 0.554874
+----------------------------------------
+WORLD MOTHER VOLUME: 154.602
+Position of Tower 1 in World: (0,0,-65)
+Tower 1 Height Above Floor: 892.942
+Tower_nZcut: 2
+Tower_zPcut: -126.231	126.231
+Tower_rIcut: 0	0
+Tower_rOcut: 57.34	42.45
+z shift for Tower Guts: 73.1226
+Height of copper upper tower: 106.216
+z shift for Tower lower cap: 20.0146
+Height of copper lower cap: 4.85
+z shift for spool: -29.7045
+Height of spool: 89.7382
+z shift for base ring: -74.5736
+Height of base ring: 4.81
+z shift for upper det housing cap: -80.2556
+Height of upper det housing cap: 6.554
+z shift for side det housing: -101.707
+Height of side det housing: 36.348
+z shift for lower det housing cap: -123.056
+Height of lower det housing cap: 6.35
+Zip Array Position In Tower: -101.707
+Zip Height Above Floor: 994.648
+Zip Height Above Floor (2nd calc): 994.648
+Coordinates of Zip w/ copy no = 0: 0,0,0
+Coordinates of Zip w/ copy no = 1: 0,0,0
+<tower1> is not found.
+Tower 1 is detector 1
+
+---> I am in a smart tcsh terminal ;-) .
+ Macro k100_252Cf_neutrons_test1.mac is being run 
+WORLD MOTHER VOLUME: 154.602
+Position of Tower 1 in World: (0,0,-65)
+Tower 1 Height Above Floor: 892.942
+Tower_nZcut: 2
+Tower_zPcut: -126.231	126.231
+Tower_rIcut: 0	0
+Tower_rOcut: 57.34	42.45
+z shift for Tower Guts: 73.1226
+Height of copper upper tower: 106.216
+z shift for Tower lower cap: 20.0146
+Height of copper lower cap: 4.85
+z shift for spool: -29.7045
+Height of spool: 89.7382
+z shift for base ring: -74.5736
+Height of base ring: 4.81
+z shift for upper det housing cap: -80.2556
+Height of upper det housing cap: 6.554
+z shift for side det housing: -101.707
+Height of side det housing: 36.348
+z shift for lower det housing cap: -123.056
+Height of lower det housing cap: 6.35
+Zip Array Position In Tower: -101.707
+Zip Height Above Floor: 994.648
+Zip Height Above Floor (2nd calc): 994.648
+Coordinates of Zip w/ copy no = 0: 0,0,0
+Coordinates of Zip w/ copy no = 1: 0,0,0
+Tower 1 is detector 1
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : DET1010
+      issued by : G4SDStructure::AddNewDetector()
+tower1 had already been stored in /. Object pointer is overwitten.
+It's users' responsibility to delete the old sensitive detector object.
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+WORLD MOTHER VOLUME: 154.602
+Position of Tower 1 in World: (0,0,-65)
+Tower 1 Height Above Floor: 892.942
+Tower_nZcut: 2
+Tower_zPcut: -126.231	126.231
+Tower_rIcut: 0	0
+Tower_rOcut: 57.34	42.45
+z shift for Tower Guts: 73.1226
+Height of copper upper tower: 106.216
+z shift for Tower lower cap: 20.0146
+Height of copper lower cap: 4.85
+z shift for spool: -29.7045
+Height of spool: 89.7382
+z shift for base ring: -74.5736
+Height of base ring: 4.81
+z shift for upper det housing cap: -80.2556
+Height of upper det housing cap: 6.554
+z shift for side det housing: -101.707
+Height of side det housing: 36.348
+z shift for lower det housing cap: -123.056
+Height of lower det housing cap: 6.35
+Zip Array Position In Tower: -101.707
+Zip Height Above Floor: 994.648
+Zip Height Above Floor (2nd calc): 994.648
+Coordinates of Zip w/ copy no = 0: 0,0,0
+Coordinates of Zip w/ copy no = 1: 0,0,0
+Tower 1 is detector 1
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : DET1010
+      issued by : G4SDStructure::AddNewDetector()
+tower1 had already been stored in /. Object pointer is overwitten.
+It's users' responsibility to delete the old sensitive detector object.
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+WORLD MOTHER VOLUME: 154.602
+Position of Tower 1 in World: (0,0,-65)
+Tower 1 Height Above Floor: 892.942
+Tower_nZcut: 2
+Tower_zPcut: -126.231	126.231
+Tower_rIcut: 0	0
+Tower_rOcut: 57.34	42.45
+z shift for Tower Guts: 73.1226
+Height of copper upper tower: 106.216
+z shift for Tower lower cap: 20.0146
+Height of copper lower cap: 4.85
+z shift for spool: -29.7045
+Height of spool: 89.7382
+z shift for base ring: -74.5736
+Height of base ring: 4.81
+z shift for upper det housing cap: -80.2556
+Height of upper det housing cap: 6.554
+z shift for side det housing: -101.707
+Height of side det housing: 36.348
+z shift for lower det housing cap: -123.056
+Height of lower det housing cap: 6.35
+Zip Array Position In Tower: -101.707
+Zip Height Above Floor: 994.648
+Zip Height Above Floor (2nd calc): 994.648
+Coordinates of Zip w/ copy no = 0: 0,0,0
+Coordinates of Zip w/ copy no = 1: 0,0,0
+Tower 1 is detector 1
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : DET1010
+      issued by : G4SDStructure::AddNewDetector()
+tower1 had already been stored in /. Object pointer is overwitten.
+It's users' responsibility to delete the old sensitive detector object.
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+phot:   for  gamma    SubType= 12  BuildTable= 0
+      LambdaPrime table from 200 keV to 10 TeV in 54 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       PhotoElectric :  Emin=        0 eV    Emax=       10 TeV   AngularGenSauterGavrila  FluoActive
+
+compt:   for  gamma    SubType= 13  BuildTable= 1
+      Lambda table from 100 eV  to 1 MeV, 7 bins per decade, spline: 1
+      LambdaPrime table from 1 MeV to 10 TeV in 49 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       Klein-Nishina :  Emin=        0 eV    Emax=       10 TeV
+
+conv:   for  gamma    SubType= 14  BuildTable= 1
+      Lambda table from 1.022 MeV to 10 TeV, 20 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        BetheHeitler :  Emin=        0 eV    Emax=       80 GeV
+     BetheHeitlerLPM :  Emin=       80 GeV   Emax=       10 TeV
+
+msc:   for e-    SubType= 10
+      RangeFactor= 0.04, stepLimitType: 1, latDisplacement: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc :  Emin=        0 eV    Emax=      100 MeV  Table with 42 bins Emin=    100 eV    Emax=    100 MeV
+        WentzelVIUni :  Emin=      100 MeV   Emax=       10 TeV  Table with 35 bins Emin=    100 MeV   Emax=     10 TeV
+
+eIoni:   for  e-    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha :  Emin=        0 eV    Emax=       10 TeV
+
+eBrem:   for  e-    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      LPM flag: 1 for E > 1 GeV
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB :  Emin=        0 eV    Emax=        1 GeV   DipBustGen
+            eBremLPM :  Emin=        1 GeV   Emax=       10 TeV   DipBustGen
+
+CoulombScat:   for  e-, integral: 1     SubType= 1  BuildTable= 1
+      Lambda table from 100 MeV to 10 TeV, 7 bins per decade, spline: 1
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=      100 MeV   Emax=       10 TeV
+
+msc:   for e+    SubType= 10
+      RangeFactor= 0.04, stepLimitType: 1, latDisplacement: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc :  Emin=        0 eV    Emax=      100 MeV  Table with 42 bins Emin=    100 eV    Emax=    100 MeV
+        WentzelVIUni :  Emin=      100 MeV   Emax=       10 TeV  Table with 35 bins Emin=    100 MeV   Emax=     10 TeV
+
+eIoni:   for  e+    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha :  Emin=        0 eV    Emax=       10 TeV
+
+eBrem:   for  e+    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      LPM flag: 1 for E > 1 GeV
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB :  Emin=        0 eV    Emax=        1 GeV   DipBustGen
+            eBremLPM :  Emin=        1 GeV   Emax=       10 TeV   DipBustGen
+
+annihil:   for  e+, integral: 1     SubType= 5  BuildTable= 0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            eplus2gg :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  e+, integral: 1     SubType= 1  BuildTable= 1
+      Lambda table from 100 MeV to 10 TeV, 7 bins per decade, spline: 1
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=      100 MeV   Emax=       10 TeV
+
+msc:   for proton    SubType= 10
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 180
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+hIoni:   for  proton    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 0.1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :  Emin=        0 eV    Emax=        2 MeV
+          BetheBloch :  Emin=        2 MeV   Emax=       10 TeV
+
+hBrems:   for  proton    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :  Emin=        0 eV    Emax=       10 TeV
+
+hPairProd:   for  proton    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      Sampling table 13x1001; from 7.50618 GeV to 10 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  proton, integral: 1     SubType= 1  BuildTable= 1
+      Used Lambda table of anti_proton
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=        0 eV    Emax=       10 TeV
+
+msc:   for GenericIon    SubType= 10
+      RangeFactor= 0.2, stepLimitType: 0, latDisplacement: 0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc :  Emin=        0 eV    Emax=       10 TeV
+
+ionIoni:   for  GenericIon    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 0.01, dRoverRange= 0.1, integral: 1, fluct: 1, linLossLimit= 0.02
+      Stopping Power data for 17 ion/material pairs 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            BraggIon :  Emin=        0 eV    Emax=        2 MeV
+          BetheBloch :  Emin=        2 MeV   Emax=       10 TeV
+
+msc:   for alpha    SubType= 10
+      RangeFactor= 0.2, stepLimitType: 0, latDisplacement: 0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+ionIoni:   for  alpha    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 0.01, dRoverRange= 0.1, integral: 1, fluct: 1, linLossLimit= 0.02
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            BraggIon :  Emin=        0 eV    Emax=   7.9452 MeV
+          BetheBloch :  Emin=   7.9452 MeV   Emax=       10 TeV
+
+msc:   for anti_proton    SubType= 10
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 180
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+hIoni:   for  anti_proton    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 0.1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO :  Emin=        0 eV    Emax=        2 MeV
+          BetheBloch :  Emin=        2 MeV   Emax=       10 TeV
+
+hBrems:   for  anti_proton    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :  Emin=        0 eV    Emax=       10 TeV
+
+hPairProd:   for  anti_proton    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      Sampling table 13x1001; from 7.50618 GeV to 10 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  anti_proton, integral: 1     SubType= 1  BuildTable= 1
+      Lambda table from threshold  to 10 TeV, 7 bins per decade, spline: 1
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=        0 eV    Emax=       10 TeV
+
+msc:   for kaon+    SubType= 10
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 180
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+hIoni:   for  kaon+    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 0.1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :  Emin=        0 eV    Emax=  1.05231 MeV
+          BetheBloch :  Emin=  1.05231 MeV   Emax=       10 TeV
+
+hBrems:   for  kaon+    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :  Emin=        0 eV    Emax=       10 TeV
+
+hPairProd:   for  kaon+    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      Sampling table 14x1001; from 3.94942 GeV to 10 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  kaon+, integral: 1     SubType= 1  BuildTable= 1
+      Lambda table from threshold  to 10 TeV, 7 bins per decade, spline: 1
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=        0 eV    Emax=       10 TeV
+
+msc:   for kaon-    SubType= 10
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 180
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+hIoni:   for  kaon-    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 0.1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO :  Emin=        0 eV    Emax=  1.05231 MeV
+          BetheBloch :  Emin=  1.05231 MeV   Emax=       10 TeV
+
+hBrems:   for  kaon-    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :  Emin=        0 eV    Emax=       10 TeV
+
+hPairProd:   for  kaon-    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      Sampling table 14x1001; from 3.94942 GeV to 10 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  kaon-, integral: 1     SubType= 1  BuildTable= 1
+      Used Lambda table of kaon+
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=        0 eV    Emax=       10 TeV
+
+msc:   for mu+    SubType= 10
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 180
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+muIoni:   for  mu+    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :  Emin=        0 eV    Emax=      200 keV
+          BetheBloch :  Emin=      200 keV   Emax=        1 GeV
+        MuBetheBloch :  Emin=        1 GeV   Emax=       10 TeV
+
+muBrems:   for  mu+    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+              MuBrem :  Emin=        0 eV    Emax=       10 TeV
+
+muPairProd:   for  mu+    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      Sampling table 17x1001; from 1 GeV to 10 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          muPairProd :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  mu+, integral: 1     SubType= 1  BuildTable= 1
+      Lambda table from threshold  to 10 TeV, 7 bins per decade, spline: 1
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=        0 eV    Emax=       10 TeV
+
+msc:   for mu-    SubType= 10
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 180
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+muIoni:   for  mu-    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO :  Emin=        0 eV    Emax=      200 keV
+          BetheBloch :  Emin=      200 keV   Emax=        1 GeV
+        MuBetheBloch :  Emin=        1 GeV   Emax=       10 TeV
+
+muBrems:   for  mu-    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+              MuBrem :  Emin=        0 eV    Emax=       10 TeV
+
+muPairProd:   for  mu-    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      Sampling table 17x1001; from 1 GeV to 10 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          muPairProd :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  mu-, integral: 1     SubType= 1  BuildTable= 1
+      Used Lambda table of mu+
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=        0 eV    Emax=       10 TeV
+NeutronHP: /Capture file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/6_nat_Carbon
+NeutronHP: /Elastic file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/6_nat_Carbon
+NeutronHP: /Inelastic file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Inelastic/CrossSection/6_nat_Carbon
+NeutronHP: /Capture file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/6_nat_Carbon
+NeutronHP: /Elastic file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/6_nat_Carbon
+NeutronHP: /Inelastic file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Inelastic/CrossSection/6_nat_Carbon
+NeutronHP: /Capture file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/8_17_Oxygen
+NeutronHP: /Elastic file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/8_17_Oxygen
+NeutronHP: /Inelastic file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Inelastic/CrossSection/8_17_Oxygen
+NeutronHP: /Capture file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/6_nat_Carbon
+NeutronHP: /Elastic file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/6_nat_Carbon
+NeutronHP: /Inelastic file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Inelastic/CrossSection/6_nat_Carbon
+NeutronHP: /Capture file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/6_nat_Carbon
+NeutronHP: /Elastic file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/6_nat_Carbon
+NeutronHP: /Inelastic file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Inelastic/CrossSection/6_nat_Carbon
+NeutronHP: /Capture file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/8_17_Oxygen
+NeutronHP: /Elastic file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/8_17_Oxygen
+NeutronHP: /Inelastic file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Inelastic/CrossSection/8_17_Oxygen
+NeutronHP: /Elastic file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/6_nat_Carbon
+NeutronHP: /Elastic file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/6_nat_Carbon
+NeutronHP: /Elastic file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/8_17_Oxygen
+NeutronHP: /Elastic file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/6_nat_Carbon
+NeutronHP: /Elastic file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/6_nat_Carbon
+NeutronHP: /Elastic file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Elastic/CrossSection/8_17_Oxygen
+NeutronHP: /Capture file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/6_nat_Carbon
+NeutronHP: /Capture file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/6_nat_Carbon
+NeutronHP: /Capture file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/8_17_Oxygen
+NeutronHP: /Capture file for Z = 6, A = 12 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/6_nat_Carbon
+NeutronHP: /Capture file for Z = 6, A = 13 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/6_nat_Carbon
+NeutronHP: /Capture file for Z = 8, A = 18 is not found and NeutronHP will use /local/cdms/geant4.10.01.p02-install/share/Geant4-10.1.2/data/G4NDL4.5/Capture/CrossSection/8_17_Oxygen
+
+msc:   for pi+    SubType= 10
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 180
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+hIoni:   for  pi+    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 0.1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg :  Emin=        0 eV    Emax=  297.505 keV
+          BetheBloch :  Emin=  297.505 keV   Emax=       10 TeV
+
+hBrems:   for  pi+    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :  Emin=        0 eV    Emax=       10 TeV
+
+hPairProd:   for  pi+    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      Sampling table 16x1001; from 1.11656 GeV to 10 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  pi+, integral: 1     SubType= 1  BuildTable= 1
+      Lambda table from threshold  to 10 TeV, 7 bins per decade, spline: 1
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=        0 eV    Emax=       10 TeV
+
+msc:   for pi-    SubType= 10
+      RangeFactor= 0.2, step limit type: 0, lateralDisplacement: 1, polarAngleLimit(deg)= 180
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni :  Emin=        0 eV    Emax=       10 TeV  Table with 77 bins Emin=    100 eV    Emax=     10 TeV
+
+hIoni:   for  pi-    SubType= 2
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      finalRange(mm)= 0.1, dRoverRange= 0.2, integral: 1, fluct: 1, linLossLimit= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO :  Emin=        0 eV    Emax=  297.505 keV
+          BetheBloch :  Emin=  297.505 keV   Emax=       10 TeV
+
+hBrems:   for  pi-    SubType= 3
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem :  Emin=        0 eV    Emax=       10 TeV
+
+hPairProd:   for  pi-    SubType= 4
+      dE/dx and range tables from 100 eV  to 10 TeV in 77 bins
+      Lambda tables from threshold to 10 TeV, 7 bins per decade, spline: 1
+      Sampling table 16x1001; from 1.11656 GeV to 10 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd :  Emin=        0 eV    Emax=       10 TeV
+
+CoulombScat:   for  pi-, integral: 1     SubType= 1  BuildTable= 1
+      Used Lambda table of pi+
+      180 < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering :  Emin=        0 eV    Emax=       10 TeV
+
+====================================================================
+                  HADRONIC PROCESSES SUMMARY (verbose level 1)
+
+---------------------------------------------------
+                           Hadronic Processes for GenericIon
+
+  Process: ionInelastic
+        Model:  Binary Light Ion Cascade: 0 eV  ---> 110 MeV
+        Model:                  QMDModel: 100 MeV ---> 10 GeV
+        Model:                      FTFP: 9.99 GeV ---> 1 TeV
+     Cr_sctns: Glauber-Gribov nucleus nucleus: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: ionElastic
+        Model:          NNDiffuseElastic: 0 eV  ---> 1 TeV
+     Cr_sctns: Glauber-Gribov nucleus nucleus: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for He3
+
+  Process: He3Inelastic
+        Model:  Binary Light Ion Cascade: 0 eV  ---> 110 MeV
+        Model:                  QMDModel: 100 MeV ---> 10 GeV
+        Model:                      FTFP: 9.99 GeV ---> 1 TeV
+     Cr_sctns: Glauber-Gribov nucleus nucleus: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for alpha
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: alphaInelastic
+        Model:  Binary Light Ion Cascade: 0 eV  ---> 110 MeV
+        Model:                  QMDModel: 100 MeV ---> 10 GeV
+        Model:                      FTFP: 9.99 GeV ---> 1 TeV
+     Cr_sctns: Glauber-Gribov nucleus nucleus: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for anti_He3
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
+        Model:              AntiAElastic: 100 MeV ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: anti_He3Inelastic
+        Model:                      FTFP: 0 eV  ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: hFritiofCaptureAtRest
+
+---------------------------------------------------
+                           Hadronic Processes for anti_alpha
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
+        Model:              AntiAElastic: 100 MeV ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: anti_alphaInelastic
+        Model:                      FTFP: 0 eV  ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: hFritiofCaptureAtRest
+
+---------------------------------------------------
+                           Hadronic Processes for anti_deuteron
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
+        Model:              AntiAElastic: 100 MeV ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: anti_deuteronInelastic
+        Model:                      FTFP: 0 eV  ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: hFritiofCaptureAtRest
+
+---------------------------------------------------
+                           Hadronic Processes for anti_neutron
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: anti_neutronInelastic
+        Model:                      FTFP: 0 eV  ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for anti_proton
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
+        Model:              AntiAElastic: 100 MeV ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: anti_protonInelastic
+        Model:                      FTFP: 0 eV  ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: hFritiofCaptureAtRest
+
+---------------------------------------------------
+                           Hadronic Processes for anti_triton
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
+        Model:              AntiAElastic: 100 MeV ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: anti_tritonInelastic
+        Model:                      FTFP: 0 eV  ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: hFritiofCaptureAtRest
+
+---------------------------------------------------
+                           Hadronic Processes for deuteron
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: dInelastic
+        Model:  Binary Light Ion Cascade: 0 eV  ---> 110 MeV
+        Model:                  QMDModel: 100 MeV ---> 10 GeV
+        Model:                      FTFP: 9.99 GeV ---> 1 TeV
+     Cr_sctns: Glauber-Gribov nucleus nucleus: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for e+
+
+  Process: positronNuclear
+        Model:   G4ElectroVDNuclearModel: 0 eV  ---> 1 PeV
+     Cr_sctns:          ElectroNuclearXS: 0 eV  ---> 100 TeV
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for e-
+
+  Process: electronNuclear
+        Model:   G4ElectroVDNuclearModel: 0 eV  ---> 1 PeV
+     Cr_sctns:          ElectroNuclearXS: 0 eV  ---> 100 TeV
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for gamma
+
+  Process: photonNuclear
+        Model:            BertiniCascade: 0 eV  ---> 3.5 GeV
+        Model:           TheoFSGenerator: 3 GeV ---> 100 TeV
+     Cr_sctns:            PhotoNuclearXS: 0 eV  ---> 100 TeV
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for kaon+
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: kaon+Inelastic
+        Model:                      FTFP: 4 GeV ---> 100 TeV
+        Model:            BertiniCascade: 0 eV  ---> 5 GeV
+     Cr_sctns:  ChipsKaonPlusInelasticXS: 0 eV  ---> 100 TeV
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for kaon-
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: kaon-Inelastic
+        Model:                      FTFP: 4 GeV ---> 100 TeV
+        Model:            BertiniCascade: 0 eV  ---> 5 GeV
+     Cr_sctns: ChipsKaonMinusInelasticXS: 0 eV  ---> 100 TeV
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: hBertiniCaptureAtRest
+
+---------------------------------------------------
+                           Hadronic Processes for lambda
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: lambdaInelastic
+        Model:            BertiniCascade: 0 eV  ---> 6 GeV
+        Model:                      FTFP: 2 GeV ---> 100 TeV
+     Cr_sctns:   ChipsHyperonInelasticXS: 0 eV  ---> 100 TeV
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for mu+
+
+  Process: muonNuclear
+        Model:      G4MuonVDNuclearModel: 0 eV  ---> 1 PeV
+     Cr_sctns:     KokoulinMuonNuclearXS: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for mu-
+
+  Process: muonNuclear
+        Model:      G4MuonVDNuclearModel: 0 eV  ---> 1 PeV
+     Cr_sctns:     KokoulinMuonNuclearXS: 0 eV  ---> 100 TeV
+
+  Process: muMinusCaptureAtRest
+
+---------------------------------------------------
+                           Hadronic Processes for neutron
+
+  Process: hadElastic
+        Model:             hElasticCHIPS: 19.5 MeV ---> 100 TeV
+        Model:          NeutronHPElastic: 0 eV  ---> 20 MeV
+     Cr_sctns:        NeutronHPElasticXS: 0 eV  ---> 20 MeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: neutronInelastic
+        Model:                      FTFP: 4 GeV ---> 100 TeV
+        Model:            BertiniCascade: 19.9 MeV ---> 5 GeV
+        Model:        NeutronHPInelastic: 0 eV  ---> 20 MeV
+     Cr_sctns:      NeutronHPInelasticXS: 0 eV  ---> 20 MeV
+     Cr_sctns: JENDLHEInelasticCrossSection: 0 eV  ---> 100 TeV
+     Cr_sctns:       Barashenkov-Glauber: 0 eV  ---> 100 TeV
+     Cr_sctns:      NeutronHPInelasticXS: 0 eV  ---> 20 MeV
+     Cr_sctns:       Barashenkov-Glauber: 0 eV  ---> 100 TeV
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: nCapture
+        Model:          NeutronHPCapture: 0 eV  ---> 20 MeV
+        Model:               nRadCapture: 19.9 MeV ---> 100 TeV
+     Cr_sctns:        NeutronHPCaptureXS: 0 eV  ---> 20 MeV
+     Cr_sctns:        G4NeutronCaptureXS: 0 eV  ---> 100 TeV
+     Cr_sctns:        NeutronHPCaptureXS: 0 eV  ---> 20 MeV
+     Cr_sctns:          GheishaCaptureXS: 0 eV  ---> 100 TeV
+
+  Process: nFission
+        Model:          NeutronHPFission: 0 eV  ---> 20 MeV
+        Model:                G4LFission: 19.9 MeV ---> 2.88022e+295 J  
+     Cr_sctns:        NeutronHPFissionXS: 0 eV  ---> 20 MeV
+     Cr_sctns:          GheishaFissionXS: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for pi+
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 1.0001 GeV
+        Model:           hElasticGlauber: 1 GeV ---> 100 TeV
+     Cr_sctns:       Barashenkov-Glauber: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: pi+Inelastic
+        Model:                      FTFP: 4 GeV ---> 100 TeV
+        Model:            BertiniCascade: 0 eV  ---> 5 GeV
+     Cr_sctns:      G4CrossSectionPairGG: 0 eV  ---> 100 TeV
+                         G4CrossSectionPairGG: G4PiNuclearCrossSection cross sections 
+                           below 91 GeV, Glauber-Gribov above 
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for pi-
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 1.0001 GeV
+        Model:           hElasticGlauber: 1 GeV ---> 100 TeV
+     Cr_sctns:       Barashenkov-Glauber: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: pi-Inelastic
+        Model:                      FTFP: 4 GeV ---> 100 TeV
+        Model:            BertiniCascade: 0 eV  ---> 5 GeV
+     Cr_sctns:      G4CrossSectionPairGG: 0 eV  ---> 100 TeV
+                         G4CrossSectionPairGG: G4PiNuclearCrossSection cross sections 
+                           below 91 GeV, Glauber-Gribov above 
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+  Process: hBertiniCaptureAtRest
+
+---------------------------------------------------
+                           Hadronic Processes for proton
+
+  Process: hadElastic
+        Model:             hElasticCHIPS: 0 eV  ---> 100 TeV
+     Cr_sctns:      ChipsProtonElasticXS: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: protonInelastic
+        Model:                      FTFP: 4 GeV ---> 100 TeV
+        Model:            BertiniCascade: 0 eV  ---> 5 GeV
+     Cr_sctns:       Barashenkov-Glauber: 0 eV  ---> 100 TeV
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+---------------------------------------------------
+                           Hadronic Processes for triton
+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            GheishaElastic: 0 eV  ---> 100 TeV
+
+  Process: tInelastic
+        Model:  Binary Light Ion Cascade: 0 eV  ---> 110 MeV
+        Model:                  QMDModel: 100 MeV ---> 10 GeV
+        Model:                      FTFP: 9.99 GeV ---> 1 TeV
+     Cr_sctns: Glauber-Gribov nucleus nucleus: 0 eV  ---> 2.88022e+295 J  
+     Cr_sctns:          GheishaInelastic: 0 eV  ---> 100 TeV
+
+================================================================
+### Run : 0
+WARNING: Scene "none" not found.
+  /vis/scene/list to see scenes.
+#### EventAction::BeginOfEventAction : k100CollName for tower1
+#### EventAction::BeginOfEventAction : k100CollID for 0
+
+>>>>>> (BeginofEventAction) Event 1
+WARNING: G4VisManager::IsValidView(): Attempt to draw when no graphics system
+  has been instantiated.  Use "/vis/open" or "/vis/sceneHandler/create".
+  Alternatively, to avoid this message, suppress instantiation of vis
+  manager (G4VisExecutive), possibly by setting G4VIS_NONE, and ensure
+  drawing code is executed only if G4VVisManager::GetConcreteInstance()
+  is non-zero.
+
+>>>>>> (BeginofEventAction) Event 1001
+
+>>>>>> (BeginofEventAction) Event 2001
+
+>>>>>> (BeginofEventAction) Event 3001
+
+>>>>>> (BeginofEventAction) Event 4001
+
+>>>>>> (BeginofEventAction) Event 5001
+
+>>>>>> (BeginofEventAction) Event 6001
+
+>>>>>> (BeginofEventAction) Event 7001
+
+>>>>>> (BeginofEventAction) Event 8001
+
+>>>>>> (BeginofEventAction) Event 9001
+
+>>>>>> (BeginofEventAction) Event 10001
+
+>>>>>> (BeginofEventAction) Event 11001
+
+>>>>>> (BeginofEventAction) Event 12001
+
+>>>>>> (BeginofEventAction) Event 13001
+
+>>>>>> (BeginofEventAction) Event 14001
+
+>>>>>> (BeginofEventAction) Event 15001
+
+>>>>>> (BeginofEventAction) Event 16001
+
+>>>>>> (BeginofEventAction) Event 17001
+
+>>>>>> (BeginofEventAction) Event 18001
+
+>>>>>> (BeginofEventAction) Event 19001
+
+>>>>>> (BeginofEventAction) Event 20001
+
+>>>>>> (BeginofEventAction) Event 21001
+
+>>>>>> (BeginofEventAction) Event 22001
+
+>>>>>> (BeginofEventAction) Event 23001
+
+>>>>>> (BeginofEventAction) Event 24001
+
+>>>>>> (BeginofEventAction) Event 25001
+
+>>>>>> (BeginofEventAction) Event 26001
+
+>>>>>> (BeginofEventAction) Event 27001
+
+>>>>>> (BeginofEventAction) Event 28001
+
+>>>>>> (BeginofEventAction) Event 29001
+
+>>>>>> (BeginofEventAction) Event 30001
+
+>>>>>> (BeginofEventAction) Event 31001
+
+>>>>>> (BeginofEventAction) Event 32001
+
+>>>>>> (BeginofEventAction) Event 33001
+
+>>>>>> (BeginofEventAction) Event 34001
+
+>>>>>> (BeginofEventAction) Event 35001
+
+>>>>>> (BeginofEventAction) Event 36001
+
+>>>>>> (BeginofEventAction) Event 37001
+
+>>>>>> (BeginofEventAction) Event 38001
+
+>>>>>> (BeginofEventAction) Event 39001
+
+>>>>>> (BeginofEventAction) Event 40001
+
+>>>>>> (BeginofEventAction) Event 41001
+
+>>>>>> (BeginofEventAction) Event 42001
+
+>>>>>> (BeginofEventAction) Event 43001
+
+>>>>>> (BeginofEventAction) Event 44001
+
+>>>>>> (BeginofEventAction) Event 45001
+
+>>>>>> (BeginofEventAction) Event 46001
+
+>>>>>> (BeginofEventAction) Event 47001
+
+>>>>>> (BeginofEventAction) Event 48001
+
+>>>>>> (BeginofEventAction) Event 49001
+
+>>>>>> (BeginofEventAction) Event 50001
+
+>>>>>> (BeginofEventAction) Event 51001
+
+>>>>>> (BeginofEventAction) Event 52001
+
+>>>>>> (BeginofEventAction) Event 53001
+
+>>>>>> (BeginofEventAction) Event 54001
+
+>>>>>> (BeginofEventAction) Event 55001
+
+>>>>>> (BeginofEventAction) Event 56001
+
+>>>>>> (BeginofEventAction) Event 57001
+
+>>>>>> (BeginofEventAction) Event 58001
+
+>>>>>> (BeginofEventAction) Event 59001
+
+>>>>>> (BeginofEventAction) Event 60001
+
+>>>>>> (BeginofEventAction) Event 61001
+
+>>>>>> (BeginofEventAction) Event 62001
+
+>>>>>> (BeginofEventAction) Event 63001
+
+>>>>>> (BeginofEventAction) Event 64001
+
+>>>>>> (BeginofEventAction) Event 65001
+
+>>>>>> (BeginofEventAction) Event 66001
+
+>>>>>> (BeginofEventAction) Event 67001
+
+>>>>>> (BeginofEventAction) Event 68001
+
+>>>>>> (BeginofEventAction) Event 69001
+
+>>>>>> (BeginofEventAction) Event 70001
+
+>>>>>> (BeginofEventAction) Event 71001
+
+>>>>>> (BeginofEventAction) Event 72001
+
+>>>>>> (BeginofEventAction) Event 73001
+
+>>>>>> (BeginofEventAction) Event 74001
+
+>>>>>> (BeginofEventAction) Event 75001
+
+>>>>>> (BeginofEventAction) Event 76001
+
+>>>>>> (BeginofEventAction) Event 77001
+
+>>>>>> (BeginofEventAction) Event 78001
+
+>>>>>> (BeginofEventAction) Event 79001
+
+>>>>>> (BeginofEventAction) Event 80001
+
+>>>>>> (BeginofEventAction) Event 81001
+
+>>>>>> (BeginofEventAction) Event 82001
+
+>>>>>> (BeginofEventAction) Event 83001
+
+>>>>>> (BeginofEventAction) Event 84001
+
+>>>>>> (BeginofEventAction) Event 85001
+
+>>>>>> (BeginofEventAction) Event 86001
+
+>>>>>> (BeginofEventAction) Event 87001
+
+>>>>>> (BeginofEventAction) Event 88001
+
+>>>>>> (BeginofEventAction) Event 89001
+
+>>>>>> (BeginofEventAction) Event 90001
+
+>>>>>> (BeginofEventAction) Event 91001
+
+>>>>>> (BeginofEventAction) Event 92001
+
+>>>>>> (BeginofEventAction) Event 93001
+
+>>>>>> (BeginofEventAction) Event 94001
+
+>>>>>> (BeginofEventAction) Event 95001
+
+>>>>>> (BeginofEventAction) Event 96001
+
+>>>>>> (BeginofEventAction) Event 97001
+
+>>>>>> (BeginofEventAction) Event 98001
+
+>>>>>> (BeginofEventAction) Event 99001
+
+>>>>>> (BeginofEventAction) Event 100001
+
+>>>>>> (BeginofEventAction) Event 101001
+
+>>>>>> (BeginofEventAction) Event 102001
+
+>>>>>> (BeginofEventAction) Event 103001
+
+>>>>>> (BeginofEventAction) Event 104001
+
+>>>>>> (BeginofEventAction) Event 105001
+
+>>>>>> (BeginofEventAction) Event 106001
+
+>>>>>> (BeginofEventAction) Event 107001
+
+>>>>>> (BeginofEventAction) Event 108001
+
+>>>>>> (BeginofEventAction) Event 109001
+
+>>>>>> (BeginofEventAction) Event 110001
+
+>>>>>> (BeginofEventAction) Event 111001
+
+>>>>>> (BeginofEventAction) Event 112001
+
+>>>>>> (BeginofEventAction) Event 113001
+
+>>>>>> (BeginofEventAction) Event 114001
+
+>>>>>> (BeginofEventAction) Event 115001
+
+>>>>>> (BeginofEventAction) Event 116001
+
+>>>>>> (BeginofEventAction) Event 117001
+
+>>>>>> (BeginofEventAction) Event 118001
+
+>>>>>> (BeginofEventAction) Event 119001
+
+>>>>>> (BeginofEventAction) Event 120001
+
+>>>>>> (BeginofEventAction) Event 121001
+
+>>>>>> (BeginofEventAction) Event 122001
+
+>>>>>> (BeginofEventAction) Event 123001
+
+>>>>>> (BeginofEventAction) Event 124001
+
+>>>>>> (BeginofEventAction) Event 125001
+
+>>>>>> (BeginofEventAction) Event 126001
+
+>>>>>> (BeginofEventAction) Event 127001
+
+>>>>>> (BeginofEventAction) Event 128001
+
+>>>>>> (BeginofEventAction) Event 129001
+
+>>>>>> (BeginofEventAction) Event 130001
+
+>>>>>> (BeginofEventAction) Event 131001
+
+>>>>>> (BeginofEventAction) Event 132001
+
+>>>>>> (BeginofEventAction) Event 133001
+
+>>>>>> (BeginofEventAction) Event 134001
+
+>>>>>> (BeginofEventAction) Event 135001
+
+>>>>>> (BeginofEventAction) Event 136001
+
+>>>>>> (BeginofEventAction) Event 137001
+
+>>>>>> (BeginofEventAction) Event 138001
+
+>>>>>> (BeginofEventAction) Event 139001
+
+>>>>>> (BeginofEventAction) Event 140001
+
+>>>>>> (BeginofEventAction) Event 141001
+
+>>>>>> (BeginofEventAction) Event 142001
+
+>>>>>> (BeginofEventAction) Event 143001
+
+>>>>>> (BeginofEventAction) Event 144001
+
+>>>>>> (BeginofEventAction) Event 145001
+
+>>>>>> (BeginofEventAction) Event 146001
+
+>>>>>> (BeginofEventAction) Event 147001
+
+>>>>>> (BeginofEventAction) Event 148001
+
+>>>>>> (BeginofEventAction) Event 149001
+
+>>>>>> (BeginofEventAction) Event 150001
+
+>>>>>> (BeginofEventAction) Event 151001
+
+>>>>>> (BeginofEventAction) Event 152001
+
+>>>>>> (BeginofEventAction) Event 153001
+
+>>>>>> (BeginofEventAction) Event 154001
+
+>>>>>> (BeginofEventAction) Event 155001
+
+>>>>>> (BeginofEventAction) Event 156001
+
+>>>>>> (BeginofEventAction) Event 157001
+
+>>>>>> (BeginofEventAction) Event 158001
+
+>>>>>> (BeginofEventAction) Event 159001
+
+>>>>>> (BeginofEventAction) Event 160001
+
+>>>>>> (BeginofEventAction) Event 161001
+
+>>>>>> (BeginofEventAction) Event 162001
+
+>>>>>> (BeginofEventAction) Event 163001
+
+>>>>>> (BeginofEventAction) Event 164001
+
+>>>>>> (BeginofEventAction) Event 165001
+
+>>>>>> (BeginofEventAction) Event 166001
+
+>>>>>> (BeginofEventAction) Event 167001
+
+>>>>>> (BeginofEventAction) Event 168001
+
+>>>>>> (BeginofEventAction) Event 169001
+
+>>>>>> (BeginofEventAction) Event 170001
+
+>>>>>> (BeginofEventAction) Event 171001
+
+>>>>>> (BeginofEventAction) Event 172001
+
+>>>>>> (BeginofEventAction) Event 173001
+
+>>>>>> (BeginofEventAction) Event 174001
+
+>>>>>> (BeginofEventAction) Event 175001
+
+>>>>>> (BeginofEventAction) Event 176001
+
+>>>>>> (BeginofEventAction) Event 177001
+
+>>>>>> (BeginofEventAction) Event 178001
+
+>>>>>> (BeginofEventAction) Event 179001
+
+>>>>>> (BeginofEventAction) Event 180001
+
+>>>>>> (BeginofEventAction) Event 181001
+
+>>>>>> (BeginofEventAction) Event 182001
+
+>>>>>> (BeginofEventAction) Event 183001
+
+>>>>>> (BeginofEventAction) Event 184001
+
+>>>>>> (BeginofEventAction) Event 185001
+
+>>>>>> (BeginofEventAction) Event 186001
+
+>>>>>> (BeginofEventAction) Event 187001
+
+>>>>>> (BeginofEventAction) Event 188001
+
+>>>>>> (BeginofEventAction) Event 189001
+
+>>>>>> (BeginofEventAction) Event 190001
+
+>>>>>> (BeginofEventAction) Event 191001
+
+>>>>>> (BeginofEventAction) Event 192001
+
+>>>>>> (BeginofEventAction) Event 193001
+
+>>>>>> (BeginofEventAction) Event 194001
+
+>>>>>> (BeginofEventAction) Event 195001
+
+>>>>>> (BeginofEventAction) Event 196001
+
+>>>>>> (BeginofEventAction) Event 197001
+
+>>>>>> (BeginofEventAction) Event 198001
+
+>>>>>> (BeginofEventAction) Event 199001
+
+>>>>>> (BeginofEventAction) Event 200001
+
+>>>>>> (BeginofEventAction) Event 201001
+
+>>>>>> (BeginofEventAction) Event 202001
+
+>>>>>> (BeginofEventAction) Event 203001
+
+>>>>>> (BeginofEventAction) Event 204001
+
+>>>>>> (BeginofEventAction) Event 205001
+
+>>>>>> (BeginofEventAction) Event 206001
+
+>>>>>> (BeginofEventAction) Event 207001
+
+>>>>>> (BeginofEventAction) Event 208001
+
+>>>>>> (BeginofEventAction) Event 209001
+
+>>>>>> (BeginofEventAction) Event 210001
+
+>>>>>> (BeginofEventAction) Event 211001
+
+>>>>>> (BeginofEventAction) Event 212001
+
+>>>>>> (BeginofEventAction) Event 213001
+
+>>>>>> (BeginofEventAction) Event 214001
+
+>>>>>> (BeginofEventAction) Event 215001
+
+>>>>>> (BeginofEventAction) Event 216001
+
+>>>>>> (BeginofEventAction) Event 217001
+
+>>>>>> (BeginofEventAction) Event 218001
+
+>>>>>> (BeginofEventAction) Event 219001
+
+>>>>>> (BeginofEventAction) Event 220001
+
+>>>>>> (BeginofEventAction) Event 221001
+
+>>>>>> (BeginofEventAction) Event 222001
+
+>>>>>> (BeginofEventAction) Event 223001
+
+>>>>>> (BeginofEventAction) Event 224001
+
+>>>>>> (BeginofEventAction) Event 225001
+
+>>>>>> (BeginofEventAction) Event 226001
+
+>>>>>> (BeginofEventAction) Event 227001
+
+>>>>>> (BeginofEventAction) Event 228001
+
+>>>>>> (BeginofEventAction) Event 229001
+
+>>>>>> (BeginofEventAction) Event 230001
+
+>>>>>> (BeginofEventAction) Event 231001
+
+>>>>>> (BeginofEventAction) Event 232001
+
+>>>>>> (BeginofEventAction) Event 233001
+
+>>>>>> (BeginofEventAction) Event 234001
+
+>>>>>> (BeginofEventAction) Event 235001
+
+>>>>>> (BeginofEventAction) Event 236001
+
+>>>>>> (BeginofEventAction) Event 237001
+
+>>>>>> (BeginofEventAction) Event 238001
+
+>>>>>> (BeginofEventAction) Event 239001
+
+>>>>>> (BeginofEventAction) Event 240001
+
+>>>>>> (BeginofEventAction) Event 241001
+
+>>>>>> (BeginofEventAction) Event 242001
+
+>>>>>> (BeginofEventAction) Event 243001
+
+>>>>>> (BeginofEventAction) Event 244001
+
+>>>>>> (BeginofEventAction) Event 245001
+
+>>>>>> (BeginofEventAction) Event 246001
+
+>>>>>> (BeginofEventAction) Event 247001
+
+>>>>>> (BeginofEventAction) Event 248001
+
+>>>>>> (BeginofEventAction) Event 249001
+
+>>>>>> (BeginofEventAction) Event 250001
+
+>>>>>> (BeginofEventAction) Event 251001
+
+>>>>>> (BeginofEventAction) Event 252001
+
+>>>>>> (BeginofEventAction) Event 253001
+
+>>>>>> (BeginofEventAction) Event 254001
+
+>>>>>> (BeginofEventAction) Event 255001
+
+>>>>>> (BeginofEventAction) Event 256001
+
+>>>>>> (BeginofEventAction) Event 257001
+
+>>>>>> (BeginofEventAction) Event 258001
+
+>>>>>> (BeginofEventAction) Event 259001
+
+>>>>>> (BeginofEventAction) Event 260001
+
+>>>>>> (BeginofEventAction) Event 261001
+
+>>>>>> (BeginofEventAction) Event 262001
+
+>>>>>> (BeginofEventAction) Event 263001
+
+>>>>>> (BeginofEventAction) Event 264001
+
+>>>>>> (BeginofEventAction) Event 265001
+
+>>>>>> (BeginofEventAction) Event 266001
+
+>>>>>> (BeginofEventAction) Event 267001
+
+>>>>>> (BeginofEventAction) Event 268001
+
+>>>>>> (BeginofEventAction) Event 269001
+
+>>>>>> (BeginofEventAction) Event 270001
+
+>>>>>> (BeginofEventAction) Event 271001
+
+>>>>>> (BeginofEventAction) Event 272001
+
+>>>>>> (BeginofEventAction) Event 273001
+
+>>>>>> (BeginofEventAction) Event 274001
+
+>>>>>> (BeginofEventAction) Event 275001
+
+>>>>>> (BeginofEventAction) Event 276001
+
+>>>>>> (BeginofEventAction) Event 277001
+
+>>>>>> (BeginofEventAction) Event 278001
+
+>>>>>> (BeginofEventAction) Event 279001
+
+>>>>>> (BeginofEventAction) Event 280001
+
+>>>>>> (BeginofEventAction) Event 281001
+
+>>>>>> (BeginofEventAction) Event 282001
+
+>>>>>> (BeginofEventAction) Event 283001
+
+>>>>>> (BeginofEventAction) Event 284001
+
+>>>>>> (BeginofEventAction) Event 285001
+
+>>>>>> (BeginofEventAction) Event 286001
+
+>>>>>> (BeginofEventAction) Event 287001
+
+>>>>>> (BeginofEventAction) Event 288001
+
+>>>>>> (BeginofEventAction) Event 289001
+
+>>>>>> (BeginofEventAction) Event 290001
+
+>>>>>> (BeginofEventAction) Event 291001
+
+>>>>>> (BeginofEventAction) Event 292001
+
+>>>>>> (BeginofEventAction) Event 293001
+
+>>>>>> (BeginofEventAction) Event 294001
+
+>>>>>> (BeginofEventAction) Event 295001
+
+>>>>>> (BeginofEventAction) Event 296001
+
+>>>>>> (BeginofEventAction) Event 297001
+
+>>>>>> (BeginofEventAction) Event 298001
+
+>>>>>> (BeginofEventAction) Event 299001
+
+>>>>>> (BeginofEventAction) Event 300001
+
+>>>>>> (BeginofEventAction) Event 301001
+
+>>>>>> (BeginofEventAction) Event 302001
+
+>>>>>> (BeginofEventAction) Event 303001
+
+>>>>>> (BeginofEventAction) Event 304001
+
+>>>>>> (BeginofEventAction) Event 305001
+
+>>>>>> (BeginofEventAction) Event 306001
+
+>>>>>> (BeginofEventAction) Event 307001
+
+>>>>>> (BeginofEventAction) Event 308001
+
+>>>>>> (BeginofEventAction) Event 309001
+
+>>>>>> (BeginofEventAction) Event 310001
+
+>>>>>> (BeginofEventAction) Event 311001
+
+>>>>>> (BeginofEventAction) Event 312001
+
+>>>>>> (BeginofEventAction) Event 313001
+
+>>>>>> (BeginofEventAction) Event 314001
+
+>>>>>> (BeginofEventAction) Event 315001
+
+>>>>>> (BeginofEventAction) Event 316001
+
+>>>>>> (BeginofEventAction) Event 317001
+
+>>>>>> (BeginofEventAction) Event 318001
+
+>>>>>> (BeginofEventAction) Event 319001
+
+>>>>>> (BeginofEventAction) Event 320001
+
+>>>>>> (BeginofEventAction) Event 321001
+
+>>>>>> (BeginofEventAction) Event 322001
+
+>>>>>> (BeginofEventAction) Event 323001
+
+>>>>>> (BeginofEventAction) Event 324001
+
+>>>>>> (BeginofEventAction) Event 325001
+
+>>>>>> (BeginofEventAction) Event 326001
+
+>>>>>> (BeginofEventAction) Event 327001
+
+>>>>>> (BeginofEventAction) Event 328001
+
+>>>>>> (BeginofEventAction) Event 329001
+
+>>>>>> (BeginofEventAction) Event 330001
+
+>>>>>> (BeginofEventAction) Event 331001
+
+>>>>>> (BeginofEventAction) Event 332001
+
+>>>>>> (BeginofEventAction) Event 333001
+
+>>>>>> (BeginofEventAction) Event 334001
+
+>>>>>> (BeginofEventAction) Event 335001
+
+>>>>>> (BeginofEventAction) Event 336001
+
+>>>>>> (BeginofEventAction) Event 337001
+
+>>>>>> (BeginofEventAction) Event 338001
+
+>>>>>> (BeginofEventAction) Event 339001
+
+>>>>>> (BeginofEventAction) Event 340001
+
+>>>>>> (BeginofEventAction) Event 341001
+
+>>>>>> (BeginofEventAction) Event 342001
+
+>>>>>> (BeginofEventAction) Event 343001
+
+>>>>>> (BeginofEventAction) Event 344001
+
+>>>>>> (BeginofEventAction) Event 345001
+
+>>>>>> (BeginofEventAction) Event 346001
+
+>>>>>> (BeginofEventAction) Event 347001
+
+>>>>>> (BeginofEventAction) Event 348001
+
+>>>>>> (BeginofEventAction) Event 349001
+
+>>>>>> (BeginofEventAction) Event 350001
+
+>>>>>> (BeginofEventAction) Event 351001
+
+>>>>>> (BeginofEventAction) Event 352001
+
+>>>>>> (BeginofEventAction) Event 353001
+
+>>>>>> (BeginofEventAction) Event 354001
+
+>>>>>> (BeginofEventAction) Event 355001
+
+>>>>>> (BeginofEventAction) Event 356001
+
+>>>>>> (BeginofEventAction) Event 357001
+
+>>>>>> (BeginofEventAction) Event 358001
+
+>>>>>> (BeginofEventAction) Event 359001
+
+>>>>>> (BeginofEventAction) Event 360001
+
+>>>>>> (BeginofEventAction) Event 361001
+
+>>>>>> (BeginofEventAction) Event 362001
+
+>>>>>> (BeginofEventAction) Event 363001
+
+>>>>>> (BeginofEventAction) Event 364001
+
+>>>>>> (BeginofEventAction) Event 365001
+
+>>>>>> (BeginofEventAction) Event 366001
+
+>>>>>> (BeginofEventAction) Event 367001
+
+>>>>>> (BeginofEventAction) Event 368001
+
+>>>>>> (BeginofEventAction) Event 369001
+
+>>>>>> (BeginofEventAction) Event 370001
+
+>>>>>> (BeginofEventAction) Event 371001
+
+>>>>>> (BeginofEventAction) Event 372001
+
+>>>>>> (BeginofEventAction) Event 373001
+
+>>>>>> (BeginofEventAction) Event 374001
+
+>>>>>> (BeginofEventAction) Event 375001
+
+>>>>>> (BeginofEventAction) Event 376001
+
+>>>>>> (BeginofEventAction) Event 377001
+
+>>>>>> (BeginofEventAction) Event 378001
+
+>>>>>> (BeginofEventAction) Event 379001
+
+>>>>>> (BeginofEventAction) Event 380001
+
+>>>>>> (BeginofEventAction) Event 381001
+
+>>>>>> (BeginofEventAction) Event 382001
+
+>>>>>> (BeginofEventAction) Event 383001
+
+>>>>>> (BeginofEventAction) Event 384001
+
+>>>>>> (BeginofEventAction) Event 385001
+
+>>>>>> (BeginofEventAction) Event 386001
+
+>>>>>> (BeginofEventAction) Event 387001
+
+>>>>>> (BeginofEventAction) Event 388001
+
+>>>>>> (BeginofEventAction) Event 389001
+
+>>>>>> (BeginofEventAction) Event 390001
+
+>>>>>> (BeginofEventAction) Event 391001
+
+>>>>>> (BeginofEventAction) Event 392001
+
+>>>>>> (BeginofEventAction) Event 393001
+
+>>>>>> (BeginofEventAction) Event 394001
+
+>>>>>> (BeginofEventAction) Event 395001
+
+>>>>>> (BeginofEventAction) Event 396001
+
+>>>>>> (BeginofEventAction) Event 397001
+
+>>>>>> (BeginofEventAction) Event 398001
+
+>>>>>> (BeginofEventAction) Event 399001
+
+>>>>>> (BeginofEventAction) Event 400001
+
+>>>>>> (BeginofEventAction) Event 401001
+
+>>>>>> (BeginofEventAction) Event 402001
+
+>>>>>> (BeginofEventAction) Event 403001
+
+>>>>>> (BeginofEventAction) Event 404001
+
+>>>>>> (BeginofEventAction) Event 405001
+
+>>>>>> (BeginofEventAction) Event 406001
+
+>>>>>> (BeginofEventAction) Event 407001
+
+>>>>>> (BeginofEventAction) Event 408001
+
+>>>>>> (BeginofEventAction) Event 409001
+
+>>>>>> (BeginofEventAction) Event 410001
+
+>>>>>> (BeginofEventAction) Event 411001
+
+>>>>>> (BeginofEventAction) Event 412001
+
+>>>>>> (BeginofEventAction) Event 413001
+
+>>>>>> (BeginofEventAction) Event 414001
+
+>>>>>> (BeginofEventAction) Event 415001
+
+>>>>>> (BeginofEventAction) Event 416001
+
+>>>>>> (BeginofEventAction) Event 417001
+
+>>>>>> (BeginofEventAction) Event 418001
+
+>>>>>> (BeginofEventAction) Event 419001
+
+>>>>>> (BeginofEventAction) Event 420001
+
+>>>>>> (BeginofEventAction) Event 421001
+
+>>>>>> (BeginofEventAction) Event 422001
+
+>>>>>> (BeginofEventAction) Event 423001
+
+>>>>>> (BeginofEventAction) Event 424001
+
+>>>>>> (BeginofEventAction) Event 425001
+
+>>>>>> (BeginofEventAction) Event 426001
+
+>>>>>> (BeginofEventAction) Event 427001
+
+>>>>>> (BeginofEventAction) Event 428001
+
+>>>>>> (BeginofEventAction) Event 429001
+
+>>>>>> (BeginofEventAction) Event 430001
+
+>>>>>> (BeginofEventAction) Event 431001
+
+>>>>>> (BeginofEventAction) Event 432001
+
+>>>>>> (BeginofEventAction) Event 433001
+
+>>>>>> (BeginofEventAction) Event 434001
+
+>>>>>> (BeginofEventAction) Event 435001
+
+>>>>>> (BeginofEventAction) Event 436001
+
+>>>>>> (BeginofEventAction) Event 437001
+
+>>>>>> (BeginofEventAction) Event 438001
+
+>>>>>> (BeginofEventAction) Event 439001
+
+>>>>>> (BeginofEventAction) Event 440001
+
+>>>>>> (BeginofEventAction) Event 441001
+
+>>>>>> (BeginofEventAction) Event 442001
+
+>>>>>> (BeginofEventAction) Event 443001
+
+>>>>>> (BeginofEventAction) Event 444001
+
+>>>>>> (BeginofEventAction) Event 445001
+
+>>>>>> (BeginofEventAction) Event 446001
+
+>>>>>> (BeginofEventAction) Event 447001
+
+>>>>>> (BeginofEventAction) Event 448001
+
+>>>>>> (BeginofEventAction) Event 449001
+
+>>>>>> (BeginofEventAction) Event 450001
+
+>>>>>> (BeginofEventAction) Event 451001
+
+>>>>>> (BeginofEventAction) Event 452001
+
+>>>>>> (BeginofEventAction) Event 453001
+
+>>>>>> (BeginofEventAction) Event 454001
+
+>>>>>> (BeginofEventAction) Event 455001
+
+>>>>>> (BeginofEventAction) Event 456001
+
+>>>>>> (BeginofEventAction) Event 457001
+
+>>>>>> (BeginofEventAction) Event 458001
+
+>>>>>> (BeginofEventAction) Event 459001
+
+>>>>>> (BeginofEventAction) Event 460001
+
+>>>>>> (BeginofEventAction) Event 461001
+
+>>>>>> (BeginofEventAction) Event 462001
+
+>>>>>> (BeginofEventAction) Event 463001
+
+>>>>>> (BeginofEventAction) Event 464001
+
+>>>>>> (BeginofEventAction) Event 465001
+
+>>>>>> (BeginofEventAction) Event 466001
+
+>>>>>> (BeginofEventAction) Event 467001
+
+>>>>>> (BeginofEventAction) Event 468001
+
+>>>>>> (BeginofEventAction) Event 469001
+
+>>>>>> (BeginofEventAction) Event 470001
+
+>>>>>> (BeginofEventAction) Event 471001
+
+>>>>>> (BeginofEventAction) Event 472001
+
+>>>>>> (BeginofEventAction) Event 473001
+
+>>>>>> (BeginofEventAction) Event 474001
+
+>>>>>> (BeginofEventAction) Event 475001
+
+>>>>>> (BeginofEventAction) Event 476001
+
+>>>>>> (BeginofEventAction) Event 477001
+
+>>>>>> (BeginofEventAction) Event 478001
+
+>>>>>> (BeginofEventAction) Event 479001
+
+>>>>>> (BeginofEventAction) Event 480001
+
+>>>>>> (BeginofEventAction) Event 481001
+
+>>>>>> (BeginofEventAction) Event 482001
+
+>>>>>> (BeginofEventAction) Event 483001
+
+>>>>>> (BeginofEventAction) Event 484001
+
+>>>>>> (BeginofEventAction) Event 485001
+
+>>>>>> (BeginofEventAction) Event 486001
+
+>>>>>> (BeginofEventAction) Event 487001
+
+>>>>>> (BeginofEventAction) Event 488001
+
+>>>>>> (BeginofEventAction) Event 489001
+
+>>>>>> (BeginofEventAction) Event 490001
+
+>>>>>> (BeginofEventAction) Event 491001
+
+>>>>>> (BeginofEventAction) Event 492001
+
+>>>>>> (BeginofEventAction) Event 493001
+
+>>>>>> (BeginofEventAction) Event 494001
+
+>>>>>> (BeginofEventAction) Event 495001
+
+>>>>>> (BeginofEventAction) Event 496001
+
+>>>>>> (BeginofEventAction) Event 497001
+
+>>>>>> (BeginofEventAction) Event 498001
+
+>>>>>> (BeginofEventAction) Event 499001
+
+>>>>>> (BeginofEventAction) Event 500001
+
+>>>>>> (BeginofEventAction) Event 501001
+
+>>>>>> (BeginofEventAction) Event 502001
+
+>>>>>> (BeginofEventAction) Event 503001
+
+>>>>>> (BeginofEventAction) Event 504001
+
+>>>>>> (BeginofEventAction) Event 505001
+
+>>>>>> (BeginofEventAction) Event 506001
+
+>>>>>> (BeginofEventAction) Event 507001
+
+>>>>>> (BeginofEventAction) Event 508001
+
+>>>>>> (BeginofEventAction) Event 509001
+
+>>>>>> (BeginofEventAction) Event 510001
+
+>>>>>> (BeginofEventAction) Event 511001
+
+>>>>>> (BeginofEventAction) Event 512001
+
+>>>>>> (BeginofEventAction) Event 513001
+
+>>>>>> (BeginofEventAction) Event 514001
+
+>>>>>> (BeginofEventAction) Event 515001
+
+>>>>>> (BeginofEventAction) Event 516001
+
+>>>>>> (BeginofEventAction) Event 517001
+
+>>>>>> (BeginofEventAction) Event 518001
+
+>>>>>> (BeginofEventAction) Event 519001
+
+>>>>>> (BeginofEventAction) Event 520001
+
+>>>>>> (BeginofEventAction) Event 521001
+
+>>>>>> (BeginofEventAction) Event 522001
+
+>>>>>> (BeginofEventAction) Event 523001
+
+>>>>>> (BeginofEventAction) Event 524001
+
+>>>>>> (BeginofEventAction) Event 525001
+
+>>>>>> (BeginofEventAction) Event 526001
+
+>>>>>> (BeginofEventAction) Event 527001
+
+>>>>>> (BeginofEventAction) Event 528001
+
+>>>>>> (BeginofEventAction) Event 529001
+
+>>>>>> (BeginofEventAction) Event 530001
+
+>>>>>> (BeginofEventAction) Event 531001
+
+>>>>>> (BeginofEventAction) Event 532001
+
+>>>>>> (BeginofEventAction) Event 533001
+
+>>>>>> (BeginofEventAction) Event 534001
+
+>>>>>> (BeginofEventAction) Event 535001
+
+>>>>>> (BeginofEventAction) Event 536001
+
+>>>>>> (BeginofEventAction) Event 537001
+
+>>>>>> (BeginofEventAction) Event 538001
+
+>>>>>> (BeginofEventAction) Event 539001
+
+>>>>>> (BeginofEventAction) Event 540001
+
+>>>>>> (BeginofEventAction) Event 541001
+
+>>>>>> (BeginofEventAction) Event 542001
+
+>>>>>> (BeginofEventAction) Event 543001
+
+>>>>>> (BeginofEventAction) Event 544001
+
+>>>>>> (BeginofEventAction) Event 545001
+
+>>>>>> (BeginofEventAction) Event 546001
+
+>>>>>> (BeginofEventAction) Event 547001
+
+>>>>>> (BeginofEventAction) Event 548001
+
+>>>>>> (BeginofEventAction) Event 549001
+
+>>>>>> (BeginofEventAction) Event 550001
+
+>>>>>> (BeginofEventAction) Event 551001
+
+>>>>>> (BeginofEventAction) Event 552001
+
+>>>>>> (BeginofEventAction) Event 553001
+
+>>>>>> (BeginofEventAction) Event 554001
+
+>>>>>> (BeginofEventAction) Event 555001
+
+>>>>>> (BeginofEventAction) Event 556001
+
+>>>>>> (BeginofEventAction) Event 557001
+
+>>>>>> (BeginofEventAction) Event 558001
+
+>>>>>> (BeginofEventAction) Event 559001
+
+>>>>>> (BeginofEventAction) Event 560001
+
+>>>>>> (BeginofEventAction) Event 561001
+
+>>>>>> (BeginofEventAction) Event 562001
+
+>>>>>> (BeginofEventAction) Event 563001
+
+>>>>>> (BeginofEventAction) Event 564001
+
+>>>>>> (BeginofEventAction) Event 565001
+
+>>>>>> (BeginofEventAction) Event 566001
+
+>>>>>> (BeginofEventAction) Event 567001
+
+>>>>>> (BeginofEventAction) Event 568001
+
+>>>>>> (BeginofEventAction) Event 569001
+
+>>>>>> (BeginofEventAction) Event 570001
+
+>>>>>> (BeginofEventAction) Event 571001
+
+>>>>>> (BeginofEventAction) Event 572001
+
+>>>>>> (BeginofEventAction) Event 573001
+
+>>>>>> (BeginofEventAction) Event 574001
+
+>>>>>> (BeginofEventAction) Event 575001
+
+>>>>>> (BeginofEventAction) Event 576001
+
+>>>>>> (BeginofEventAction) Event 577001
+
+>>>>>> (BeginofEventAction) Event 578001
+
+>>>>>> (BeginofEventAction) Event 579001
+
+>>>>>> (BeginofEventAction) Event 580001
+
+>>>>>> (BeginofEventAction) Event 581001
+
+>>>>>> (BeginofEventAction) Event 582001
+
+>>>>>> (BeginofEventAction) Event 583001
+
+>>>>>> (BeginofEventAction) Event 584001
+
+>>>>>> (BeginofEventAction) Event 585001
+
+>>>>>> (BeginofEventAction) Event 586001
+
+>>>>>> (BeginofEventAction) Event 587001
+
+>>>>>> (BeginofEventAction) Event 588001
+
+>>>>>> (BeginofEventAction) Event 589001
+
+>>>>>> (BeginofEventAction) Event 590001
+
+>>>>>> (BeginofEventAction) Event 591001
+
+>>>>>> (BeginofEventAction) Event 592001
+
+>>>>>> (BeginofEventAction) Event 593001
+
+>>>>>> (BeginofEventAction) Event 594001
+
+>>>>>> (BeginofEventAction) Event 595001
+
+>>>>>> (BeginofEventAction) Event 596001
+
+>>>>>> (BeginofEventAction) Event 597001
+
+>>>>>> (BeginofEventAction) Event 598001
+
+>>>>>> (BeginofEventAction) Event 599001
+
+>>>>>> (BeginofEventAction) Event 600001
+
+>>>>>> (BeginofEventAction) Event 601001
+
+>>>>>> (BeginofEventAction) Event 602001
+
+>>>>>> (BeginofEventAction) Event 603001
+
+>>>>>> (BeginofEventAction) Event 604001
+
+>>>>>> (BeginofEventAction) Event 605001
+
+>>>>>> (BeginofEventAction) Event 606001
+
+>>>>>> (BeginofEventAction) Event 607001
+
+>>>>>> (BeginofEventAction) Event 608001
+
+>>>>>> (BeginofEventAction) Event 609001
+
+>>>>>> (BeginofEventAction) Event 610001
+
+>>>>>> (BeginofEventAction) Event 611001
+
+>>>>>> (BeginofEventAction) Event 612001
+
+>>>>>> (BeginofEventAction) Event 613001
+
+>>>>>> (BeginofEventAction) Event 614001
+
+>>>>>> (BeginofEventAction) Event 615001
+
+>>>>>> (BeginofEventAction) Event 616001
+
+>>>>>> (BeginofEventAction) Event 617001
+
+>>>>>> (BeginofEventAction) Event 618001
+
+>>>>>> (BeginofEventAction) Event 619001
+
+>>>>>> (BeginofEventAction) Event 620001
+
+>>>>>> (BeginofEventAction) Event 621001
+
+>>>>>> (BeginofEventAction) Event 622001
+
+>>>>>> (BeginofEventAction) Event 623001
+
+>>>>>> (BeginofEventAction) Event 624001
+
+>>>>>> (BeginofEventAction) Event 625001
+
+>>>>>> (BeginofEventAction) Event 626001
+
+>>>>>> (BeginofEventAction) Event 627001
+
+>>>>>> (BeginofEventAction) Event 628001
+
+>>>>>> (BeginofEventAction) Event 629001
+
+>>>>>> (BeginofEventAction) Event 630001
+
+>>>>>> (BeginofEventAction) Event 631001
+
+>>>>>> (BeginofEventAction) Event 632001
+
+>>>>>> (BeginofEventAction) Event 633001
+
+>>>>>> (BeginofEventAction) Event 634001
+
+>>>>>> (BeginofEventAction) Event 635001
+
+>>>>>> (BeginofEventAction) Event 636001
+
+>>>>>> (BeginofEventAction) Event 637001
+
+>>>>>> (BeginofEventAction) Event 638001
+
+>>>>>> (BeginofEventAction) Event 639001
+
+>>>>>> (BeginofEventAction) Event 640001
+
+>>>>>> (BeginofEventAction) Event 641001
+
+>>>>>> (BeginofEventAction) Event 642001
+
+>>>>>> (BeginofEventAction) Event 643001
+
+>>>>>> (BeginofEventAction) Event 644001
+
+>>>>>> (BeginofEventAction) Event 645001
+
+>>>>>> (BeginofEventAction) Event 646001
+
+>>>>>> (BeginofEventAction) Event 647001
+
+>>>>>> (BeginofEventAction) Event 648001
+
+>>>>>> (BeginofEventAction) Event 649001
+
+>>>>>> (BeginofEventAction) Event 650001
+
+>>>>>> (BeginofEventAction) Event 651001
+
+>>>>>> (BeginofEventAction) Event 652001
+
+>>>>>> (BeginofEventAction) Event 653001
+
+>>>>>> (BeginofEventAction) Event 654001
+
+>>>>>> (BeginofEventAction) Event 655001
+
+>>>>>> (BeginofEventAction) Event 656001
+
+>>>>>> (BeginofEventAction) Event 657001
+
+>>>>>> (BeginofEventAction) Event 658001
+
+>>>>>> (BeginofEventAction) Event 659001
+
+>>>>>> (BeginofEventAction) Event 660001
+
+>>>>>> (BeginofEventAction) Event 661001
+
+>>>>>> (BeginofEventAction) Event 662001
+
+>>>>>> (BeginofEventAction) Event 663001
+
+>>>>>> (BeginofEventAction) Event 664001
+
+>>>>>> (BeginofEventAction) Event 665001
+
+>>>>>> (BeginofEventAction) Event 666001
+
+>>>>>> (BeginofEventAction) Event 667001
+
+>>>>>> (BeginofEventAction) Event 668001
+
+>>>>>> (BeginofEventAction) Event 669001
+
+>>>>>> (BeginofEventAction) Event 670001
+
+>>>>>> (BeginofEventAction) Event 671001
+
+>>>>>> (BeginofEventAction) Event 672001
+
+>>>>>> (BeginofEventAction) Event 673001
+
+>>>>>> (BeginofEventAction) Event 674001
+
+>>>>>> (BeginofEventAction) Event 675001
+
+>>>>>> (BeginofEventAction) Event 676001
+
+>>>>>> (BeginofEventAction) Event 677001
+
+>>>>>> (BeginofEventAction) Event 678001
+
+>>>>>> (BeginofEventAction) Event 679001
+
+>>>>>> (BeginofEventAction) Event 680001
+
+>>>>>> (BeginofEventAction) Event 681001
+
+>>>>>> (BeginofEventAction) Event 682001
+
+>>>>>> (BeginofEventAction) Event 683001
+
+>>>>>> (BeginofEventAction) Event 684001
+
+>>>>>> (BeginofEventAction) Event 685001
+
+>>>>>> (BeginofEventAction) Event 686001
+
+>>>>>> (BeginofEventAction) Event 687001
+
+>>>>>> (BeginofEventAction) Event 688001
+
+>>>>>> (BeginofEventAction) Event 689001
+
+>>>>>> (BeginofEventAction) Event 690001
+
+>>>>>> (BeginofEventAction) Event 691001
+
+>>>>>> (BeginofEventAction) Event 692001
+
+>>>>>> (BeginofEventAction) Event 693001
+
+>>>>>> (BeginofEventAction) Event 694001
+
+>>>>>> (BeginofEventAction) Event 695001
+
+>>>>>> (BeginofEventAction) Event 696001
+
+>>>>>> (BeginofEventAction) Event 697001
+
+>>>>>> (BeginofEventAction) Event 698001
+
+>>>>>> (BeginofEventAction) Event 699001
+
+>>>>>> (BeginofEventAction) Event 700001
+
+>>>>>> (BeginofEventAction) Event 701001
+
+>>>>>> (BeginofEventAction) Event 702001
+
+>>>>>> (BeginofEventAction) Event 703001
+
+>>>>>> (BeginofEventAction) Event 704001
+
+>>>>>> (BeginofEventAction) Event 705001
+
+>>>>>> (BeginofEventAction) Event 706001
+
+>>>>>> (BeginofEventAction) Event 707001
+
+>>>>>> (BeginofEventAction) Event 708001
+
+>>>>>> (BeginofEventAction) Event 709001
+
+>>>>>> (BeginofEventAction) Event 710001
+
+>>>>>> (BeginofEventAction) Event 711001
+
+>>>>>> (BeginofEventAction) Event 712001
+
+>>>>>> (BeginofEventAction) Event 713001
+
+>>>>>> (BeginofEventAction) Event 714001
+
+>>>>>> (BeginofEventAction) Event 715001
+
+>>>>>> (BeginofEventAction) Event 716001
+
+>>>>>> (BeginofEventAction) Event 717001
+
+>>>>>> (BeginofEventAction) Event 718001
+
+>>>>>> (BeginofEventAction) Event 719001
+
+>>>>>> (BeginofEventAction) Event 720001
+
+>>>>>> (BeginofEventAction) Event 721001
+
+>>>>>> (BeginofEventAction) Event 722001
+
+>>>>>> (BeginofEventAction) Event 723001
+
+>>>>>> (BeginofEventAction) Event 724001
+
+>>>>>> (BeginofEventAction) Event 725001
+
+>>>>>> (BeginofEventAction) Event 726001
+
+>>>>>> (BeginofEventAction) Event 727001
+
+>>>>>> (BeginofEventAction) Event 728001
+
+>>>>>> (BeginofEventAction) Event 729001
+
+>>>>>> (BeginofEventAction) Event 730001
+
+>>>>>> (BeginofEventAction) Event 731001
+
+>>>>>> (BeginofEventAction) Event 732001
+
+>>>>>> (BeginofEventAction) Event 733001
+
+>>>>>> (BeginofEventAction) Event 734001
+
+>>>>>> (BeginofEventAction) Event 735001
+
+>>>>>> (BeginofEventAction) Event 736001
+
+>>>>>> (BeginofEventAction) Event 737001
+
+>>>>>> (BeginofEventAction) Event 738001
+
+>>>>>> (BeginofEventAction) Event 739001
+
+>>>>>> (BeginofEventAction) Event 740001
+
+>>>>>> (BeginofEventAction) Event 741001
+
+>>>>>> (BeginofEventAction) Event 742001
+
+>>>>>> (BeginofEventAction) Event 743001
+
+>>>>>> (BeginofEventAction) Event 744001
+
+>>>>>> (BeginofEventAction) Event 745001
+
+>>>>>> (BeginofEventAction) Event 746001
+
+>>>>>> (BeginofEventAction) Event 747001
+
+>>>>>> (BeginofEventAction) Event 748001
+
+>>>>>> (BeginofEventAction) Event 749001
+
+>>>>>> (BeginofEventAction) Event 750001
+
+>>>>>> (BeginofEventAction) Event 751001
+
+>>>>>> (BeginofEventAction) Event 752001
+
+>>>>>> (BeginofEventAction) Event 753001
+
+>>>>>> (BeginofEventAction) Event 754001
+
+>>>>>> (BeginofEventAction) Event 755001
+
+>>>>>> (BeginofEventAction) Event 756001
+
+>>>>>> (BeginofEventAction) Event 757001
+
+>>>>>> (BeginofEventAction) Event 758001
+
+>>>>>> (BeginofEventAction) Event 759001
+
+>>>>>> (BeginofEventAction) Event 760001
+
+>>>>>> (BeginofEventAction) Event 761001
+
+>>>>>> (BeginofEventAction) Event 762001
+
+>>>>>> (BeginofEventAction) Event 763001
+
+>>>>>> (BeginofEventAction) Event 764001
+
+>>>>>> (BeginofEventAction) Event 765001
+
+>>>>>> (BeginofEventAction) Event 766001
+
+>>>>>> (BeginofEventAction) Event 767001
+
+>>>>>> (BeginofEventAction) Event 768001
+
+>>>>>> (BeginofEventAction) Event 769001
+
+>>>>>> (BeginofEventAction) Event 770001
+
+>>>>>> (BeginofEventAction) Event 771001
+
+>>>>>> (BeginofEventAction) Event 772001
+
+>>>>>> (BeginofEventAction) Event 773001
+
+>>>>>> (BeginofEventAction) Event 774001
+
+>>>>>> (BeginofEventAction) Event 775001
+
+>>>>>> (BeginofEventAction) Event 776001
+
+>>>>>> (BeginofEventAction) Event 777001
+
+>>>>>> (BeginofEventAction) Event 778001
+
+>>>>>> (BeginofEventAction) Event 779001
+
+>>>>>> (BeginofEventAction) Event 780001
+
+>>>>>> (BeginofEventAction) Event 781001
+
+>>>>>> (BeginofEventAction) Event 782001
+
+>>>>>> (BeginofEventAction) Event 783001
+
+>>>>>> (BeginofEventAction) Event 784001
+
+>>>>>> (BeginofEventAction) Event 785001
+
+>>>>>> (BeginofEventAction) Event 786001
+
+>>>>>> (BeginofEventAction) Event 787001
+
+>>>>>> (BeginofEventAction) Event 788001
+
+>>>>>> (BeginofEventAction) Event 789001
+
+>>>>>> (BeginofEventAction) Event 790001
+
+>>>>>> (BeginofEventAction) Event 791001
+
+>>>>>> (BeginofEventAction) Event 792001
+
+>>>>>> (BeginofEventAction) Event 793001
+
+>>>>>> (BeginofEventAction) Event 794001
+
+>>>>>> (BeginofEventAction) Event 795001
+
+>>>>>> (BeginofEventAction) Event 796001
+
+>>>>>> (BeginofEventAction) Event 797001
+
+>>>>>> (BeginofEventAction) Event 798001
+
+>>>>>> (BeginofEventAction) Event 799001
+
+>>>>>> (BeginofEventAction) Event 800001
+
+>>>>>> (BeginofEventAction) Event 801001
+
+>>>>>> (BeginofEventAction) Event 802001
+
+>>>>>> (BeginofEventAction) Event 803001
+
+>>>>>> (BeginofEventAction) Event 804001
+
+>>>>>> (BeginofEventAction) Event 805001
+
+>>>>>> (BeginofEventAction) Event 806001
+
+>>>>>> (BeginofEventAction) Event 807001
+
+>>>>>> (BeginofEventAction) Event 808001
+
+>>>>>> (BeginofEventAction) Event 809001
+
+>>>>>> (BeginofEventAction) Event 810001
+
+>>>>>> (BeginofEventAction) Event 811001
+
+>>>>>> (BeginofEventAction) Event 812001
+
+>>>>>> (BeginofEventAction) Event 813001
+
+>>>>>> (BeginofEventAction) Event 814001
+
+>>>>>> (BeginofEventAction) Event 815001
+
+>>>>>> (BeginofEventAction) Event 816001
+
+>>>>>> (BeginofEventAction) Event 817001
+
+>>>>>> (BeginofEventAction) Event 818001
+
+>>>>>> (BeginofEventAction) Event 819001
+
+>>>>>> (BeginofEventAction) Event 820001
+
+>>>>>> (BeginofEventAction) Event 821001
+
+>>>>>> (BeginofEventAction) Event 822001
+
+>>>>>> (BeginofEventAction) Event 823001
+
+>>>>>> (BeginofEventAction) Event 824001
+
+>>>>>> (BeginofEventAction) Event 825001
+
+>>>>>> (BeginofEventAction) Event 826001
+
+>>>>>> (BeginofEventAction) Event 827001
+
+>>>>>> (BeginofEventAction) Event 828001
+
+>>>>>> (BeginofEventAction) Event 829001
+
+>>>>>> (BeginofEventAction) Event 830001
+
+>>>>>> (BeginofEventAction) Event 831001
+
+>>>>>> (BeginofEventAction) Event 832001
+
+>>>>>> (BeginofEventAction) Event 833001
+
+>>>>>> (BeginofEventAction) Event 834001
+
+>>>>>> (BeginofEventAction) Event 835001
+
+>>>>>> (BeginofEventAction) Event 836001
+
+>>>>>> (BeginofEventAction) Event 837001
+
+>>>>>> (BeginofEventAction) Event 838001
+
+>>>>>> (BeginofEventAction) Event 839001
+
+>>>>>> (BeginofEventAction) Event 840001
+
+>>>>>> (BeginofEventAction) Event 841001
+
+>>>>>> (BeginofEventAction) Event 842001
+
+>>>>>> (BeginofEventAction) Event 843001
+
+>>>>>> (BeginofEventAction) Event 844001
+
+>>>>>> (BeginofEventAction) Event 845001
+
+>>>>>> (BeginofEventAction) Event 846001
+
+>>>>>> (BeginofEventAction) Event 847001
+
+>>>>>> (BeginofEventAction) Event 848001
+
+>>>>>> (BeginofEventAction) Event 849001
+
+>>>>>> (BeginofEventAction) Event 850001
+
+>>>>>> (BeginofEventAction) Event 851001
+
+>>>>>> (BeginofEventAction) Event 852001
+
+>>>>>> (BeginofEventAction) Event 853001
+
+>>>>>> (BeginofEventAction) Event 854001
+
+>>>>>> (BeginofEventAction) Event 855001
+
+>>>>>> (BeginofEventAction) Event 856001
+
+>>>>>> (BeginofEventAction) Event 857001
+
+>>>>>> (BeginofEventAction) Event 858001
+
+>>>>>> (BeginofEventAction) Event 859001
+
+>>>>>> (BeginofEventAction) Event 860001
+
+>>>>>> (BeginofEventAction) Event 861001
+
+>>>>>> (BeginofEventAction) Event 862001
+
+>>>>>> (BeginofEventAction) Event 863001
+
+>>>>>> (BeginofEventAction) Event 864001
+
+>>>>>> (BeginofEventAction) Event 865001
+
+>>>>>> (BeginofEventAction) Event 866001
+
+>>>>>> (BeginofEventAction) Event 867001
+
+>>>>>> (BeginofEventAction) Event 868001
+
+>>>>>> (BeginofEventAction) Event 869001
+
+>>>>>> (BeginofEventAction) Event 870001
+
+>>>>>> (BeginofEventAction) Event 871001
+
+>>>>>> (BeginofEventAction) Event 872001
+
+>>>>>> (BeginofEventAction) Event 873001
+
+>>>>>> (BeginofEventAction) Event 874001
+
+>>>>>> (BeginofEventAction) Event 875001
+
+>>>>>> (BeginofEventAction) Event 876001
+
+>>>>>> (BeginofEventAction) Event 877001
+
+>>>>>> (BeginofEventAction) Event 878001
+
+>>>>>> (BeginofEventAction) Event 879001
+
+>>>>>> (BeginofEventAction) Event 880001
+
+>>>>>> (BeginofEventAction) Event 881001
+
+>>>>>> (BeginofEventAction) Event 882001
+
+>>>>>> (BeginofEventAction) Event 883001
+
+>>>>>> (BeginofEventAction) Event 884001
+
+>>>>>> (BeginofEventAction) Event 885001
+
+>>>>>> (BeginofEventAction) Event 886001
+
+>>>>>> (BeginofEventAction) Event 887001
+
+>>>>>> (BeginofEventAction) Event 888001
+
+>>>>>> (BeginofEventAction) Event 889001
+
+>>>>>> (BeginofEventAction) Event 890001
+
+>>>>>> (BeginofEventAction) Event 891001
+
+>>>>>> (BeginofEventAction) Event 892001
+
+>>>>>> (BeginofEventAction) Event 893001
+
+>>>>>> (BeginofEventAction) Event 894001
+
+>>>>>> (BeginofEventAction) Event 895001
+
+>>>>>> (BeginofEventAction) Event 896001
+
+>>>>>> (BeginofEventAction) Event 897001
+
+>>>>>> (BeginofEventAction) Event 898001
+
+>>>>>> (BeginofEventAction) Event 899001
+
+>>>>>> (BeginofEventAction) Event 900001
+
+>>>>>> (BeginofEventAction) Event 901001
+
+>>>>>> (BeginofEventAction) Event 902001
+
+>>>>>> (BeginofEventAction) Event 903001
+
+>>>>>> (BeginofEventAction) Event 904001
+
+>>>>>> (BeginofEventAction) Event 905001
+
+>>>>>> (BeginofEventAction) Event 906001
+
+>>>>>> (BeginofEventAction) Event 907001
+
+>>>>>> (BeginofEventAction) Event 908001
+
+>>>>>> (BeginofEventAction) Event 909001
+
+>>>>>> (BeginofEventAction) Event 910001
+
+>>>>>> (BeginofEventAction) Event 911001
+
+>>>>>> (BeginofEventAction) Event 912001
+
+>>>>>> (BeginofEventAction) Event 913001
+
+>>>>>> (BeginofEventAction) Event 914001
+
+>>>>>> (BeginofEventAction) Event 915001
+
+>>>>>> (BeginofEventAction) Event 916001
+
+>>>>>> (BeginofEventAction) Event 917001
+
+>>>>>> (BeginofEventAction) Event 918001
+
+>>>>>> (BeginofEventAction) Event 919001
+
+>>>>>> (BeginofEventAction) Event 920001
+
+>>>>>> (BeginofEventAction) Event 921001
+
+>>>>>> (BeginofEventAction) Event 922001
+
+>>>>>> (BeginofEventAction) Event 923001
+
+>>>>>> (BeginofEventAction) Event 924001
+
+>>>>>> (BeginofEventAction) Event 925001
+
+>>>>>> (BeginofEventAction) Event 926001
+
+>>>>>> (BeginofEventAction) Event 927001
+
+>>>>>> (BeginofEventAction) Event 928001
+
+>>>>>> (BeginofEventAction) Event 929001
+
+>>>>>> (BeginofEventAction) Event 930001
+
+>>>>>> (BeginofEventAction) Event 931001
+
+>>>>>> (BeginofEventAction) Event 932001
+
+>>>>>> (BeginofEventAction) Event 933001
+
+>>>>>> (BeginofEventAction) Event 934001
+
+>>>>>> (BeginofEventAction) Event 935001
+
+>>>>>> (BeginofEventAction) Event 936001
+
+>>>>>> (BeginofEventAction) Event 937001
+
+>>>>>> (BeginofEventAction) Event 938001
+
+>>>>>> (BeginofEventAction) Event 939001
+
+>>>>>> (BeginofEventAction) Event 940001
+
+>>>>>> (BeginofEventAction) Event 941001
+
+>>>>>> (BeginofEventAction) Event 942001
+
+>>>>>> (BeginofEventAction) Event 943001
+
+>>>>>> (BeginofEventAction) Event 944001
+
+>>>>>> (BeginofEventAction) Event 945001
+
+>>>>>> (BeginofEventAction) Event 946001
+
+>>>>>> (BeginofEventAction) Event 947001
+
+>>>>>> (BeginofEventAction) Event 948001
+
+>>>>>> (BeginofEventAction) Event 949001
+
+>>>>>> (BeginofEventAction) Event 950001
+
+>>>>>> (BeginofEventAction) Event 951001
+
+>>>>>> (BeginofEventAction) Event 952001
+
+>>>>>> (BeginofEventAction) Event 953001
+
+>>>>>> (BeginofEventAction) Event 954001
+
+>>>>>> (BeginofEventAction) Event 955001
+
+>>>>>> (BeginofEventAction) Event 956001
+
+>>>>>> (BeginofEventAction) Event 957001
+
+>>>>>> (BeginofEventAction) Event 958001
+
+>>>>>> (BeginofEventAction) Event 959001
+
+>>>>>> (BeginofEventAction) Event 960001
+
+>>>>>> (BeginofEventAction) Event 961001
+
+>>>>>> (BeginofEventAction) Event 962001
+
+>>>>>> (BeginofEventAction) Event 963001
+
+>>>>>> (BeginofEventAction) Event 964001
+
+>>>>>> (BeginofEventAction) Event 965001
+
+>>>>>> (BeginofEventAction) Event 966001
+
+>>>>>> (BeginofEventAction) Event 967001
+
+>>>>>> (BeginofEventAction) Event 968001
+
+>>>>>> (BeginofEventAction) Event 969001
+
+>>>>>> (BeginofEventAction) Event 970001
+
+>>>>>> (BeginofEventAction) Event 971001
+
+>>>>>> (BeginofEventAction) Event 972001
+
+>>>>>> (BeginofEventAction) Event 973001
+
+>>>>>> (BeginofEventAction) Event 974001
+
+>>>>>> (BeginofEventAction) Event 975001
+
+>>>>>> (BeginofEventAction) Event 976001
+
+>>>>>> (BeginofEventAction) Event 977001
+
+>>>>>> (BeginofEventAction) Event 978001
+
+>>>>>> (BeginofEventAction) Event 979001
+
+>>>>>> (BeginofEventAction) Event 980001
+
+>>>>>> (BeginofEventAction) Event 981001
+
+>>>>>> (BeginofEventAction) Event 982001
+
+>>>>>> (BeginofEventAction) Event 983001
+
+>>>>>> (BeginofEventAction) Event 984001
+
+>>>>>> (BeginofEventAction) Event 985001
+
+>>>>>> (BeginofEventAction) Event 986001
+
+>>>>>> (BeginofEventAction) Event 987001
+
+>>>>>> (BeginofEventAction) Event 988001
+
+>>>>>> (BeginofEventAction) Event 989001
+
+>>>>>> (BeginofEventAction) Event 990001
+
+>>>>>> (BeginofEventAction) Event 991001
+
+>>>>>> (BeginofEventAction) Event 992001
+
+>>>>>> (BeginofEventAction) Event 993001
+
+>>>>>> (BeginofEventAction) Event 994001
+
+>>>>>> (BeginofEventAction) Event 995001
+
+>>>>>> (BeginofEventAction) Event 996001
+
+>>>>>> (BeginofEventAction) Event 997001
+
+>>>>>> (BeginofEventAction) Event 998001
+
+>>>>>> (BeginofEventAction) Event 999001
+WARNING: command "/vis/viewer/update" could not be applied: no current viewer.
+file name:  /data/chocula/villaa/k100Sim_Data/252Cf/Cf252_k100_0x0000_1M_1551302218_000_000.txt
+Deleted dataArray.
