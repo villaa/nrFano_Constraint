@@ -32,7 +32,7 @@ update_plots();
 
 
 <h2><center>The Silicon Effective Fano Factor from Lindhard and Dougherty</center></h2>
- <center><span style="font-weight: bold;">02/13/19</span><br style="font-weight: bold;"></center>
+ <center><span style="font-weight: bold;">02/21/19</span><br style="font-weight: bold;"></center>
 
 <br>
 <center><span style="font-weight: bold;">A.N. Villano</span><br></center>
@@ -57,7 +57,7 @@ theoretically [<a href="papers/Lindhard2.pdf">Lind63a</a>, <a
 <ol>
 
 <li><a href="#epsilon">Lindhard energy definition</a></li>
-<li><a href="#dough">Dogherty paper</li>
+<li><a href="#dough">Dougherty paper</li>
 <li><a href="#lindx">Lindhard extraction and plot</li>
 <li><a href="#furtherwork">further work</a></li>
 <li><a href="#conclusion">conclusions</a></li>
@@ -67,6 +67,9 @@ theoretically [<a href="papers/Lindhard2.pdf">Lind63a</a>, <a
 </ol>
 
 <h3 id="epsilon">1. Lindhard energy definition</h3>
+<br>
+<b>Energy Definition:</b>
+<br>
 <p>
 Lindhard [<a href="papers/Lindhard3.pdf">Lind63b</a>] defines the dimensionless energy as follows. 
 </p>
@@ -121,34 +124,230 @@ and for silicon:
 \begin{equation}
 \epsilon_{Si} = \mathrm{0.02432} \cdot E_{Si} \mathrm{(keV)},
 \end{equation}
-
-<!--<br>
-<button onclick="toggle_visibility('complex_kin');">show/hide more complex kinematics</button>
-<div id="complex_kin">
+<p>
+These definitions seem to match the Sorensen paper [<a
+	href="https://journals.aps.org/prd/abstract/10.1103/PhysRevD.91.083509">Sor15</a>],
+because $\epsilon$=0.1 corresponds to 28.3&nbsp;keV and 4.11&nbsp; for germanium and silicon
+respectively. This correspondence is confirmed by Figures&nbsp;1&amp;3 of that paper respectively.
 <br>
-<b>Gamma Cascade Kinematics:</b>
 <br>
+<b>Variance in Ionization Production and the Effective Fano Factor:</b>
+<br>
+<p>
+Using this non-dimensional energy, Lindhard et al. parameterize the energy deposition balance for a nuclear recoil as:
+</p>
+\begin{equation}
+\epsilon = \nu(\epsilon) + \eta(\epsilon),
+\end{equation}
+<p>
+where $\nu$ is the energy given to the lattice (phonons) and $\eta$ is the energy given to the
+electron system (e/h pairs). The total energy deposited is fixed and assumed to be equal to the
+incoming energy, but the sharing of energy can be a function of the incoming energy. This makes
+the standard definition of "ionization yield:" $Y=\bar{\eta}/\epsilon$, where the bar
+indicates the average for many identical recoils. The variance in the energy given to the
+electronic system is denoted (following Lindhard) as $\Omega^2$. Note that due to the constrained
+total energy deposit this must also be the variance of the lattice energy.
+</p>
+<p>
+The standard Fano factor, F, is defined as follows:
+</p>
+\begin{equation}
+\sigma_N = \sqrt{F\bar{N}},
+\end{equation}
+<p>
+where $\sigma_N$ is the standard deviation of the number of ionization pairs produced, and $\bar{N}$
+is the average number of pairs produced. This equation basically is an analog to the
+counting-statistics variance from Poisson statistics; if the Fano factor is unity the distribution
+agrees with the Poisson distribution up to the second moment. 
+</p>
+<p>
+The fractional variance for the electronic energy is $\sigma_N/\bar{N}$ and in terms of Lindhard
+parameters this is $\Omega/\eta$. And, since $\bar{\eta} = Y\epsilon$, we can write the effective
+Fano factor like:
+</p>
+\begin{equation}
+\tilde{F} = \bar{N} \frac{1}{Y^2} \left(\frac{\Omega}{\epsilon}\right)^2.
+\end{equation}
+<p>
+The ratio of the variance in ionization production to the total energy of the recoil has been
+measured for silicon by Dougherty [<a
+	href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.45.2104">Doug91</a>]. And The
+ionization yield for silicon can be taken from the Lindhard paper with the parameter k=0.15. This
+will allow one to put Dougherty's measurements into the context of the effective Fano factor
+$\tilde{F}$. 
+</p>
 
-</div>
-<script type="text/javascript">
-   remove_visibility('complex_kin');
-</script>
-<br>-->
 
 <br>
 <h3 id="dough">2. Dougherty paper</h3>
 <p>
+The measurement by Dougherty [<a
+	href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.45.2104">Doug91</a>] was done
+by using neutrons to scatter off of silicon and looking for features in the resulting recoil
+spectrum. The experiment used the $^7$Li(p,n)$^7$Be reaction to produce neutrons via a proton
+source of around 1.8&ndash;2.7&nbsp;MeV. Each proton energy produced a different maximum neutron
+energy. It was a "thick-target" experiment so the protons slowed to a stop in the
+neutron-production target and ensured that neutrons of all energies up to the maximum were
+produced. 
 </p>
+<p>
+The neutron scatters were observed in a silicon ionization detector with threshold of 0.5&nbsp;keV
+ionization energy. Because of resonance structures in silicon for incoming neutron energies of
+815, 566, 189, 56, and 31&nbsp;keV, features are observed in the recoil spectrum. Generally the
+changes in elastic cross section will cause the recoil spectra to have a feature when one moves
+above the maximum recoil energy from a resonant-energy neutron. 
+</p>
+<p>
+Near the features in slope of the recoil energy spectra there is an inflection due to the resonant
+features that can be extracted by looking at a "derivative filter" of the recoil spectrum. The
+simple filter used is:
+</p>
+\begin{equation}
+\Delta N(k) /n \equiv \left[\sum_{i=k+1}^{k+n} N(i) - \sum_{i=k-n-1}^{k} N(i)\right]/n,
+\end{equation}
+<p>
+where $n$ was specifically chosen for each neutron energy to emphasize the inflection point.
+</p>
+<p>
+Table&nbsp;1 shows the relevant data from the Dougherty paper.
+</p>
+
+<br>
+<center>
+<table WIDTH="95%">
+<tr>
+<td>Table 1:  Relevant data from the paper of Dougherty. The observed widths are usually the
+	full-width at half maximum (FWHM) estimates except for the 8.9&nbsp;keV observed
+	ionization peak which is the low-side half width at half maximum (HWHM). The expected
+	widths are a combination of the ionization signal electronics noise (99-eV rms) and the
+	scattering-resonance widths transformed to ionization equivalent. The excess fluctuations
+	are the result of subtracting (in quadrature) the expected widths from the observed widths
+	and transforming to 1-$\sigma$ equivalent. 
+</td>
+</tr>
+</table>
+</center>
+<center>
+<table border=1 WIDTH="95%">
+<!--table border=1 align="center" class="boldtable" -->
+
+<tbody>
+          <tr>
+           <td bgcolor=#D6CCA6>Si recoil energy (keV)</td>
+           <td bgcolor=#D6CCA6>Si resonance energy (keV)</td>
+           <td bgcolor=#D6CCA6>Observed ionization energy (keV)</td>
+	   <td bgcolor=#D6CCA6>Ionization efficiency (%)</td>
+           <td bgcolor=#D6CCA6>Observed width (keV)</td>
+           <td bgcolor=#D6CCA6>Expected width (keV)</td>
+           <td bgcolor=#D6CCA6>Excess fluct. (%)</td>
+          </tr>
+          <tr>
+      	    <td rowspan=1>109.1$\pm$0.7</td>
+            <td>815</td>
+	    <td>55.5$\pm$2 </td>
+	    <td>51.4$\pm$2</td>
+	    <td>16$\pm$3</td>
+	    <td>3.5$\pm$0.4</td>
+	    <td>6.1$\pm$1.2</td>
+          </tr>
+
+          <tr>
+      	    <td rowspan=1>75.7$\pm$0.4</td>
+            <td>566</td>
+	    <td>33.3$\pm$0.4 </td>
+	    <td>45.6$\pm$0.5</td>
+	    <td>9.6$\pm$1.0</td>
+	    <td>1.1$\pm$0.3</td>
+	    <td>5.3$\pm$0.6</td>
+          </tr>
+
+          <tr>
+      	    <td rowspan=1>25.3$\pm$0.3</td>
+            <td>189</td>
+	    <td>8.9$\pm$0.1 </td>
+	    <td>35.5$\pm$0.6</td>
+	    <td>1.30$\pm$0.04</td>
+	    <td>0.75$\pm$0.1</td>
+	    <td>3.6$\pm$0.3</td>
+          </tr>
+
+          <tr>
+      	    <td rowspan=1>7.50$\pm$0.03</td>
+            <td>56</td>
+	    <td>2.01$\pm$0.02 </td>
+	    <td>26.9$\pm$0.4</td>
+	    <td>0.55$\pm$0.07</td>
+	    <td>0.24$\pm$0.01</td>
+	    <td>2.8$\pm$0.4</td>
+          </tr>
+
+          <tr>
+      	    <td rowspan=1>4.15$\pm$0.15</td>
+            <td>31</td>
+	    <td>0.93$\pm$0.008 </td>
+	    <td>22.5$\pm$0.5</td>
+	    <td>0.32$\pm$0.06</td>
+	    <td>0.236$\pm$0.005</td>
+	    <td>2.2$\pm$0.9</td>
+          </tr>
+        </tbody>
+     </table>
+</center>
+<br>
 
 <h3 id="lindx">3. Lindhard extraction and plot </h3>
 <br>
 <p>
+In order to be sure I understood all of the details of the Dougherty paper and its relation to the
+Lindhard papers, I decided to re-plot the Fig.&nbsp;2 of Dougherty, and overlay my own extraction
+of the Lindhard model for the ionization variance. Python&nbsp;Code&nbsp;Block&nbsp;1 below (use the show/hide
+button to reveal) shows the Jupyter notebook that I used to accomplish the analysis. 
+</p>
+
+<br>
+<button onclick="toggle_visibility('PythonBlock1');">show/hide Python&nbsp;Block&nbsp;1 details</button>
+<div id="PythonBlock1">
+<center>
+<table WIDTH="95.0%" align="center">
+<tr>
+	<td align="center">Python Block 1: An IPython notebook demonstration of code to apply the
+
+    </td> 
+</tr>
+</table>
+<center>
+<iframe src="html/plot_Lindhard_Variance_NACIII.html" width="95%" height="600">
+      Browser does not support iframe.  This is an example of Python code, see <a href="yield_demonstration.html">the yield demonstration IPython code</a>
+</iframe>
+</center>
+
+</div>
+<script type="text/javascript">
+   remove_visibility('PythonBlock1');
+</script>
+<br>
+<p>
+First I extracted the Dougherty data (see Fig.&nbsp;1 (left)) from his Fig.&nbsp;2. This was
+straight-forward to do with "Data Thief" but it was a bit difficult because the lines for the
+theory models were not contiguous and had poor contrast. So I ended up tracing them with a
+fine-point sharpie marker and then using Data Thief [<a
+	href="https://www.datathief.org/">Data-Thief</a>]. I used <a
+	href='pics/Dougherty_fig2.png'>this</a> figure to extract the curves shown on the
+Dougherty plot (see Fig.&nbsp;1 (left), black solid and dashed lines). 
+</p>
+<p>
+To get the $\Omega/\epsilon$ information I used <a href='pics/Lindhard_NACIII_fig8.png'>Fig. 8</a>
+of the Lindhard "Notes on Atomic Collisons III" (NACIII) paper [<a
+href="papers/Lindhard3.pdf">Lind63b</a>]. I used the same technique of tracing them with a
+fine-point sharpie (red and green). 
 </p>
 <br>
 <center>
 <table WIDTH="90.0%" align="center">
 <tr>
-	<td align="center">Figure 1: (left) Silicon simulation with Luke gain added in for a
+	<td align="center">Figure 1: (left) Extracted Dougherty data overlayed with extracted
+		Lindhard data in terms of true recoil energies and $\Omega/\epsilon$. (right) Same
+		data but converted to be in terms of the effective Fano factor ($\tilde{F}$).
 
     </td> 
 </tr>
@@ -179,26 +378,44 @@ and for silicon:
 </table>
 </center>
 <br>
+<p>
+Figure&nbsp;1 shows that the technique of tracing was a little unstable but I was able in the end
+to obtain the same graph as Dougherty and also confirm that the estimates for the theoretical
+$\Omega/\epsilon$ came from the Lindhard NACIII paper Fig.&nbsp;8. When I converted the ratio into
+the effective Fano factor using the equations of Sec.&nbsp;1 (and a $k$=0.15 for the Lindhard
+model of the silicon ionization yield) I get Figure&nbsp;1 (right). The effective Fano factor gets
+to over 200 times larger than the standard Poisson fluctuation (Fano of one). 
+</p>
 
 <br>
 <h3 id="furtherwork">4. further work</h3>
 
 <p>
+This note is pretty simple and self-contained. The technique is interesting and that might be good
+to study more in the future, but is not relevant on the short timescale. Here are some areas of
+further work related to this:
 </p>
 <ol>
-
+ <li>Try to get better specifications of the Lindhard and Dougherty curves for the theoretical
+	 predictions for the ionization variance (and therefore the effective Fano factor too).
+ </li>
+ <br>
+ <li>Get a double-check on the conversion from ionization variance to the effective Fano factor.</li> 
 </ol>
 <br>
-<p>
-Still, there are details that could change the logistics of doing such a calibration drastically
-and they still need to be addressed.
-</p>
 <br>
 <h3 id="conclusion">5. conclusions</h3>
 
 <p>
+I was able to extract the data from the Dougherty paper and convert it to the effective Fano
+factor. Furthermore, I was able to match the theoretical predictions from the Dougherty paper
+where he quoted the Lindhard predictions, by taking the original predictions from that paper and
+converting the energy scale ($\epsilon$ relations in Sec.&nbsp;1) and converting to the
+appropriate percent scale that Dougherty used for the "excess" ionization variance. 
 </p>
 <ol>
+<li>Note that the effective Fano factors are quite large for silicon near 100&nbsp;keV recoils,
+	over 200 times wider than a Poisson fluctuation. This result should be checked.</li>
 </ol>
 
 <br>
@@ -210,25 +427,17 @@ and they still need to be addressed.
 <br>
     [<a id="Lind68">Lind68</a>] <a href="papers/Lindhard1.pdf">J. Lindhard, et al. (Notes on Atomic Collisions I) Mat. Fys. Medd. K. Dan. Vidensk. Selsk <b>36</b> 10 (1968)</a><br>
     [<a id="Lind63a">Lind63a</a>] <a href="papers/Lindhard2.pdf">J. Lindhard, et al. (Notes on Atomic Collisions II) Mat. Fys. Medd. K. Dan. Vidensk. Selsk <b>33</b> 14 (1963)</a><br>
-    [<a id="Lind63b">Lind63a</a>] <a href="papers/Lindhard3.pdf">J. Lindhard, et al. (Notes on Atomic Collisions III) Mat. Fys. Medd. K. Dan. Vidensk. Selsk <b>33</b> 10 (1963)</a><br>
+    [<a id="Lind63b">Lind63b</a>] <a href="papers/Lindhard3.pdf">J. Lindhard, et al. (Notes on Atomic Collisions III) Mat. Fys. Medd. K. Dan. Vidensk. Selsk <b>33</b> 10 (1963)</a><br>
     [<a id="Sor15">Sor15</a>] <a href="https://journals.aps.org/prd/abstract/10.1103/PhysRevD.91.083509">P. Sorensen Phys. Rev. D <b>91</b> 083509 (2015)</a><br>
     [<a id="Doug91">Doug91</a>] <a href="https://journals.aps.org/pra/abstract/10.1103/PhysRevA.45.2104">B.L. Dougherty Phys. Rev. A <b>45</b> 2104 (1991)</a><br>
     [<a id="Jones75">Jones75</a>] <a href="http://journals.aps.org/pra/abstract/10.1103/PhysRevA.11.1347">K.W. Jones, et al. Phys. Rev. A <b>11</b> 1347 (1975)</a><br>
     [<a id="Gauss-cgs">Gauss-cgs</a>] <a href="https://en.wikipedia.org/wiki/Gaussian_units">Gaussian-cgs units for electromagnetism</a><br>
     [<a id="Bohr-rad">Bohr-rad</a>] <a href="https://en.wikipedia.org/wiki/Bohr_radius">Bohr radius in Gaussian units</a><br>
+    [<a id="Data-Thief">Data-Thief</a>] <a href="https://www.datathief.org/">Data Thief program</a><br>
 <br>
 <h3 id="footnotes">7. footnotes</h3>
 <br>
 
-	&dagger;  There is a metastable level <sup>73m</sup>Ge at 66.7&nbsp;keV which has a lifetime of 0.499&nbsp;s.  The reference [<a href="http://journals.aps.org/prc/abstract/10.1103/PhysRevC.43.1086">Isl91</a>] lists no transition to the ground state but one to the 66.7&nbsp;keV level at a strength of 1.43&nbsp;%.  Since that lifetime is long enough so that some of the decays will not be piled up events, we can consider a single-gamma transition with transition energy S<sub>n</sub> - 66.7&nbsp;keV.  This makes the recoil energy 332.1&nbsp;eV. A delayed-tag analysis might help bring out these events in data.
-	<br>
-	<br>
-	&Dagger;  The reference [<a href="http://journals.aps.org/prc/abstract/10.1103/PhysRevC.43.1086">Isl91</a>] does not mention the transition, perhaps more modern references have constrained it.  It does, however mention a continuum transition to the 595.9&nbsp;keV level at a strength of 0.06&nbsp;%.  That level is only coupled to the ground state by the emission of an ~ 595.9&nbsp;keV gamma.  The transition is fast (12.41&nbsp;ps) so it's likeley they're emitted near-simultaneously.  Since a 595.9&nbsp;keV gamma has a probability of escaping a germanium detector of ~cm scale, we can calculate a range of recoil energies depending on if the second gamma is emitted parallel or anti-parallel to the first.  In the former case we get the same recoil energy as the single-gamma case, 755.1&nbsp;eV, in the latter case we get 669.4&nbsp;eV.
-	<br>
-	<br>
-	&sect; There is a metastable level <sup>75m</sup>Ge at 139.7&nbsp;keV which has a lifetime of 47.7&nbsp;s.  The reference [<a href="http://journals.aps.org/prc/abstract/10.1103/PhysRevC.81.027603">Meier10</a>] measures the capture on <sup>74</sup>Ge that results in this state via a single (I think) gamma: <sup>74</sup>Ge(n,&gamma;)<sup>75m</sup>Ge to be about 130.5&nbsp;mb for thermal neutrons.  This is comparable to the ground state value they measure, 497&nbsp;mb.  If we take the strength for the g.s. capture to be 2.83&nbsp;%[<a href="http://journals.aps.org/prc/abstract/10.1103/PhysRevC.43.1086">Isl91</a>] and consider the two possibilities to be mutually exclusive, then the strength for the metastable case is 0.74&nbsp;%.   Finding captures to this metastable state might benefit from a delayed tag on a 139.7&nbsp;keV event, and the preceding nuclear recoil would be 290.4&nbsp;eV.  This has a benefit over looking for a trailing tag in capture to <sup>73m</sup>Ge because <sup>75</sup>Ge isn't naturally present and is anyway unstable, so this trailing tag is not competing with inelastic excitation from neutrons (if a high-energy source like <sup>252</sup>Cf is used).
-	<br>
-	<br>
-	&para; There is a metastable level <sup>77m</sup>Ge at 159.7&nbsp;keV which has a lifetime of 53.7&nbsp;s and decays either through isomeric transition (19&nbsp;%) or beta decay (81&nbsp;%).  The reference [<a href="http://link.springer.com/article/10.1140%2Fepja%2Fi2012-12020-y">Meier12</a>] measures the strength for capture to this state via <sup>76</sup>Ge(n,&gamma;)<sup>77m</sup>Ge to be 25.53&nbsp;%.  These facts give the expected recoil an energy of 243.9&nbsp;eV.
-	
+<!--	&dagger;  There is a metastable level <sup>73m</sup>Ge at 66.7&nbsp;keV which has a lifetime of 0.499&nbsp;s.  The reference [<a href="http://journals.aps.org/prc/abstract/10.1103/PhysRevC.43.1086">Isl91</a>] lists no transition to the ground state but one to the 66.7&nbsp;keV level at a strength of 1.43&nbsp;%.  Since that lifetime is long enough so that some of the decays will not be piled up events, we can consider a single-gamma transition with transition energy S<sub>n</sub> - 66.7&nbsp;keV.  This makes the recoil energy 332.1&nbsp;eV. A delayed-tag analysis might help bring out these events in data.
+<br>-->
 </html>
