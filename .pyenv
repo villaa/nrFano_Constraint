@@ -4,6 +4,7 @@ import os
 import matplotlib as mpl
 
 sys.path.append('python/')
+sys.path.append('sima2py/')
 sys.path.append('condor/')
 os.environ['MPLCONFIGDIR'] = './mplstyles'
 
