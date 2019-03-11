@@ -50,6 +50,7 @@ def readFiles(flist,dirpath='./'):
         d = []
         data,tags = readFile(dirpath+flist[0]) #FIXME bug in simcode only puts correct header for file 0 -- eventually need to check if n colums is same for all files and return error if not
         for f in flist:
+          print(dirpath+f)
           data,t = readFile(dirpath+f)
           d.extend(data)
 
