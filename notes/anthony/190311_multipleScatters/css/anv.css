@@ -1,0 +1,116 @@
+/* GENERAL */
+div.floatLeft { 
+    float: left; 
+    margin: 4px; 
+}
+div.floatRight { 
+    float: right; 
+    margin: 4px; 
+}
+sup, sub { vertical-align: 0;
+           position: relative; }
+sup { bottom: 1ex; }
+sub { top: 0.8ex; }
+body
+{
+color: black;
+/*background-color: fffff2;*/
+background-color: ffffff;
+alink=#000099;
+link=#000099;
+vlink=#990099;
+}
+
+/* BOLDTABLE CLASS: For Ge/Si detector tables */
+.boldtable, .boldtable TD, .boldtable TH
+{
+font-size:16pt;
+}
+.boldtable TD
+{
+background-color:#7B6F4B;
+font-style:normal;
+font-size:large;
+}
+.boldtable TH
+{
+background-color:#7B6F4B;
+font-style:normal;
+font-size:large;
+}
+/* H3: colored section header/divider*/
+h3
+{
+background-color: #CFB87C;
+/*background-color: #8B2323;*/
+border: 2px solid #000000;
+/*border: 2px solid #FFB90F;*/
+text-align: left;
+color: white;
+}
+/* code block */
+pre {
+border: 1px dashed rgb(0, 0, 0); padding: 18px; background-color: #EDEDED; font-family: 'courier new'; font-size: 12pt; width: 80%; margin-left: auto; margin-right: auto; white-space: pre-wrap;
+word-wrap: break-word;
+}
+out {
+border: 1px dashed rgb(0, 0, 0); padding: 18px; background-color: #BDFCC9; font-family: 'courier new'; font-size: 12pt; width: 80%; margin-left: auto; margin-right: auto;
+}
+/*UTILITYTABLE CLASS*/
+.utilitytable
+{
+background-color: #006699;
+border: 1px solid black;
+text-align: center;
+color: white;
+}
+.utilitytable a:link{color: #FFFF00;}
+.utilitytable a:vlink{color:  #FFFF00;}
+.utilitytable a:alink{color: white;}
+/*HEADBOX*/
+DIV.headbox
+{ 
+background-color: #006699;
+color: #FFFF00;
+text-align: center;
+}
+/*ABSTRACT*/
+DIV.abs
+{
+border: 2px solid black; 
+width: 70%; 
+margin-left: 15%; 
+text-size: medium; 
+background: #FFFFFF;
+}
+/*IMAGES*/
+IMG.enhance
+{
+border: 2px solid black;
+}
+/*SPECIAL TABLE*/
+<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<style type="text/css">
+table.imagetable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table.imagetable th {
+	background:#b5cfd2 url('cell-blue.jpg');
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+table.imagetable td {
+	background:#dcddc0 url('cell-grey.jpg');
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+</style>
