@@ -28,6 +28,7 @@ def getRFunc(infile):
     lin_vec[3] = np.float64(line.split()[10])
     out[det]['lin'] = lin_vec 
 
+  f.close()
   return out
 
 def makeRFunc(vec,islin = False):
@@ -67,6 +68,8 @@ def getBandFunc(prefix):
     sig_vec[3] = np.float64(line.split()[4])
     out[det]['sig'] = sig_vec 
 
+  f.close()
+  g.close()
   return out
 def makeBFunc(vec,issig = False):
 
