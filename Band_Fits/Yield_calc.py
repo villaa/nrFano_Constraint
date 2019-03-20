@@ -92,11 +92,14 @@ def Yield_NR(Er_true):
 
         Ptnr = Enr+(V/1000)*N_eh #central value of Pt
         Qnr = N_eh*eps
+        
+        Ptnr1 = Enr + (V/1000)*Neh # mean Neh, not varied. 
+        Qnr1 = Neh*eps #mean Neh 
 
 
        #With Fano Factor. 
-        sig_p = np.sqrt(p_alpha + p_beta*Ptnr + p_gamma*(Ptnr**2))  #Phonon uncertainty (energy dependent)
-        sig_q = np.sqrt(q_alpha + q_beta*Qnr + q_gamma*(Qnr**2)) #Charge uncertainty 
+        sig_p = np.sqrt(p_alpha + p_beta*Ptnr1 + p_gamma*(Ptnr1**2))  #Phonon uncertainty (energy dependent)
+        sig_q = np.sqrt(q_alpha + q_beta*Qnr1 + q_gamma*(Qnr1**2)) #Charge uncertainty 
         sigp_nr.append(sig_p)
         sigq_nr.append(sig_q)
 
@@ -116,18 +119,22 @@ def Yield_NR(Er_true):
         ER.append(Ernr)
        
         Yield.append(yield1)
+        
+    df = pd.DataFrame({'E_true':Enr_true,'E_measured':ER,'Yield':Yield,'EP':EPnr,'EQ':EQnr,'Sigp':sigp_nr,'Sigq':sigq_nr})
      
         
-    return  Enr_true, ER, Yield, EQnr,EPnr,sigp_nr,sigq_nr 
+    return  df
 
 
 
 def Yield_Er(Er_True):
     Yield_er = []
-    ERer = []
-    Er_true =[]
+    ER = []
+    E_true =[]
     EQ = []
+    EQ_true = []
     EP = []
+    EP_true = []
     sig_p = []
     sig_q = []
    # bins  = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
@@ -135,15 +142,18 @@ def Yield_Er(Er_True):
     #Eer = np.random.choice(E1er,N)
     #E1er = (bins[:-1] + bins[1:]) / 2
     #E1er = np.array([10.7,25.2,40.3,75.2])
-    E1er = Er_True
-    print("Bin center is:", E1er)
+  #  E1er = Er_True
+
 
     QER = []
  
+    Er_True = np.sort(Er_True)
+    
+    
     for Eer in Er_True:
 
 
-        Er_true.append(Eer)
+        E_true.append(Eer)
         #Eer = 40
 
        # Pter = (1+(V/eps/1000))*Eer
@@ -151,12 +161,17 @@ def Yield_Er(Er_True):
         #More physical 
         
         N_e = Eer/eps 
-        Er_fano = 0#0.13
+        Er_fano = 0.13
         N_er = np.random.normal(0,np.sqrt(Er_fano *N_e)) + N_e  # 0.13 is the fano factor for germainium 
         #N_er = N_e
         Pter = Eer+(V/1000)*N_er
         
-        sig_pee = np.sqrt(p_alpha + p_beta*Pter + p_gamma*(Pter**2)) #Phonon uncertainty 
+        Pter_noF = Eer+(V/1000)*N_e
+        
+        sig_pee = np.sqrt(p_alpha + p_beta*Pter + p_gamma*(Pter**2))
+        
+        sig_p_noF = np.sqrt(p_alpha + p_beta*Pter_noF + p_gamma*(Pter_noF**2)) #Phonon uncertainty 
+    
         sig_qee = np.sqrt(q_alpha + q_beta*Eer + q_gamma*(Eer**2)) #Charge uncertainty
         
         sig_p.append(sig_pee)
@@ -164,7 +179,7 @@ def Yield_Er(Er_True):
         
         #For Linear Fit Model
         '''
-        alpha1 = 0.406241
+        alpha1 = 0.406241f
         beta1 =0.00899969
         sig_qee = alpha1 + beta1*Eer   #Charge resolution 
         
@@ -181,17 +196,22 @@ def Yield_Er(Er_True):
         Qer = np.random.normal(Eer,sig_qee)
 
         EQ.append(Qer)
+        EQ_true.append(Eer)
+        
         EP.append(Pter1)
+        EP_true.append(Pter_noF)
+        
      
 
         Erer = Pter1 - (V/eps/1000)*Qer
-        ERer.append(Erer)
+        ER.append(Erer)
 
        # Y_er = yer_mu(Erer)
         
         Yield2 = Qer/Erer
         Yield_er.append(Yield2)
-        
-    return Er_true,ERer, Yield_er, EQ, EP, sig_p, sig_q
-
+    
+    df = pd.DataFrame({'E_true':E_true,'E_measured':ER,'Yield':Yield_er,'EP':EP,'EP_true':EP_true,'EQ_true':EQ_true,'EQ':EQ,'Sigp':sig_p,'Sigq':sig_q,'Sigp_noF':sig_p_noF})
+    
+    return df
 
