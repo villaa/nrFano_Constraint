@@ -23,6 +23,8 @@ def hist_plot(data,prob,array,bins):
     ax1.set_ylabel('Count',size = '18')
     ax1.set_title("Electron Recoil Yield Distribution " + str(bins) + ' keV')
     ax1.set_xlim(xmin, xmax)
+    ax1.set_ylim(bottom = 0.1)
+    ax1.set_yscale('log')
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='--')
     ax1.legend(loc=1,prop={'size':18})

@@ -15,7 +15,7 @@ from tabulate import tabulate
 
     
         
-def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
+def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true):
     
     V = 4
     eps = 0.0033
@@ -25,16 +25,20 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
     Error = [] 
     sig_high = []
     sig_low = []
-    expected = []
+    expected1 = []
     bin_names = []
+    bincenters = []
+    
     
    # print("before sort Er_true is:",Er_true)
-    recoil_type, upper,lower = band_func(Er_true,s)
+    recoil_type, upper,lower = band_func(df.E_true,s)
 
     #Data = np.vstack((Er,Yield,upper,lower,EP,EQ,sigp,sigq,Er_true)).T
     #Data1 = Data[np.argsort(Data[:, 0])]
     
-    df = pd.DataFrame({'E_measured':Er,'E_true':Er_true,'Yield':Yield,'upper':upper,'lower':lower,'EP':EP,'EQ':EQ,'Sigp':sigp,'Sigq':sigq})
+    df1 = pd.DataFrame({'upper':upper,'lower':lower})
+    
+    df = pd.concat([df,df1],axis=1)
 
     #bins  = [10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110] #use 8
    # bins = [9,16,25.2,40.3,75.2]
@@ -67,16 +71,18 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
             #Er_true = np.array(df[8].loc[df1 == q])
 
             E = np.array(bin_data.E_measured)
-            Er_true = np.array(bin_data.E_true)
+            E_true = np.array(bin_data.E_true)
             x = np.array(bin_data.Yield) # Yield 
             y = np.array(bin_data.upper) #upper bound
             z = np.array(bin_data.lower) #lower bound
-            P = np.array(bin_data.EP) #EP
+            P = np.array(bin_data.EP)
+            P_true = np.array(bin_data.EP_true)
             Q = np.array(bin_data.EQ) #EQ
+            Q_true = np.array(bin_data.EQ_true) #EQ
             Sp = np.array(bin_data.Sigp) #Sigma_p
             Sq = np.array(bin_data.Sigq) #Sigma_q
 
-
+            bincenters.append(np.mean(E_true))
             #print(x)
 
             #look at distributions graphically f
@@ -84,7 +90,7 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
             u = np.arange(0,2,0.002) #electron recoils 
            # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
-            prob = dist_check(u,P,Q,Sp,Sq,k) #amy's defined PDF 
+            prob = dist_check(u,P_true,Q_true,Sp,Sq,k) #amy's defined PDF 
             
             
          
@@ -116,11 +122,11 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
 
             #v = np.linspace(np.mean(z),np.mean(y),1000)
             #g = np.trapz(prob,v)
-            g = integrate.quad(lambda x: dist_check(x,P,Q,Sp,Sq,k),np.mean(z),np.mean(y) )
+            g = integrate.quad(lambda x: dist_check(x,P_true,Q_true,Sp,Sq,k),np.mean(z),np.mean(y) )
             H =g[0]*100
             #H = g*500
            # print('Area under curve is:',g)
-            expected.append(H)
+            expected1.append(H)
 
 
             n = (N-up-down)
@@ -164,7 +170,7 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
     print("--------------", '\t', '\t' "-------------------", '\t' "-------------------", '\t' "-------------------", '\t' "-------------------")
     bin_spacing = np.array(bin_names).astype(str)
 
-    for x,y,e,h,z,q,t,l in zip(bin_spacing,Percent1,Error,expected,Percent2,Percent3,sig_high,sig_low):
+    for x,y,e,h,z,q,t,l in zip(bin_spacing,Percent1,Error,expected1,Percent2,Percent3,sig_high,sig_low):
         print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','±','{0:1.2f}'.format(e),'%', '\t','{0:1.2f}'.format(h), '\t','\t','\t','{0:1.2f}'.format(z), '\t','±','{0:1.2f}'.format(t),'\t', '{0:1.2f}'.format(q), '\t','±','{0:1.2f}'.format(l))
             
     print('--------------------------------------------')
@@ -182,14 +188,15 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
 
-    ax1.scatter(bin_center,Percent1,label = "Simulated")
-    plt.plot(bin_center,expected,label = "Expected")
-    plt.errorbar(bin_center,Percent1,yerr=Error,fmt ='o',label = 'Error', ecolor = 'purple', Linestyle = 'None', capsize=5, capthick=0.5)
+    #ax1.scatter(bincenters,Percent1,label = "Simulated")
+    #plt.plot(bincenters,expected1,label = "Expected")
+    plt.plot(Er_true,expected,label = "Expected",color ='blue')
+    plt.errorbar(bincenters,Percent1,yerr=Error,fmt ='o',label = 'Simulated', ecolor = 'purple', Linestyle = 'None', capsize=5, capthick=0.5)
     plt.axhline(68, color='r', linestyle='--',Label = "68%")
-    ax1.set_xlabel('Bin Centers [keV]',size = '18')
-    ax1.set_ylabel('Percent of Data in Bin',size = '18')
+    ax1.set_xlabel('Recoil Energy [keV]',size = '18')
+    ax1.set_ylabel('Percent of Data Contained in Band',size = '18')
     ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils', size = '20')
-    plt.xticks(bin_center)
+    plt.xticks(bins)
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     ax1.legend(loc=1,prop={'size':12})
@@ -197,6 +204,6 @@ def bin_check(Yield,Er,Er_true,s,band_func,EP,EQ,sigp,sigq,bins,cut_idx):
     plt.show()
     
 
-    return df
+    return df,bincenters
 
 
