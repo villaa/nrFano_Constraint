@@ -3,7 +3,7 @@
 +CondorGroup = "cdms"
 +HappyToBeEvicted = TRUE
 Universe        = vanilla
-Executable      = /home/phys/villaa/geant4_workdir/bin/Linux-g++/k100Sim 
+Executable      = /home/phys/villaa/analysis/misc/nrFano_Constraint/ms_sim/runMacro.sh
 GetEnv		= true
 
 remote_initialdir =  /home/phys/villaa/analysis/misc/nrFano_Constraint/ms_sim
