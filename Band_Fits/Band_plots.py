@@ -18,9 +18,13 @@ ynr_sig = rfr.makeBFunc(bpar_nr[1]['sig'],True)
 ynr_sigv = np.vectorize(ynr_sig)
 
 
-def NR_band_plot(Enr,a):
-    X = Enr
+def NR_band_plot(df):
+    
+    Enr = df.E_measured
+    a = df.Yield
+    X = df.E_measured
     X = np.sort(X)
+    
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
     xy = np.vstack([Enr,a])
