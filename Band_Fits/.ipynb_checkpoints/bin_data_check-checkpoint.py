@@ -15,7 +15,7 @@ from tabulate import tabulate
 
     
         
-def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true):
+def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     
     V = 4
     eps = 0.0033
@@ -94,7 +94,9 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true):
             
             
          
-            hist_plot(x,prob,u,bin_name)  
+            hist_plot(x,prob,u,bin_name,fano)  
+            
+            #hist_plot_compare(data,data1,prob,prob1,array,bins)
 
 
 
@@ -195,12 +197,12 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true):
     plt.axhline(68, color='r', linestyle='--',Label = "68%")
     ax1.set_xlabel('Recoil Energy [keV]',size = '18')
     ax1.set_ylabel('Percent of Data Contained in Band',size = '18')
-    ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils', size = '20')
+    ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils Fano =' + str(fano) , size = '15')
     plt.xticks(bins)
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     ax1.legend(loc=1,prop={'size':12})
-    plt.savefig('figures/Eer_Error.png')
+    plt.savefig('figures/Dist_fits/Eer_Error_NoFano.png')
     plt.show()
     
 
