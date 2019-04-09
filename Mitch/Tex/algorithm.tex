@@ -1,0 +1,86 @@
+\documentclass[12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\doublespacing
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{notoccite}
+\usepackage{subfig}
+
+
+
+\begin{document}
+    
+
+\begin{enumerate}
+    \item Find the true recoil energy. 
+    \begin{itemize}
+        \item Create a uniform distribution of energy between 10 and 150 keV.
+        \item The true recoil energy is then randomly drawn for this distribution. 
+    \end{itemize} 
+  \item Calculate the average number of electron hole pairs produced $\Bar{N}$ based on the yield $Y$.
+   \begin{itemize}
+        \item $Y$ is the average yield calculated from Lindhard for a given recoil energy.  
+    \end{itemize} 
+  
+  \item Randomly draw the number of electron hole pairs produced $N$
+   \begin{itemize}
+        \item $N$ is randomly drawn from a normal distribution with a mean of $\Bar{N}$ and a standard deviation $\sqrt{\Bar{N}F}$, where F is the fano factor. 
+    \end{itemize} 
+
+    \item Calculate $E_P$ and $E_Q$ based on $N$.
+       \begin{itemize}
+        \item $E_P$ and $E_Q$ are considered the "true" values. 
+    \end{itemize} 
+    
+    \item Calculate detector resolutions $\sigma_p$ and $\sigma_q$ 
+        \begin{itemize}
+        \item  $\sigma_p(E_P)$ and $\sigma_q(E_Q)$ are based on the quantities found in Dan Jardin's note [ref].
+        \end{itemize} 
+    
+    \item Smear $E_P$ and $E_Q$ with $\sigma_p$ and $\sigma_q$ to find $\Tilde{E_P}$ and $\Tilde{E_Q}$
+        \begin{itemize}
+        \item Create two normal distributions with means $E_P$ and $E_Q$ and standard deviations $\sigma_p$ and $\sigma_q$.
+        \item Randomly draw from these distributions to find $\Tilde{E_P}$ and $\Tilde{E_Q}$ respectivly. 
+        \end{itemize} 
+    \item Calculate the 'measured' recoil energy $\Tilde{E_r}$ using $\Tilde{E_P}$ and $\Tilde{E_Q}$. 
+    \item Calculate the 'measured' yield $\Tilde{Y}$
+    
+    
+\end{enumerate}
+
+\section{Expected Yield Algorithm }
+The following algorithm is to calculate the expected amount of energy given to the electronic system as a function of energy for electron and nuclear recoils. 
+
+\begin{enumerate}
+    \item Find the true recoil energy. 
+    \begin{itemize}
+        \item Create a uniform distribution of energy between 10 and 150 keV.
+        \item The true recoil energy is then randomly drawn for this distribution. 
+    \end{itemize} 
+    
+    \item Calculate the average number of electron hole pairs produced $\Bar{N}$ based on the yield $Y$.
+        \begin{itemize}
+            \item $Y$ is the average yield calculated from Lindhard for a given recoil energy ( for electron recoils $Y=1$.)
+        \end{itemize}
+    
+    \item Calculate $\Bar{E_P}$ and $\Bar{E_Q}$ based on $\Bar{N}$
+    
+    \item Calculate $\sigma_P(\Bar{E_P})$ and $\sigma_Q(\Bar{E_Q})$ based on Dan Jardin's note [ref]
+    \newpage
+    \item Add $\epsilon^2 F\Bar{N}$ to $\sigma_Q^2$ to get $\Tilde{\sigma_Q^2} = \sqrt{\sigma_Q(\Bar{E_Q})^2 + \epsilon^2 F\Bar{N}}$
+        \begin{itemize}
+            \item The fano factor $F$ is added here, as we are not varying the number of electron hole pairs created.
+        \end{itemize}
+        
+    \item Add $(eV)^2 F\Bar{N}$ to $\Tilde{\sigma_P^2}$
+    
+    \item 
+    
+
+\end{enumerate}
+
+\end{document}
