@@ -25,18 +25,10 @@ p_gamma = 0.000506287
 
 q_alpha = 0.166004
 q_beta = 0.00233716
+
 q_gamma = 9.52576*10**(-5)
 
-#for Detector 2 
 
-'''p_alpha = 0.082
-p_beta = 0.0108
-p_gamma = 0
-
-q_alpha = 0.126
-q_beta = 0.0066
-q_gamma = 7.8*10**-5
-'''
 def Yield_NR(Er_true):
     
     import sys
@@ -52,11 +44,7 @@ def Yield_NR(Er_true):
     EQnr = []
     Enr_true = []
     
-    #Er = np.random.uniform(10,200,N)
-    #Er = np.random.exponential(40,np.uint32(N*0.3))
-    #Er = Er[Er<=150]
-    #Er = Er[Er>=10]
-    #E1nr = E_true
+
     for Enr in Er_true:
 
         #Enr = np.random.choice(E1nr)
@@ -127,7 +115,7 @@ def Yield_NR(Er_true):
 
 
 
-def Yield_Er(Er_True):
+def Yield_Er(Er_True,fano):
     Yield_er = []
     ER = []
     E_true =[]
@@ -137,12 +125,8 @@ def Yield_Er(Er_True):
     EP_true = []
     sig_p = []
     sig_q = []
-   # bins  = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
-    #E1er = np.random.uniform(10,150,N)#from anthony, Er's are close enough to randomly distributed.
-    #Eer = np.random.choice(E1er,N)
-    #E1er = (bins[:-1] + bins[1:]) / 2
-    #E1er = np.array([10.7,25.2,40.3,75.2])
-  #  E1er = Er_True
+    sig_p0 = []
+    Er_fano = fano 
 
 
     QER = []
@@ -153,65 +137,62 @@ def Yield_Er(Er_True):
     for Eer in Er_True:
 
 
-        E_true.append(Eer)
-        #Eer = 40
+        E_true.append(Eer) #sorted array of 'true' recoil energies. 
 
-       # Pter = (1+(V/eps/1000))*Eer
-
-        #More physical 
-        
-        N_e = Eer/eps 
-        Er_fano = 0.13
-        N_er = np.random.normal(0,np.sqrt(Er_fano *N_e)) + N_e  # 0.13 is the fano factor for germainium 
-        #N_er = N_e
-        Pter = Eer+(V/1000)*N_er
-        
-        Pter_noF = Eer+(V/1000)*N_e
-        
-        sig_pee = np.sqrt(p_alpha + p_beta*Pter + p_gamma*(Pter**2))
-        
-        sig_p_noF = np.sqrt(p_alpha + p_beta*Pter_noF + p_gamma*(Pter_noF**2)) #Phonon uncertainty 
+ 
+        #calculate number of electron hole pairs. 
     
-        sig_qee = np.sqrt(q_alpha + q_beta*Eer + q_gamma*(Eer**2)) #Charge uncertainty
+        N_e = Eer/eps #mean number of electron hole pairs producde. 
+        N_er = np.random.normal(0,np.sqrt(Er_fano *N_e)) + N_e  # 0.13 is the fano factor for germainium 
         
-        sig_p.append(sig_pee)
-        sig_q.append(sig_qee)
+        #calculate Phonon energy 
+        Pter = Eer+(V/1000)*N_er #phonon energy, with fano 
         
-        #For Linear Fit Model
-        '''
-        alpha1 = 0.406241f
-        beta1 =0.00899969
-        sig_qee = alpha1 + beta1*Eer   #Charge resolution 
+        Pter_noF = Eer+(V/1000)*N_e # phonon energy, no fano 
         
-        alpha2 = 0.125107
-        beta2 = 0.0223536
-        sig_pee = alpha2 + beta2*Pter1 #Phonon resolution '''
+        #calculate Charge energy
+        
+        Qer1 = N_e*eps #no Fano
+        Qer1 = N_er*eps #with Fano
         
         
+        #resolutions
         
-               
+        sig_p1 = np.sqrt(p_alpha + p_beta*Pter + p_gamma*(Pter**2)) #phonon res, with fano 
+        sig_p.append(sig_p1)
+        
+        sig_p_noF = np.sqrt(p_alpha + p_beta*Pter_noF + p_gamma*(Pter_noF**2)) #phonon res, no fano
+        sig_p0.append(sig_p_noF)
+    
+        sig_q1 = np.sqrt(q_alpha + q_beta*Eer + q_gamma*(Eer**2)) #Charge uncertainty
+        sig_q.append(sig_q1)
+        
 
-        Pter1 = np.random.normal(Pter,sig_pee)
-      
-        Qer = np.random.normal(Eer,sig_qee)
 
-        EQ.append(Qer)
-        EQ_true.append(Eer)
         
+        # Find 'Measured' phonon energy. 
+
+        Pter1 = np.random.normal(Pter,sig_p1) #smearing 'measured' phonon energy with res that contains fano factor 
         EP.append(Pter1)
-        EP_true.append(Pter_noF)
+        EP_true.append(Pter_noF) # no smear, no fano factor. 
+      
+        # Find 'Measured' charge energy.
+        Qer = np.random.normal(Eer,sig_q1) #smearing 'measured' charge energy with res that contains fano factor 
+        EQ.append(Qer)
+        EQ_true.append(Eer) 
+       
         
      
 
-        Erer = Pter1 - (V/eps/1000)*Qer
+        Erer = Pter1 - (V/eps/1000)*Qer # measured recoil energy 
         ER.append(Erer)
 
        # Y_er = yer_mu(Erer)
         
-        Yield2 = Qer/Erer
+        Yield2 = Qer/Erer # "measured" Ionization Yield
         Yield_er.append(Yield2)
     
-    df = pd.DataFrame({'E_true':E_true,'E_measured':ER,'Yield':Yield_er,'EP':EP,'EP_true':EP_true,'EQ_true':EQ_true,'EQ':EQ,'Sigp':sig_p,'Sigq':sig_q,'Sigp_noF':sig_p_noF})
+    df = pd.DataFrame({'E_true':E_true,'E_measured':ER,'Yield':Yield_er,'EP':EP,'EP_true':EP_true,'EQ_true':EQ_true,'EQ':EQ,'Sigp':sig_p,'Sigq':sig_q,'Sigp_noF':sig_p0})
     
     return df
 
