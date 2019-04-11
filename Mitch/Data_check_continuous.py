@@ -1,7 +1,6 @@
 
 import resfuncRead as rfr
-import numpy as np
-from Yield_calc import * 
+import numpy as np 
 import pandas as pd 
 from data_check import *
 from matplotlib.ticker import FuncFormatter

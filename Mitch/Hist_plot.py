@@ -30,7 +30,6 @@ def hist_plot(data,prob,array,bins,fano):
     ax1.legend(loc=1,prop={'size':18})
     ax1.tick_params(axis='both', labelsize = '20')
     #plt.savefig('figures/Dist_fits/nofano'+ str(bin_center)+'.png')
-    plt.savefig('figures/Dist_fits/'+ str(bin_center)+'.png')
-
+    plt.savefig('Notes/Dist_fits/'+ str(bin_center)+',fano = '+str(fano)+'.png')
 
     plt.show()

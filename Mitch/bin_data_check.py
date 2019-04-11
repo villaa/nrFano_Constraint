@@ -1,7 +1,6 @@
 
 import resfuncRead as rfr
-import numpy as np
-from Yield_calc import * 
+import numpy as np 
 import pandas as pd 
 from data_check import *
 from matplotlib.ticker import FuncFormatter
@@ -59,16 +58,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             
   
             bin_names.append(bin_name)
-        
-           # E = np.array(df[0].loc[df1 == q])
-           # x = np.array(df[1].loc[df1 == q]) # Yield 
-            #y = np.array(df[2].loc[df1 == q]) #upper bound
-            #z = np.array(df[3].loc[df1 == q]) #lower bound
-            #P = np.array(df[4].loc[df1 == q]) #EP
-            #Q = np.array(df[5].loc[df1 == q]) #EQ
-            #Sp = np.array(df[6].loc[df1 == q]) #Sigma_p
-            #Sq = np.array(df[7].loc[df1 == q]) #Sigma_q
-            #Er_true = np.array(df[8].loc[df1 == q])
+  
 
             E = np.array(bin_data.E_measured)
             E_true = np.array(bin_data.E_true)
@@ -149,7 +139,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     bin_spacing = np.array(bin_names).astype(str)
 
     for x,y,e,h,z,q,t,l in zip(bin_spacing,Percent1,Error,expected1,Percent2,Percent3,sig_high,sig_low):
-        print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','±','{0:1.2f}'.format(e),'%', '\t','{0:1.2f}'.format(h), '\t','\t','\t','{0:1.2f}'.format(z), '\t','±','{0:1.2f}'.format(t),'\t', '{0:1.2f}'.format(q), '\t','±','{0:1.2f}'.format(l))
+        print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','±','{0:1.2f}'.format(e),'%', '\t','{0:1.2f}'.format(np.abs(h)), '\t','\t','\t','{0:1.2f}'.format(z), '\t','±','{0:1.2f}'.format(t),'\t', '{0:1.2f}'.format(q), '\t','±','{0:1.2f}'.format(l))
             
     print('--------------------------------------------')
     
@@ -178,7 +168,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     ax1.legend(loc=1,prop={'size':12})
-    plt.savefig('figures/Dist_fits/Eer_Error_NoFano.png')
+    plt.savefig('Notes/Dist_fits/Eer_Error_Fano =' + str(fano)+'.png')
     plt.show()
     
 

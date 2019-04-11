@@ -1,7 +1,6 @@
 
 import resfuncRead as rfr
-import numpy as np
-from Yield_calc import * 
+import numpy as np 
 import pandas as pd 
 from data_check import *
 from matplotlib.ticker import FuncFormatter
@@ -59,28 +58,17 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             
   
             bin_names.append(bin_name)
-        
-           # E = np.array(df[0].loc[df1 == q])
-           # x = np.array(df[1].loc[df1 == q]) # Yield 
-            #y = np.array(df[2].loc[df1 == q]) #upper bound
-            #z = np.array(df[3].loc[df1 == q]) #lower bound
-            #P = np.array(df[4].loc[df1 == q]) #EP
-            #Q = np.array(df[5].loc[df1 == q]) #EQ
-            #Sp = np.array(df[6].loc[df1 == q]) #Sigma_p
-            #Sq = np.array(df[7].loc[df1 == q]) #Sigma_q
-            #Er_true = np.array(df[8].loc[df1 == q])
+  
 
             E = np.array(bin_data.E_measured)
             E_true = np.array(bin_data.E_true)
-            x = np.array(bin_data.Yield) # Yield 
-            y = np.array(bin_data.upper) #upper bound
-            z = np.array(bin_data.lower) #lower bound
-            P = np.array(bin_data.EP)
-            P_true = np.array(bin_data.EP_true)
-            Q = np.array(bin_data.EQ) #EQ
-            Q_true = np.array(bin_data.EQ_true) #EQ
-            Sp = np.array(bin_data.Sigp) #Sigma_p
-            Sq = np.array(bin_data.Sigq) #Sigma_q
+            Yield = np.array(bin_data.Yield) # Yield 
+            upper_bound = np.array(bin_data.upper) #upper bound
+            lower_bound = np.array(bin_data.lower) #lower bound
+            Ep_mean = np.array(bin_data.Ep_mean)
+            Eq_mean = np.array(bin_data.Eq_mean) #EQ
+            Sp_mean = np.array(bin_data.sigp_mean) #Sigma_p
+            Sq_mean = np.array(bin_data.sigq_mean) #Sigma_q
 
             bincenters.append(np.mean(E_true))
             #print(x)
@@ -90,41 +78,21 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             u = np.arange(0,2,0.002) #electron recoils 
            # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
-            prob = dist_check(u,P_true,Q_true,Sp,Sq,k) #amy's defined PDF 
+            prob = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
+            hist_plot(Yield,prob,u,bin_name,fano)  
             
-            
-         
-            hist_plot(x,prob,u,bin_name,fano)  
-            
-            #hist_plot_compare(data,data1,prob,prob1,array,bins)
-
-
-
-            up,down,N = compare(x,y,z) # up and down are the number of data points OUTSIDE the bands. 
+        
+            up,down,N = compare(Yield,upper_bound,lower_bound) # up and down are the number of data points OUTSIDE the bands. 
 
             percent1 = 100*(N - (up+down))/N
             Percent1.append(percent1)
 
-            #print(len(Percent1))
-            #Error
+        
             p_up = N-up/N 
-            #q_up = 1-p_up 
-            #Error_up = np.sqrt((N*p_up*q_up)) 
-
             p_down = N-down/N
 
 
-            '''print("Er is:",Er_true)
-            print("number of oddball entries",np.sum(Er_true > 12),len(Er_true))
-            print("Yield is:",x,"Yield is centered at:",np.mean(x))
-            print("lower is: ", z)
-            print("Upper is:", y)
-            print("mean of PDF is:",np.mean(prob))'''
-
-
-            #v = np.linspace(np.mean(z),np.mean(y),1000)
-            #g = np.trapz(prob,v)
-            g = integrate.quad(lambda x: dist_check(x,P_true,Q_true,Sp,Sq,k),np.mean(z),np.mean(y) )
+            g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
             H =g[0]*100
             #H = g*500
            # print('Area under curve is:',g)
@@ -136,8 +104,6 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
 
             sig_d = np.sqrt((N*p*(1-p)))/N
             Error.append(sig_d*100)
-
-
 
             #looking at symmetry 
             percent2 = 100*(N - (2*up))/N
@@ -173,7 +139,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     bin_spacing = np.array(bin_names).astype(str)
 
     for x,y,e,h,z,q,t,l in zip(bin_spacing,Percent1,Error,expected1,Percent2,Percent3,sig_high,sig_low):
-        print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','±','{0:1.2f}'.format(e),'%', '\t','{0:1.2f}'.format(h), '\t','\t','\t','{0:1.2f}'.format(z), '\t','±','{0:1.2f}'.format(t),'\t', '{0:1.2f}'.format(q), '\t','±','{0:1.2f}'.format(l))
+        print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','±','{0:1.2f}'.format(e),'%', '\t','{0:1.2f}'.format(np.abs(h)), '\t','\t','\t','{0:1.2f}'.format(z), '\t','±','{0:1.2f}'.format(t),'\t', '{0:1.2f}'.format(q), '\t','±','{0:1.2f}'.format(l))
             
     print('--------------------------------------------')
     

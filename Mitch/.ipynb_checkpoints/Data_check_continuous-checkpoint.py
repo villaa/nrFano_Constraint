@@ -1,7 +1,6 @@
 
 import resfuncRead as rfr
-import numpy as np
-from Yield_calc import * 
+import numpy as np 
 import pandas as pd 
 from data_check import *
 from matplotlib.ticker import FuncFormatter
@@ -15,22 +14,17 @@ from tabulate import tabulate
 
     
         
-def continuous_containment(df,s,band_func):
+def continuous_containment(df,s,band_type):
     
     V = 4
     eps = 0.0033
     expected = []
-
    # print("before sort Er_true is:",Er_true)
-    recoil_type, upper,lower = band_func(df.E_true,s)
-
-    #Data = np.vstack((Er,Yield,upper,lower,EP,EQ,sigp,sigq,Er_true)).T
-    #Data1 = Data[np.argsort(Data[:, 0])]
+    recoil_type, upper,lower = band_type(df.E_true,s)
     
     df1 = pd.DataFrame({'upper':upper,'lower':lower})
     
     df = pd.concat([df,df1],axis=1)
-
 
 
     E = np.array(df.E_measured)
@@ -38,29 +32,17 @@ def continuous_containment(df,s,band_func):
     x = np.array(df.Yield) # Yield 
     y = np.array(df.upper) #upper bound
     z = np.array(df.lower) #lower bound
-    P = np.array(df.EP) #EPe
-    P_true = np.array(df.EP_true)
-    Q = np.array(df.EQ) #EQ
-    Q_true = np.array(df.EQ_true)
-    Sp = np.array(df.Sigp) #Sigma_p
-    Sq = np.array(df.Sigq)
-    Sp_noF = np.array(df.Sigp_noF) #Sigma_q
-
-
-            #print(x)
-
-            #look at distributions graphically f
+    Ep_mean = np.array(df.Ep_mean)
+    Eq_mean = np.array(df.Eq_mean)
+    Sp_mean = np.array(df.sigp_mean) #Sigma_p
+    Sq_mean = np.array(df.sigq_mean)
+   
     k= (V/eps/1000)
     u = np.arange(0,2,0.002) #electron recoils 
-           # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
+  # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
-
-
-
-            #v = np.linspace(np.mean(z),np.mean(y),1000)
-            #g = np.trapz(prob,v)
             
-    for a,b,c,d,e,f in zip(P_true,Q_true,Sp_noF,Sq,z,y): 
+    for a,b,c,d,e,f in zip(Ep_mean,Eq_mean,Sp_mean,Sq_mean,z,y): 
         
         g = integrate.quad(lambda x: dist_check(x,a,b,c,d,k),np.mean(e),np.mean(f) )
         H =g[0]*100
