@@ -1,0 +1,27 @@
+# This script uses BatRoot directly. This is convenient for one series. The paths are set for UMN data.
+#+CondorGroup = "phys"
+#+CondorGroup = "cdms"
++CondorGroup = "cmsfarm"
++HappyToBeEvicted = TRUE
+Universe        = vanilla
+Executable      = /home/phys/villaa/analysis/misc/nrFano_Constraint/ms_sim/runMacro.sh
+GetEnv		= true
+
+remote_initialdir =  /home/phys/villaa/analysis/misc/nrFano_Constraint/ms_sim
+
+Notification = error
+Notify_user = $ENV(USER)@physics.umn.edu
+
+Requirements = (Machine != "cdms2.spa.umn.edu") && (Arch=="X86_64") && (Machine != "zebra04.spa.umn.edu") && (Machine != "zebra03.spa.umn.edu") && (Machine != "zebra02.spa.umn.edu") && (Machine != "zebra01.spa.umn.edu") && (Machine != "whybee2.spa.umn.edu") && (Machine != "whybee1.spa.umn.edu") && (Machine != "whybee0.spa.umn.edu") && (Machine != "cms011.spa.umn.edu") && (Machine != "cms010.spa.umn.edu") && (Machine != "cms008.spa.umn.edu") && (Machine != "cms007.spa.umn.edu") && (Machine != "cms006.spa.umn.edu") && (Machine != "cms005.spa.umn.edu") && (Machine != "cms001.spa.umn.edu")
+#request_memory = ImageSize
+
+OutputDir	= /home/phys/villaa/analysis/misc/nrFano_Constraint/ms_sim/logs
+Error       = $(OutputDir)/252Cf_condor.phys.err.$(Cluster)-$(Process).txt
+Log         = $(OutputDir)/252Cf_condor.phys.log.$(Cluster)-$(Process).txt
+Output		= $(OutputDir)/252Cf_condor.phys.out.$(Cluster)-$(Process).txt
+
+#should_transfer_files = YES
+#when_to_transfer_output = ON_EXIT
+
+Arguments = "k100_252Cf_neutrons_wShield_CDMSII_1M.mac"
+Queue
