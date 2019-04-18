@@ -36,22 +36,27 @@ def continuous_containment(df,s,band_type):
     Eq_mean = np.array(df.Eq_mean)
     Sp_mean = np.array(df.sigp_mean) #Sigma_p
     Sq_mean = np.array(df.sigq_mean)
+    N_mean = np.array(df.N_mean) #Sigma_q
+    SN = np.array(df.sig_N)
    
+
     k= (V/eps/1000)
     u = np.arange(0,2,0.002) #electron recoils 
   # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
             
-    for a,b,c,d,e,f in zip(Ep_mean,Eq_mean,Sp_mean,Sq_mean,z,y): 
+    #for a,b,c,d,e,f in zip(Ep_mean,Eq_mean,Sp_mean,Sq_mean,z,y): 
+    for a,b,c,d,e,f,g in zip(E,N_mean,Sp_mean,Sq_mean,SN,z,y):
         
-        g = integrate.quad(lambda x: dist_check(x,a,b,c,d,k),np.mean(e),np.mean(f) )
+        
+        #g = integrate.quad(lambda x: dist_check(x,a,b,c,d,k),np.mean(e),np.mean(f) )
+        g = integrate.quad(lambda x: dist_check_fano(x,a,b,c,d,e),f,1.04)
+
         H =g[0]*100
            
         expected.append(H)
 
 
-          
+    print(a,b,c,d,e,f)
 
-    return expected, Er_true
-
-
+    return expected, Er_true , y,z

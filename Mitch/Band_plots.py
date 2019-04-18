@@ -69,17 +69,17 @@ def ER_band_plot(df,N):
     import time
     start_time = time.time()
     
-    Erer = np.array(df.E_measured)
+    Erer = np.array(np.sort(df.E_measured))
     Y = np.array(df.Yield)
     
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
-    xy = np.vstack([Erer,Y])
-    z = gaussian_kde(xy)(xy)
+    #xy = np.vstack([Erer,Y])
+    #z = gaussian_kde(xy)(xy)
 
-    #ax1.plot(Erer,b,'+',color='b',linewidth=2,markersize=3,alpha = 0.5)
-    cm = plt.cm.get_cmap('nipy_spectral')
-    cax = ax1.scatter(Erer, Y, c=z, s=10, cmap = cm)
+    ax1.plot(Erer,Y,'+',color='b',linewidth=2,markersize=3,alpha = 0.5)
+    #cm = plt.cm.get_cmap('nipy_spectral')
+    #cax = ax1.scatter(Erer, Y, c=z, s=10, cmap = cm)
     #ax1.hist2d(a, b, (50, 50), cmap=plt.cm.jet)
     
     
@@ -103,36 +103,28 @@ def ER_band_plot(df,N):
     x = np.ones(len(Y))
     
     
-    ax1.plot(Erer,x,color='blue',linestyle='--',label = 'Mean')
+    ax1.plot(Erer,x,color='r',linestyle='--',linewidth = 2,label = 'Mean')
     
-    ax1.plot(Erer,1+1*yer_sig(Erer),color='red',linestyle='-',linewidth = 1,label = '1 $\sigma$')
-    ax1.plot(Erer,1-1*yer_sig(Erer),'r-')
+    ax1.plot(Erer,1+1*yer_sig(Erer),color='black',linestyle='-',label = '1 $\sigma$')
+    ax1.plot(Erer,1-1*yer_sig(Erer),color='black',linestyle='-')
 
-    ax1.plot(Erer,1+2*yer_sig(Erer),color='magenta',linestyle='-',label = '2 $\sigma$')
-    ax1.plot(Erer,1-2*yer_sig(Erer),'m-')
+    #ax1.plot(Erer,1+2*yer_sig(Erer),color='magenta',linestyle='-',label = '2 $\sigma$')
+    #ax1.plot(Erer,1-2*yer_sig(Erer),'m-')
 
-    ax1.plot(Erer,1+3*yer_sig(Erer),color='black',linestyle='-',label = '3 $\sigma$')
-    ax1.plot(Erer,1-3*yer_sig(Erer),'k-')
+    #ax1.plot(Erer,1+3*yer_sig(Erer),color='black',linestyle='-',label = '3 $\sigma$')
+    #ax1.plot(Erer,1-3*yer_sig(Erer),'k-')
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    plt.axvline(10, color='r', linestyle='-')
+    #plt.axvline(10, color='r', linestyle='-')
 
     ax1.plot()
-    ax1.set_ylim(0.7,1.3)
-    ax1.set_xlim(0,165)
+    ax1.set_ylim(0.5,1.5)
+    ax1.set_xlim(0,160)
     
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')
     ax1.set_ylabel('Yield',size = '18')
-    ax1.set_title('Data Check ER Band', size = '20')
+    ax1.set_title('Simulated Electron Recoil Band', size = '20')
     ax1.tick_params(axis='both', labelsize = '20')
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
@@ -140,7 +132,7 @@ def ER_band_plot(df,N):
 
     ax1.legend(loc=1,prop={'size':12})
     #fig.colorbar(cax)
-    #plt.savefig('figures/ERer_Band_')
+    plt.savefig('figures/ERer_Band_')
     plt.show()
     
     print("My program took", (time.time() - start_time), " seconds to run")

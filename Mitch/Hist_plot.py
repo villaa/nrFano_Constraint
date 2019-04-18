@@ -14,9 +14,11 @@ def hist_plot(data,prob,array,bins,fano):
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
     
-    ax1.hist(data,normed=True,histtype = "step",color ='red',label = 'Data',linewidth="3")
+    ax1.hist(data,density=True,histtype = "step",color ='red',label = 'Data',linewidth="3")
     ax1.plot(array,prob,color ='black',label = 'Expected')
 
+    y,bined = np.histogram(data, normed = True)
+    bin_center = 0.5*(bined[1:]+bined[:-1])
 
 
     ax1.set_xlabel('Yield',size = '18')
@@ -33,3 +35,5 @@ def hist_plot(data,prob,array,bins,fano):
     plt.savefig('Notes/Dist_fits/'+ str(bin_center)+',fano = '+str(fano)+'.png')
 
     plt.show()
+
+    return y,bin_center

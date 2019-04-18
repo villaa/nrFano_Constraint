@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 import resfuncRead as rfr
@@ -33,6 +34,8 @@ def Yield_Er(Er_True,fano):
     Ep_mean = []
     sigp_mean = []
     sigq_mean = []
+    n_mean = []
+    sig_N = []
  
     Er_True = np.sort(Er_True)
     
@@ -40,6 +43,7 @@ def Yield_Er(Er_True,fano):
 
         #For mean number of electron hole pairs 
         N_mean = Eer/eps 
+        sigN = np.sqrt(N_mean * fano) 
 
         E_p_mean = Eer+(V/1000)*N_mean
         E_q_mean = N_mean*eps
@@ -65,6 +69,8 @@ def Yield_Er(Er_True,fano):
         Yield = Eq_smear/Er # "measured" Ionization Yield
         
         #append stuff 
+        n_mean.append(N_mean)
+        sig_N.append(sigN)
         E_true.append(Eer)
         Ep_mean.append(E_p_mean) # used for 'expected'
         Eq_mean.append(E_q_mean) #used for 'expected'
@@ -73,7 +79,6 @@ def Yield_Er(Er_True,fano):
         ER.append(Er)
         Yield_er.append(Yield)
 
-    df = pd.DataFrame({'E_true':E_true,'E_measured':ER,'Yield':Yield_er,'Ep_mean':Ep_mean,'Eq_mean':Eq_mean,'sigp_mean':sigp_mean,'sigq_mean':sigq_mean})
+    df = pd.DataFrame({'N_mean':n_mean,'sig_N':sig_N,'E_true':E_true,'E_measured':ER,'Yield':Yield_er,'Ep_mean':Ep_mean,'Eq_mean':Eq_mean,'sigp_mean':sigp_mean,'sigq_mean':sigq_mean})
     
     return df
-

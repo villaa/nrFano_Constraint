@@ -1,4 +1,3 @@
-
 import resfuncRead as rfr
 import numpy as np 
 import pandas as pd 
@@ -68,7 +67,10 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             Ep_mean = np.array(bin_data.Ep_mean)
             Eq_mean = np.array(bin_data.Eq_mean) #EQ
             Sp_mean = np.array(bin_data.sigp_mean) #Sigma_p
-            Sq_mean = np.array(bin_data.sigq_mean) #Sigma_q
+            Sq_mean = np.array(bin_data.sigq_mean)
+            N_mean = np.array(bin_data.N_mean) #Sigma_q
+            SN = np.array(bin_data.sig_N)
+             
 
             bincenters.append(np.mean(E_true))
             #print(x)
@@ -78,7 +80,8 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             u = np.arange(0,2,0.002) #electron recoils 
            # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
-            prob = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
+            #prob = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
+            prob = dist_check_fano(u,E,N_mean,Sp_mean,Sq_mean,SN)
             hist_plot(Yield,prob,u,bin_name,fano)  
             
         
@@ -92,7 +95,8 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             p_down = N-down/N
 
 
-            g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
+            #g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
+            g = integrate.quad(lambda x: dist_check_fano(x,E,N_mean,Sp_mean,Sq_mean,SN),np.mean(upper_bound),np.mean(lower_bound))
             H =g[0]*100
             #H = g*500
            # print('Area under curve is:',g)
@@ -173,5 +177,3 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     
 
     return df,bincenters
-
-
