@@ -19,11 +19,21 @@ def dist_check(Yield,EP,EQ,sigP,sigQ,k):
     res_q = mu_q/sig_q
     r = sig_p/sig_q
 
-    
+    prob = ratio_dist(Yield, res_p, res_q, r, k)
+
+    return prob
 
     #print(res_p,res_q,r)
 
-    
-    prob = ratio_dist(Yield, res_p, res_q, r, k)
+def dist_check_fano(Yield,E,N_mean,Sp_mean,Sq_mean,SN):
+    V = 4 
+
+    N_mean = np.mean(N_mean)    
+    Er = np.mean(E)
+    Sp = np.mean(Sp_mean)
+    Sq = np.mean(Sq_mean)
+    SN = np.mean(SN)
+
+    prob = ratio_dist_fano(Yield,Er,N_mean,Sp,Sq,SN,V/1000,0.003)
     
     return prob 

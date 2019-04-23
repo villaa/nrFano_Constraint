@@ -1,5 +1,7 @@
 import numpy as np
 from scipy.special import erf
+import math 
+
 
 # returns the probability of z, where z is the yield
 # z = Eq/(Ep - k*Eq)
@@ -19,3 +21,33 @@ def ratio_dist(z, res_p, res_q, r, k):
     G13 = erf((z*res_q + (1+k*z)*res_p/r) / np.sqrt(2*(z**2 + (1+k*z)**2 / r**2)))
 
     return F1 + G11*G12*G13
+
+# x is the yield, Eq/Er
+# Er is the recoil energy, in units of keV
+# meanN is the mean number of e/h pairs created given Er
+# sdP is the standard deviation of the phonon signal, units of ??
+# sdQ is the standard deviation of the charge signal, units of ??
+# sdN is the standard deviation of the number of electron-hole pairs, unitless
+# V is the voltage across the detector, in units of kV??
+def ratio_dist_fano(x, Er, meanN, sdP, sdQ, sdN, V,e):
+
+
+    k = (sdP**2)*(sdQ**2)+(V**2)*(sdQ**2)*(sdN**2)+(e**2)*(sdN**2)*(sdP**2)
+
+    def g(x):
+        ans = (1/np.sqrt(np.pi))+x*(np.exp(x**2))*erf(x)
+        return ans
+        
+    def A(x):
+        ans = ((((x*(V/e)+1)*sdQ)**2)+((x*sdP)**2)+((e*sdN)**2))/(2*k)
+        return ans
+        
+    def B(x):
+        ans = ((V/e)*(sdQ**2)*(Er*x+e*meanN)+x*e*meanN*(((V*sdQ/e)**2)+(sdP**2))+Er*((sdQ**2)+((e*sdN)**2)))/(k)
+        return ans
+
+    C = ((((meanN*V+Er)*sdQ)**2)+(((meanN*sdP)**2)+((Er*sdN)**2))*(e**2))/(2*k)
+
+    ans = (1/(2*np.sqrt(np.pi*k)))*(1/A(x))*np.exp(-C)*g((B(x))/(2*np.sqrt(A(x))))
+    
+    return ans

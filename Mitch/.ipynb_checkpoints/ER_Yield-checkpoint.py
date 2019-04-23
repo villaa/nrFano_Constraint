@@ -36,8 +36,6 @@ def Yield_Er(Er_True,fano):
     sigq_mean = []
     n_mean = []
     sig_N = []
-    EQ_smear = []
-    EP_smear = []
  
     Er_True = np.sort(Er_True)
     
@@ -72,8 +70,6 @@ def Yield_Er(Er_True,fano):
         
         #append stuff 
         n_mean.append(N_mean)
-        EP_smear.append(Ep_smear)
-        EQ_smear.append(Eq_smear)
         sig_N.append(sigN)
         E_true.append(Eer)
         Ep_mean.append(E_p_mean) # used for 'expected'
@@ -83,6 +79,6 @@ def Yield_Er(Er_True,fano):
         ER.append(Er)
         Yield_er.append(Yield)
 
-    df = pd.DataFrame({'EQ_smear':EQ_smear,'EP_smear':EP_smear,'N_mean':n_mean,'sig_N':sig_N,'E_true':E_true,'E_measured':ER,'Yield':Yield_er,'Ep_mean':Ep_mean,'Eq_mean':Eq_mean,'sigp_mean':sigp_mean,'sigq_mean':sigq_mean})
+    df = pd.DataFrame({'N_mean':n_mean,'sig_N':sig_N,'E_true':E_true,'E_measured':ER,'Yield':Yield_er,'Ep_mean':Ep_mean,'Eq_mean':Eq_mean,'sigp_mean':sigp_mean,'sigq_mean':sigq_mean})
     
     return df

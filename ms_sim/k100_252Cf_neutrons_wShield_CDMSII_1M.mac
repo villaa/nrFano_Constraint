@@ -1,0 +1,34 @@
+#make a generic generator
+/gps/particle neutron 
+/gps/position 25.4 25.4 -68.58 cm
+/gps/pos/type Point
+/gps/ang/type iso
+/gps/ene/type Arb 
+/gps/hist/type arb 
+/gps/hist/file sources/Cf252NSpectrum.dat 
+/gps/hist/inter Lin
+#/gps/ene/mono 8 MeV
+
+#make a raytrace model
+#/vis/rayTracer/eyePosition 1 1 1 m
+#/vis/rayTracer/trace
+
+#/CDMS/Zip1/IsGe False
+/CDMS/detector/activate Walls
+/CDMS/detector/activate Floor 
+/CDMS/detector/activate Frame 
+/CDMS/detector/activate IceBox 
+#/CDMS/detector/activate PuBeSourceAndShield 
+#/CDMS/PuBe/Barrel True 
+/CDMS/detector/activate Shields
+#use a CDMS-II detector
+/CDMS/Det/setSize 3.8 1 0 cm
+#/CDMS/Shield/SouthNaI True
+/CDMS/updateGeometry
+
+#run naming stuff
+#/run/k100/uniqueID 160617_182500_365312119 # not implemented in the geant4 code
+/run/k100/OnlyNCapOut false 
+/run/k100/OFPrefix /data/chocula/villaa/k100Sim_Data/252Cf/Cf252_k100_0x0002_1M_
+
+/run/beamOn 1000000 
