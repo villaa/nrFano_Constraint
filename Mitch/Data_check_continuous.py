@@ -10,7 +10,6 @@ from scipy import integrate
 from Hist_plot import * 
 
 
-from tabulate import tabulate
 
     
         
@@ -45,12 +44,12 @@ def continuous_containment(df,s,band_type):
   # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
             
-    #for a,b,c,d,e,f in zip(Ep_mean,Eq_mean,Sp_mean,Sq_mean,z,y): 
-    for a,b,c,d,e,f,g in zip(E,N_mean,Sp_mean,Sq_mean,SN,z,y):
+    for a,b,c,d,e,f in zip(Ep_mean,Eq_mean,Sp_mean,Sq_mean,z,y): 
+    #for a,b,c,d,e,f,g in zip(E,N_mean,Sp_mean,Sq_mean,SN,z,y):
         
         
-        #g = integrate.quad(lambda x: dist_check(x,a,b,c,d,k),np.mean(e),np.mean(f) )
-        g = integrate.quad(lambda x: dist_check_fano(x,a,b,c,d,e),f,1.04)
+        g = integrate.quad(lambda x: dist_check(x,a,b,c,d,k),np.mean(e),np.mean(f) )
+        #g = integrate.quad(lambda x: dist_check_fano(x,a,b,c,d,e),f,1.04)
 
         H =g[0]*100
            

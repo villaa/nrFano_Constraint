@@ -9,8 +9,6 @@ from scipy import integrate
 from Hist_plot import * 
 
 
-from tabulate import tabulate
-
     
         
 def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
@@ -80,8 +78,8 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             u = np.arange(0,2,0.002) #electron recoils 
            # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
-            #prob = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
-            prob = dist_check_fano(u,E,N_mean,Sp_mean,Sq_mean,SN)
+            prob = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
+            #prob = dist_check_fano(u,E,N_mean,Sp_mean,Sq_mean,SN)
             hist_plot(Yield,prob,u,bin_name,fano)  
             
         
@@ -95,8 +93,8 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             p_down = N-down/N
 
 
-            #g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
-            g = integrate.quad(lambda x: dist_check_fano(x,E,N_mean,Sp_mean,Sq_mean,SN),np.mean(upper_bound),np.mean(lower_bound))
+            g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
+            #g = integrate.quad(lambda x: dist_check_fano(x,E,N_mean,Sp_mean,Sq_mean,SN),np.mean(upper_bound),np.mean(lower_bound))
             H =g[0]*100
             #H = g*500
            # print('Area under curve is:',g)

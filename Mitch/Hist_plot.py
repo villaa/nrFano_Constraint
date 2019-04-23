@@ -32,8 +32,36 @@ def hist_plot(data,prob,array,bins,fano):
     ax1.legend(loc=1,prop={'size':18})
     ax1.tick_params(axis='both', labelsize = '20')
     #plt.savefig('figures/Dist_fits/nofano'+ str(bin_center)+'.png')
-    plt.savefig('Notes/Dist_fits/'+ str(bin_center)+',fano = '+str(fano)+'.png')
+    plt.savefig('Notes/Dist_fits/'+ str(bins)+', Fano = '+str(fano)+'.png')
 
     plt.show()
 
     return y,bin_center
+
+def hist_plot_simple(data,label):
+    
+    
+    xmin=min(data)
+    xmax=max(data)
+
+    fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
+    ax1 = axes
+    
+    ax1.hist(data,density=False,histtype = "step",color ='red',label = 'Data',linewidth="3")
+
+    ax1.set_xlabel('label',size = '18')
+    ax1.set_ylabel('Count',size = '18')
+    ax1.set_title("True "+ str(label)) 
+    #ax1.set_xlim(xmin, xmax)
+    ax1.set_ylim(bottom = 0.1)
+    ax1.set_yscale('log')
+    ax1.grid(True)
+    ax1.yaxis.grid(True,which='minor',linestyle='--')
+    ax1.legend(loc=1,prop={'size':18})
+    ax1.tick_params(axis='both', labelsize = '20')
+    
+    plt.savefig('figures/true'+str(label)+'.png')
+
+    plt.show()
+
+    

@@ -103,7 +103,7 @@ def ER_band_plot(df,N):
     x = np.ones(len(Y))
     
     
-    ax1.plot(Erer,x,color='r',linestyle='--',linewidth = 2,label = 'Mean')
+    ax1.plot(Erer,x,color='r',linestyle='--',linewidth = 3,label = 'Mean')
     
     ax1.plot(Erer,1+1*yer_sig(Erer),color='black',linestyle='-',label = '1 $\sigma$')
     ax1.plot(Erer,1-1*yer_sig(Erer),color='black',linestyle='-')
@@ -111,7 +111,7 @@ def ER_band_plot(df,N):
     #ax1.plot(Erer,1+2*yer_sig(Erer),color='magenta',linestyle='-',label = '2 $\sigma$')
     #ax1.plot(Erer,1-2*yer_sig(Erer),'m-')
 
-    #ax1.plot(Erer,1+3*yer_sig(Erer),color='black',linestyle='-',label = '3 $\sigma$')
+    #ax1.plot(Erer,1+3*yer_sig(Erer),color='red',linestyle='-',label = '3 $\sigma$')
     #ax1.plot(Erer,1-3*yer_sig(Erer),'k-')
     
     
@@ -119,7 +119,7 @@ def ER_band_plot(df,N):
 
     ax1.plot()
     ax1.set_ylim(0.5,1.5)
-    ax1.set_xlim(0,160)
+    ax1.set_xlim(0,130)
     
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')
