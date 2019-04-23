@@ -48,6 +48,6 @@ def ratio_dist_fano(x, Er, meanN, sdP, sdQ, sdN, V,e):
 
     C = ((((meanN*V+Er)*sdQ)**2)+(((meanN*sdP)**2)+((Er*sdN)**2))*(e**2))/(2*k)
 
-    ans = (1/(2*np.sqrt(np.pi*k)))*(1/A(x))*np.exp(-C)*g((B(x))/(2*np.sqrt(A(x))))
+    ans = (1/(2*np.sqrt(np.pi*k)))*(1/A(x))*g((B(x))/(2*np.sqrt(A(x))))*np.exp(-C)
     
     return ans
