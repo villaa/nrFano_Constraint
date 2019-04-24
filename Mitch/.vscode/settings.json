@@ -1,5 +1,5 @@
 {
     "python.linting.pylintEnabled": true,
-    "workbench.colorTheme": "Night Owl Light",
+    "workbench.colorTheme": "Default Light+",
     "python.pythonPath": "/usr/local/opt/python/bin/python3.7"
 }

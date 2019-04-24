@@ -29,25 +29,21 @@ def ratio_dist(z, res_p, res_q, r, k):
 # sdQ is the standard deviation of the charge signal, units of ??
 # sdN is the standard deviation of the number of electron-hole pairs, unitless
 # V is the voltage across the detector, in units of kV??
+
 def ratio_dist_fano(x, Er, meanN, sdP, sdQ, sdN, V,e):
 
 
     k = (sdP**2)*(sdQ**2)+(V**2)*(sdQ**2)*(sdN**2)+(e**2)*(sdN**2)*(sdP**2)
 
-    def g(x):
-        ans = (1/np.sqrt(np.pi))+x*(np.exp(x**2))*erf(x)
-        return ans
-        
-    def A(x):
-        ans = ((((x*(V/e)+1)*sdQ)**2)+((x*sdP)**2)+((e*sdN)**2))/(2*k)
-        return ans
-        
-    def B(x):
-        ans = ((V/e)*(sdQ**2)*(Er*x+e*meanN)+x*e*meanN*(((V*sdQ/e)**2)+(sdP**2))+Er*((sdQ**2)+((e*sdN)**2)))/(k)
-        return ans
+    A = ((((x*(V/e)+1)*sdQ)**2)+((x*sdP)**2)+((e*sdN)**2))/(2*k)
+
+    B = ((V/e)*(sdQ**2)*(Er*x+e*meanN)+x*e*meanN*(((V*sdQ/e)**2)+(sdP**2))+Er*((sdQ**2)+((e*sdN)**2)))/(k)
 
     C = ((((meanN*V+Er)*sdQ)**2)+(((meanN*sdP)**2)+((Er*sdN)**2))*(e**2))/(2*k)
+    
+    D = (B**2/(4*A)) - C
 
-    ans = (1/(2*np.sqrt(np.pi*k)))*(1/A(x))*g((B(x))/(2*np.sqrt(A(x))))*np.exp(-C)
+    #ans = (1/(2*np.sqrt(np.pi*k)))*(1/A(x))*g((B(x))/(2*np.sqrt(A(x))))*np.exp(-C)
+    ans = (1/(2*np.sqrt(np.pi*k)))*(1/A*(np.exp(-C)/(np.sqrt(np.pi)) + B/(2*np.sqrt(A)*np.exp(D*erf(B/(2*np.sqrt(A)))
     
     return ans
