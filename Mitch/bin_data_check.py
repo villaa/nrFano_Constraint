@@ -92,6 +92,8 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             plt.grid(True)
             plt.savefig('figures/Q-Q_plot '+str(bin_center)+' keV.png')
             pylab.show()
+
+            print('skew is: ',stats.skew(Yield))
             
         
             up,down,N = compare(Yield,upper_bound,lower_bound) # up and down are the number of data points OUTSIDE the bands. 
