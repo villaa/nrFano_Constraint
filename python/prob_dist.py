@@ -44,6 +44,10 @@ def ratio_dist_fano(x, Er, meanN, sdP, sdQ, sdN, V,e):
     D = (B**2/(4*A)) - C
 
     #ans = (1/(2*np.sqrt(np.pi*k)))*(1/A(x))*g((B(x))/(2*np.sqrt(A(x))))*np.exp(-C)
-    ans = (1/(2*np.sqrt(np.pi*k)))*(1/A*(np.exp(-C)/(np.sqrt(np.pi)) + B/(2*np.sqrt(A)*np.exp(D*erf(B/(2*np.sqrt(A)))
-    
+
+    ans = (1/(2*np.sqrt(np.pi*k)))*(1/A)*((np.exp(-C)/(np.sqrt(np.pi))) + B/(2*np.sqrt(A))*np.exp(D)*erf(B/(2*np.sqrt(A))))
+
     return ans
+
+
+

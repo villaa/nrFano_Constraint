@@ -18,7 +18,7 @@ from Data_check_continuous import *
 
 
 #%%
-N = 100000
+N = 10000
 s = 1
 fano = 0 # 'known' fano factor for electron recoils. 
 
@@ -27,7 +27,7 @@ bins = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
 bins_cont = np.linspace(10,150,N)
 Eer = np.random.choice(bins,N)
 
-df = Yield_Er(Eer,fano) #Electron Recoil Band with fano
+df = Yield_Er(Eer,fano) #Electron Recoil Band with fano (BINNED)
 
 df_count = Yield_Er(bins_cont,fano) #with fano 
 
