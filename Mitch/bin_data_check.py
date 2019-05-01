@@ -7,7 +7,8 @@ from prob_dist import *
 from Dist_check import * 
 from scipy import integrate 
 from Hist_plot import * 
-
+import pylab 
+import scipy.stats as stats
 
     
         
@@ -55,7 +56,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             
   
             bin_names.append(bin_name)
-  
+
 
             E = np.array(bin_data.E_measured)
             E_true = np.array(bin_data.E_true)
@@ -71,6 +72,9 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
              
 
             bincenters.append(np.mean(E_true))
+
+            bin_center = bin_name.mid
+            
             #print(x)
 
             #look at distributions graphically f
@@ -78,9 +82,20 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             u = np.arange(0,2,0.002) #electron recoils 
            # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
-            prob = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
-            #prob = dist_check_fano(u,E,N_mean,Sp_mean,Sq_mean,SN)
+            #prob = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
+            prob = dist_check_fano(u,E_true,N_mean,Sp_mean,Sq_mean,SN)
             hist_plot(Yield,prob,u,bin_name,fano)  
+
+
+            plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
+            stats.probplot(Yield, dist="norm", plot=pylab)
+            pylab.title('Q-Q plot '+ str(bin_center)+' keV')
+            plt.grid(True)
+            plt.savefig('figures/Q-Q_plot '+str(bin_center)+' keV.png')
+            pylab.show()
+
+            print('skew is: ',stats.skew(Yield))
+            print('kurtosis is: ', stats.kurtosis(Yield,fisher=False))
             
         
             up,down,N = compare(Yield,upper_bound,lower_bound) # up and down are the number of data points OUTSIDE the bands. 
@@ -93,8 +108,8 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             p_down = N-down/N
 
 
-            g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
-            #g = integrate.quad(lambda x: dist_check_fano(x,E,N_mean,Sp_mean,Sq_mean,SN),np.mean(upper_bound),np.mean(lower_bound))
+            #g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
+            g = integrate.quad(lambda x: dist_check_fano(x,E,N_mean,Sp_mean,Sq_mean,SN),np.mean(upper_bound),np.mean(lower_bound))
             H =g[0]*100
             #H = g*500
            # print('Area under curve is:',g)
@@ -147,8 +162,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     
     
     #bin = [10.7,25.2,40.3]
-    bin_center = [x.mid for x in bin_names]
-    print(bin_center)
+   
     
     
     #f = np.linspace(11,96,100)
