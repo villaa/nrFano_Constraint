@@ -4,7 +4,9 @@ import numpy as np
 import pandas as pd 
 from data_check import *
 from matplotlib.ticker import FuncFormatter
-from prob_dist import * 
+import sys
+sys.path.append('../python')
+import prob_dist as PD
 from Dist_check import * 
 from scipy import integrate 
 from Hist_plot import * 
@@ -18,6 +20,7 @@ def continuous_containment(df,s,band_type):
     V = 4
     eps = 0.0033
     expected = []
+    expected1= [] 
    # print("before sort Er_true is:",Er_true)
     recoil_type, upper,lower = band_type(df.E_true,s)
     
@@ -44,11 +47,9 @@ def continuous_containment(df,s,band_type):
   # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
             
-    #for a,b,c,d,e,f in zip(Ep_mean,Eq_mean,Sp_mean,Sq_mean,z,y): 
+    
     for a,b,c,d,e,f,g in zip(Er_true,N_mean,Sp_mean,Sq_mean,SN,z,y):
         
-        
-        #g = integrate.quad(lambda x: dist_check(x,a,b,c,d,k),np.mean(e),np.mean(f) )
         g = integrate.quad(lambda x: dist_check_fano(x,a,b,c,d,e),np.mean(f),np.mean(g))
 
         H =g[0]*100
@@ -56,6 +57,13 @@ def continuous_containment(df,s,band_type):
         expected.append(H)
 
 
-    print(a,b,c,d,e,f)
+    for a,b,c,d,e,f in zip(Ep_mean,Eq_mean,Sp_mean,Sq_mean,z,y):
+      f = integrate.quad(lambda x: dist_check(x,a,b,c,d,k),np.mean(e),np.mean(f))
 
-    return expected, Er_true , y,z
+      h = f[0]*100
+
+      expected1.append(h)
+
+      
+
+    return expected, expected1, Er_true , y,z

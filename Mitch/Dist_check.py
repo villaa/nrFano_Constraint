@@ -2,7 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import resfuncRead as rfr
 from scipy.stats import gaussian_kde
-from prob_dist import * 
+import sys
+sys.path.append('../python')
+import prob_dist as PD
 
 
 def dist_check(Yield,EP,EQ,sigP,sigQ,k):
@@ -19,7 +21,7 @@ def dist_check(Yield,EP,EQ,sigP,sigQ,k):
     res_q = mu_q/sig_q
     r = sig_p/sig_q
 
-    prob = ratio_dist(Yield, res_p, res_q, r, k)
+    prob = PD.ratio_dist(Yield, res_p, res_q, r, k)
 
     return prob
 
@@ -34,6 +36,6 @@ def dist_check_fano(Yield,E,N_mean,Sp_mean,Sq_mean,SN):
     Sq = np.mean(Sq_mean)
     SN = np.mean(SN)
 
-    prob = ratio_dist_fano(Yield,Er,N_mean,Sp,Sq,SN,V/1000,0.003)
+    prob = PD.ratio_dist_fano(Yield,Er,N_mean,Sp,Sq,SN,V/1000,0.0033)
     
     return prob 
