@@ -33,6 +33,8 @@ def ratio_dist(z, res_p, res_q, r, k):
 def ratio_dist_fano(x, Er, meanN, sdP, sdQ, sdN, V,e):
 
 
+    
+    
     k = (sdP**2)*(sdQ**2)+(V**2)*(sdQ**2)*(sdN**2)+(e**2)*(sdN**2)*(sdP**2)
 
     A = ((((x*(V/e)+1)*sdQ)**2)+((x*sdP)**2)+((e*sdN)**2))/(2*k)

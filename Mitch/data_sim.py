@@ -1,8 +1,12 @@
 
 #%%
 get_ipython().run_line_magic('load_ext', 'autoreload')
-
 get_ipython().run_line_magic('autoreload', '2')
+import seaborn as sns 
+import matplotlib as mpl
+mpl.rcParams.update(_VSCode_defaultMatplotlib_Params)
+sns.set_style(rc = {'figure.facecolor':'white'})
+
 import numpy as np
 import matplotlib.pyplot as plt
 import resfuncRead as rfr
@@ -17,10 +21,13 @@ from Data_check_continuous import *
 
 
 
+
+
+
 #%%
 N = 10000
 s = 1
-fano = 0 # 'known' fano factor for electron recoils. 
+fano = 3 # 'known' fano factor for electron recoils. 
 
 bins = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
 
@@ -35,10 +42,16 @@ df_count = Yield_Er(bins_cont,fano) #with fano
 
 
 #%%
-expected,Er_true,y,z = continuous_containment(df_count,s,band_er)
+expected,expected1,Er_true,y,z = continuous_containment(df_count,s,band_er)
 
 m = np.linspace(0,110,len(expected))
-plt.plot(bins_cont,expected,'.')
+
+#%%
+plt.figure()
+plt.figure(figsize=(8, 6))
+plt.plot(bins_cont,expected,'.',label = 'Dep')
+plt.plot(bins_cont,expected1,linestyle = '--',linewidth = '3',label = 'InDep')
+plt.legend()
 plt.show()
 
 #%%
@@ -58,12 +71,6 @@ cut_idx = 'E_true' # True energy
 
 df,bincenters = bin_check(df,1,band_er,bins,cut_idx,expected,Er_true,fano)#For electron Recoils with fano factor 
 
-
-#%%
-
-
-
-#%%
 
 
 
