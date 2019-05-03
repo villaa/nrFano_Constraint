@@ -35,25 +35,10 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     
    # print("before sort Er_true is:",Er_true)
     recoil_type, upper,lower = band_func(df.E_true,s)
-
-    #Data = np.vstack((Er,Yield,upper,lower,EP,EQ,sigp,sigq,Er_true)).T
-    #Data1 = Data[np.argsort(Data[:, 0])]
-    
     df1 = pd.DataFrame({'upper':upper,'lower':lower})
-    
     df = pd.concat([df,df1],axis=1)
-
-    #bins  = [10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110] #use 8
-   # bins = [9,16,25.2,40.3,75.2]
-
     df['bin'] = pd.cut(df[cut_idx],bins)
 
-    
-   # return df1
-        
-
-
-    #for q in np.arange(0,8):
     for bin_name, bin_data in df.groupby('bin'):
 
         
@@ -76,12 +61,9 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             N_mean = np.array(bin_data.N_mean) #Sigma_q
             SN = np.array(bin_data.sig_N)
              
-
             bincenters.append(np.mean(E_true))
-
             bin_center = bin_name.mid
-            
-            #print(x)
+
 
             #look at distributions graphically f
             k= (V/eps/1000)
@@ -99,25 +81,19 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             percent1 = 100*(N - (up+down))/N
             Percent1.append(percent1)
 
-        
-            p_up = N-up/N 
-            p_down = N-down/N
 
 
             #g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
             g = integrate.quad(lambda x: dist_check_fano(x,E,N_mean,Sp_mean,Sq_mean,SN),np.mean(upper_bound),np.mean(lower_bound))
             H =g[0]*100
-            #H = g*500
-           # print('Area under curve is:',g)
-            expected1.append(H)
+            expected1.append(H) #binned (for data points)
 
 
             n = (N-up-down)
             p = n/N
-
             sig_d = np.sqrt((N*p*(1-p)))/N
-            Error.append(sig_d*100)
-
+            Error.append(sig_d*100) # error in expected containment (data) ss
+                                                                                   
             #looking at symmetry 
             percent2 = 100*(N - (2*up))/N
             percent3 = 100*(N - (2*down))/N
@@ -129,7 +105,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             n2 = N-down
 
             sig_up = np.sqrt((2/N)**2*(N*((n1/N)*(1-(n1/N)))))
-            sig_down = np.sqrt((2/N)**2*(N*((n2/N)*(1-(n2/N)))))
+            sig_down = np.sqrt((2/N)**2*(N*((n2/N)*(1-(n2/N)))))         
 
             sig_high.append(100*sig_up)
             sig_low.append(100*sig_down)
@@ -145,8 +121,6 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     print('--------------------------------------------')  
     print(s,"SIGMA",recoil_type, "RECOIL BAND")
     print('--------------------------------------------')  
-    #'10-13.4','13.4-18.1','18.1-24.5','24.5-33.1','33.1-44.8','44.8-60.6','60.6-80.2','80.2-110','110-150'
-
     print("Bin Spacing (keV)", '\t', "Percent in band",'\t', "Expected",'\t', '\t', "Percent from high", '\t', "Percent from low")     #table column headings
     print("--------------", '\t', '\t' "-------------------", '\t' "-------------------", '\t' "-------------------", '\t' "-------------------")
     bin_spacing = np.array(bin_names).astype(str)
@@ -155,15 +129,6 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
         print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','±','{0:1.2f}'.format(e),'%', '\t','{0:1.2f}'.format(np.abs(h)), '\t','\t','\t','{0:1.2f}'.format(z), '\t','±','{0:1.2f}'.format(t),'\t', '{0:1.2f}'.format(q), '\t','±','{0:1.2f}'.format(l))
             
     print('--------------------------------------------')
-    
-    
-    #bin = [10.7,25.2,40.3]
-   
-    
-    
-    #f = np.linspace(11,96,100)
-    
-    #print(len(Percent1),len(bin))
     
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes

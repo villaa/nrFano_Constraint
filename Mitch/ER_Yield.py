@@ -60,6 +60,6 @@ def Yield_Er(Er_True,fano):
     Er_m = np.sort(Er)
 
 
-    df = pd.DataFrame({'E_measured':Er_m,'EQ_smear':Eq_smear,'EP_smear':Ep_smear,'N_mean':N_mean,'sig_N':sigN,'E_true':Eer,'E_measured':Er,'Yield':Yield,'Ep_mean':E_p_mean,'Eq_mean':E_q_mean,'sigp_mean':sig_p_mean,'sigq_mean':sig_q_mean})
+    df = pd.DataFrame({'E_measured':Er_m,'EQ_smear':Eq_smear,'EP_smear':Ep_smear,'N_mean':N_mean,'sig_N':sigN,'E_true':Eer,'E_measured':Er,'Yield':Yield,'Ep_mean':E_p_mean,'Eq_mean':E_q_mean,'sigp_mean':sig_p_mean,'sig_p_var':sig_p_var,'sigq_mean':sig_q_mean,'Ep_var':E_p_var})
     
     return df

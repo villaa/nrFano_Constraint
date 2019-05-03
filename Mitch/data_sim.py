@@ -25,9 +25,9 @@ from Data_check_continuous import *
 
 
 #%%
-N = 10000
+N = 100000
 s = 1
-fano = 3 # 'known' fano factor for electron recoils. 
+fano =0 # 'known' fano factor for electron recoils. 
 
 bins = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
 
@@ -93,50 +93,22 @@ def sigmap(Ep):
 def sigp_der(Ep):
     return 0.5*np.power(p_alpha + p_beta*Ep + p_gamma*(Ep**2),-0.5)*(p_beta + 2*p_gamma*(Ep))
 
-Eq = np.linspace(10,170,10000)
-Ep = np.linspace(20,250,10000)
-
+Eq = np.linspace(10,170,100000)
+Ep = np.linspace(20,250,100000)
 
 
 
 
 plt.figure(figsize=(8, 6))
-plt.plot(Eq,sigmaq(Eq))
-plt.axvline(x = 60+sigmaq(60),color = 'black',linestyle = '--',label = '$1\sigma$')
-plt.axvline(x = 60-sigmaq(60), color = 'black',linestyle = '--')
-plt.title('$\sigma_q vs. E_q$',size = '20')
-plt.xlabel('$E_q$',size = '18')
-#plt.xscale('log')
-plt.ylabel('$\sigma_q$',size = '18')
-plt.legend(loc=1,prop={'size':12})
-plt.grid(True)
-
-plt.figure(figsize=(8, 6))
-plt.plot(Ep,sigmap(Ep))
-plt.axvline(x = 100+sigmap(100),color = 'black',linestyle = '--',label = '$1\sigma$')
-plt.axvline(x = 100-sigmap(100), color = 'black',linestyle = '--')
-plt.title('$\sigma_p  vs. E_p$',size = 20 )
-plt.xlabel('$E_p$',size = '18')
-#plt.xscale('log')
-plt.ylabel('$\sigma_p$',size = '18')
-plt.legend(loc=1,prop={'size':12})
-plt.grid(True)
-
-
-
-plt.figure(figsize=(8, 6))
-plt.plot(Eq,sigq_der(Eq))
-plt.title("Derivative of $\sigma_q$ ")
+#plt.plot(Eq,sigq_der(Eq))
+plt.plot(Ep,df_count.sig_p_var,label = 'Varried N')
+plt.plot(Ep,df_count.sigp_mean,label = 'Varried SigP')
+plt.title("simgap compare ")
 plt.ylabel('$\sigma_q^|$')
 plt.xlabel('$E_q$')
+plt.legend()
 plt.grid(True)
 
-plt.figure(figsize=(8, 6))
-plt.plot(Ep,sigp_der(Ep))
-plt.title("Derivative of $\sigma_p$ ")
-plt.ylabel('$\sigma_p^|$')
-plt.xlabel('$E_p$')
-plt.grid(True)
 
 plt.show()
 
