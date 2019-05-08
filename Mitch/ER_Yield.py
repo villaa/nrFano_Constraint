@@ -6,7 +6,7 @@ import pandas as pd
 from scipy.stats import norm
 import matplotlib.mlab as mlab
 from scipy.optimize import curve_fit
-from data_check import * 
+from band_check import * 
 from bin_data_check import *
 
 f = 1.5
@@ -36,16 +36,23 @@ def Yield_Er(Er_True,fano):
 
     E_p_mean = Eer+(V/1000)*N_mean
     E_q_mean = N_mean*eps
-    sig_p_mean = np.sqrt(p_alpha + p_beta*E_p_mean + p_gamma*(E_p_mean**2) + (V/1000)**2*fano*N_mean)
-    sig_q_mean = np.sqrt(q_alpha + q_beta*E_q_mean + q_gamma*(E_q_mean**2) + eps**2*fano*N_mean)
 
+    '''These resolutions are for the independent(v1) pdf'''
+    sig_p_v1= np.sqrt(p_alpha + p_beta*E_p_mean + p_gamma*(E_p_mean**2)+ (V/1000)**2*fano*N_mean)
+    sig_q_v1 = np.sqrt(q_alpha + q_beta*E_q_mean + q_gamma*(E_q_mean**2)+ eps**2*fano*N_mean)
 
-    #for fano varried number of electron hole pairs. 
+    '''These resolutions are for the dependent(v2) pdf'''
+    sig_p_v2= np.sqrt(p_alpha + p_beta*E_p_mean + p_gamma*(E_p_mean**2))
+    sig_q_v2 = np.sqrt(q_alpha + q_beta*E_q_mean + q_gamma*(E_q_mean**2))
+
+ 
+
+    '''This section is for generating 'measured' data'''    #for fano varried number of electron hole pairs. 
     N_var = np.random.normal(0,np.sqrt(fano *N_mean)) + N_mean
+    #N_var =  N_mean
 
     E_p_var = Eer + (V/1000)*N_var
     E_q_var = N_var*eps #with Fano
-
 
 
     sig_p_var = np.sqrt(p_alpha + p_beta*E_p_var + p_gamma*(E_p_var**2))  
@@ -63,7 +70,11 @@ def Yield_Er(Er_True,fano):
     Er_m = np.sort(Er)
 
 
-    df = pd.DataFrame({'E_measured':Er_m,'EQ_smear':Eq_smear,'EP_smear':Ep_smear,'N_mean':N_mean,'sig_N':sigN,'E_true':Eer,'E_measured':Er,'Yield':Yield,'Ep_mean':E_p_mean,'Eq_mean':E_q_mean,'sigp_mean':sig_p_mean,'sig_p_var':sig_p_var,'sigq_mean':sig_q_mean,'Ep_var':E_p_var,'N_var':N_var})
+    df = pd.DataFrame({'E_measured':Er_m,'E_true':Eer,'N_mean':N_mean,'sig_N':sigN,'Yield':Yield,'Ep_mean':E_p_mean,'Eq_mean':E_q_mean,'sigp_v1':sig_p_v1,'sigq_v1':sig_q_v1,'sigp_v2':sig_p_v2,'sigq_v2':sig_q_v2})
     df2 = pd.DataFrame({'Yield':Yield,'ER':Er,'EP':Ep_smear,'EQ':Eq_smear,'E_sort':Er_m,'EP_var': E_p_var,'EQ_var':E_q_var})
 
     return df,df2
+
+
+
+

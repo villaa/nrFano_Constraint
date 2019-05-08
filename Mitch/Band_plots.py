@@ -103,36 +103,37 @@ def ER_band_plot(df,N):
     x = np.ones(len(Y))
     
     
-    ax1.plot(Erer,x,color='r',linestyle='--',linewidth = 3,label = 'Mean')
+    ax1.plot(Erer,x,color='y',linestyle='--',linewidth = 3,label = 'Mean')
     
-    ax1.plot(Erer,1+1*yer_sig(Erer),color='black',linestyle='-',label = '1 $\sigma$')
-    ax1.plot(Erer,1-1*yer_sig(Erer),color='black',linestyle='-')
+    ax1.plot(Erer,1+1*yer_sig(Erer),color='red',linestyle='-',label = '1 $\sigma$')
+    ax1.plot(Erer,1-1*yer_sig(Erer),color='red',linestyle='-')
 
-    #ax1.plot(Erer,1+2*yer_sig(Erer),color='magenta',linestyle='-',label = '2 $\sigma$')
-    #ax1.plot(Erer,1-2*yer_sig(Erer),'m-')
+    ax1.plot(Erer,1+2*yer_sig(Erer),color='magenta',linestyle='-',label = '2 $\sigma$')
+    ax1.plot(Erer,1-2*yer_sig(Erer),'m-')
 
-    #ax1.plot(Erer,1+3*yer_sig(Erer),color='red',linestyle='-',label = '3 $\sigma$')
-    #ax1.plot(Erer,1-3*yer_sig(Erer),'k-')
+    ax1.plot(Erer,1+3*yer_sig(Erer),color='black',linestyle='-',label = '3 $\sigma$')
+    ax1.plot(Erer,1-3*yer_sig(Erer),'k-')
     
     
     #plt.axvline(10, color='r', linestyle='-')
 
     ax1.plot()
-    ax1.set_ylim(0.5,1.5)
-    ax1.set_xlim(0,130)
+    ax1.set_ylim(0.7,1.3)
+    ax1.set_xlim(0,120)
     
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')
     ax1.set_ylabel('Yield',size = '18')
-    ax1.set_title('Simulated Electron Recoil Band', size = '20')
+    ax1.set_title('Electron Recoil Band Cf252', size = '20')
     ax1.tick_params(axis='both', labelsize = '20')
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     
 
     ax1.legend(loc=1,prop={'size':12})
+    
     #fig.colorbar(cax)
-    plt.savefig('figures/ERer_Band_')
+    plt.savefig('/Users/Mitch 1/Desktop/ER_band.png')
     plt.show()
     
     print("My program took", (time.time() - start_time), " seconds to run")

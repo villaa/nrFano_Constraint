@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def hist_plot(data,prob,prob1,array,bins,fano):
+def hist_plot(data,prob,prob1,array,bins,fano,recoil_type):
     
     #for x in zip(bin_names):
     
@@ -36,8 +36,8 @@ def hist_plot(data,prob,prob1,array,bins,fano):
 
     ax1.set_xlabel('Yield',size = '18')
     ax1.set_ylabel('Count',size = '18')
-    ax1.set_title("Electron Recoil Yield Distribution " +str(bins) + ' kev, '  'fano = ' +str(fano))
-    ax1.set_xlim(0.7,1.3)
+    ax1.set_title('Electron Recoil Yield Distribution' +str(bins) + ' kev, '  'fano = ' +str(fano))
+   # ax1.set_xlim(0.7,1.3)
 
     ax1.set_ylim(bottom = 0.1)
     ax1.set_yscale('log')

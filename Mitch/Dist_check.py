@@ -7,7 +7,7 @@ sys.path.append('../python')
 import prob_dist as PD
 
 
-def dist_check(Yield,EP,EQ,sigP,sigQ,k):
+def dist_check_v1(Yield,EP,EQ,sigP,sigQ,k):
     V = 4 #Voltage 
     eps = 0.003
     mu_p = np.mean(EP)
@@ -27,7 +27,7 @@ def dist_check(Yield,EP,EQ,sigP,sigQ,k):
 
     #print(res_p,res_q,r)
 
-def dist_check_fano(Yield,E,N_mean,Sp_mean,Sq_mean,SN):
+def dist_check_v2(Yield,E,N_mean,Sp_mean,Sq_mean,SN):
     V = 4 
 
     N_mean = np.mean(N_mean)    
