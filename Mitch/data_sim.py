@@ -25,19 +25,21 @@ from Data_check_continuous import *
 
 
 #%%
-N = 100000
+N = 50000
 s = 1
-fano =0 # 'known' fano factor for electron recoils. 
+fano =0.13 # 'known' fano factor for electron recoils. 
 
 bins = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
 
 bins_cont = np.linspace(10,150,N)
 Eer = np.random.choice(bins,N)
 
-df = Yield_Er(Eer,fano) #Electron Recoil Band with fano (BINNED)
+df,DF = Yield_Er(Eer,fano) #Electron Recoil Band with fano (BINNED)
 
-df_count = Yield_Er(bins_cont,fano) #with fano 
+df_count,df2 = Yield_Er(bins_cont,fano) #with fano 
 
+
+df2.to_csv('Stat.csv', sep='\t')
 
 
 
@@ -69,7 +71,7 @@ plt.hist(s)
 cut_idx = 'E_true' # True energy
 #cut_idx = 'E_measured' # Measured Energy
 
-df,bincenters = bin_check(df,1,band_er,bins,cut_idx,expected,Er_true,fano)#For electron Recoils with fano factor 
+df,bincenters = bin_check(df,1,band_er,bins,cut_idx,expected,expected1,Er_true,fano)#For electron Recoils with fano factor 
 
 
 
@@ -115,6 +117,22 @@ plt.show()
 
 #%%
 
+m,c,r,p,se1= stats.linregress(df_count.EP_smear,df_count.EQ_smear)
 
+cm1lab="$"+('y=%2.2fx+%2.2f, r^2=%1.2f'%(m,c,r**2))+"$"
+
+plt.figure(figsize=(9.0,8.0))
+plt.plot(df_count.EP_smear, m*df_count.EP_smear+c,'r--',label = cm1lab)
+plt.scatter(df_count.EP_smear,df_count.EQ_smear,s= 2.5,label = 'Data')
+
+plt.title('$E_P$ vs. $E_Q$')
+plt.xlabel('$E_P$')
+plt.ylabel('$E_Q$')
+plt.grid(linestyle='-', linewidth=0.35)
+plt.legend()
+
+plt.savefig('/Users/Mitch 1/Desktop/EP_EQ_FIT.png')
+
+plt.show()
 
 

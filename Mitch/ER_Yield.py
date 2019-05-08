@@ -45,6 +45,9 @@ def Yield_Er(Er_True,fano):
 
     E_p_var = Eer + (V/1000)*N_var
     E_q_var = N_var*eps #with Fano
+
+
+
     sig_p_var = np.sqrt(p_alpha + p_beta*E_p_var + p_gamma*(E_p_var**2))  
     sig_q_var = np.sqrt(q_alpha + q_beta*E_q_var + q_gamma*(E_q_var**2))
 
@@ -60,6 +63,7 @@ def Yield_Er(Er_True,fano):
     Er_m = np.sort(Er)
 
 
-    df = pd.DataFrame({'E_measured':Er_m,'EQ_smear':Eq_smear,'EP_smear':Ep_smear,'N_mean':N_mean,'sig_N':sigN,'E_true':Eer,'E_measured':Er,'Yield':Yield,'Ep_mean':E_p_mean,'Eq_mean':E_q_mean,'sigp_mean':sig_p_mean,'sig_p_var':sig_p_var,'sigq_mean':sig_q_mean,'Ep_var':E_p_var})
-    
-    return df
+    df = pd.DataFrame({'E_measured':Er_m,'EQ_smear':Eq_smear,'EP_smear':Ep_smear,'N_mean':N_mean,'sig_N':sigN,'E_true':Eer,'E_measured':Er,'Yield':Yield,'Ep_mean':E_p_mean,'Eq_mean':E_q_mean,'sigp_mean':sig_p_mean,'sig_p_var':sig_p_var,'sigq_mean':sig_q_mean,'Ep_var':E_p_var,'N_var':N_var})
+    df2 = pd.DataFrame({'Yield':Yield,'ER':Er,'EP':Ep_smear,'EQ':Eq_smear,'E_sort':Er_m,'EP_var': E_p_var,'EQ_var':E_q_var})
+
+    return df,df2

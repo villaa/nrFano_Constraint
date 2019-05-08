@@ -39,3 +39,5 @@ def dist_check_fano(Yield,E,N_mean,Sp_mean,Sq_mean,SN):
     prob = PD.ratio_dist_fano(Yield,Er,N_mean,Sp,Sq,SN,V/1000,0.0033)
     
     return prob 
+
+ 

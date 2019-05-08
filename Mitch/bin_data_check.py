@@ -18,7 +18,7 @@ import scipy.stats as stats
 
     
         
-def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
+def bin_check(df,s,band_func,bins,cut_idx,expected,expected1,Er_true,fano):
     
     V = 4
     eps = 0.0033
@@ -28,7 +28,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     Error = [] 
     sig_high = []
     sig_low = []
-    expected1 = []
+    expected11 = []
     bin_names = []
     bincenters = []
     
@@ -64,16 +64,21 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             bincenters.append(np.mean(E_true))
             bin_center = bin_name.mid
 
+            plt.hist(Ep_mean)
+            plt.title("Hist of EP")
+            plt.show()
 
             #look at distributions graphically f
             k= (V/eps/1000)
             u = np.arange(0,2,0.002) #electron recoils 
            # u = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
-            #prob = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
+            prob1 = dist_check(u,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k) #amy's defined PDF 
             prob = dist_check_fano(u,E_true,N_mean,Sp_mean,Sq_mean,SN)
-            hist_plot(Yield,prob,u,bin_name,fano)  
-            
+
+            #hist_plot(Yield,prob,u,bin_name,fano)  #for new distribution 
+            hist_plot(Yield,prob,prob1,u,bin_name,fano) #for normal Distribution 
+
             stat_analysis(Yield,prob,bin_center)
         
             up,down,N = compare(Yield,upper_bound,lower_bound) # up and down are the number of data points OUTSIDE the bands. 
@@ -86,7 +91,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
             #g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
             g = integrate.quad(lambda x: dist_check_fano(x,E,N_mean,Sp_mean,Sq_mean,SN),np.mean(upper_bound),np.mean(lower_bound))
             H =g[0]*100
-            expected1.append(H) #binned (for data points)
+            expected11.append(H) #binned (for data points)
 
 
             n = (N-up-down)
@@ -125,7 +130,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     print("--------------", '\t', '\t' "-------------------", '\t' "-------------------", '\t' "-------------------", '\t' "-------------------")
     bin_spacing = np.array(bin_names).astype(str)
 
-    for x,y,e,h,z,q,t,l in zip(bin_spacing,Percent1,Error,expected1,Percent2,Percent3,sig_high,sig_low):
+    for x,y,e,h,z,q,t,l in zip(bin_spacing,Percent1,Error,expected11,Percent2,Percent3,sig_high,sig_low):
         print(x, '\t','\t', '{0:1.2f}'.format(y), '\t','±','{0:1.2f}'.format(e),'%', '\t','{0:1.2f}'.format(np.abs(h)), '\t','\t','\t','{0:1.2f}'.format(z), '\t','±','{0:1.2f}'.format(t),'\t', '{0:1.2f}'.format(q), '\t','±','{0:1.2f}'.format(l))
             
     print('--------------------------------------------')
@@ -133,19 +138,22 @@ def bin_check(df,s,band_func,bins,cut_idx,expected,Er_true,fano):
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
 
-    #ax1.scatter(bincenters,Percent1,label = "Simulated")
-    #plt.plot(bincenters,expected1,label = "Expected")
-    plt.plot(Er_true,expected,label = "Expected",color ='blue')
-    plt.errorbar(bincenters,Percent1,yerr=Error,fmt ='o',label = 'Simulated', ecolor = 'purple', Linestyle = 'None', capsize=5, capthick=0.5)
-    plt.axhline(68, color='r', linestyle='--',Label = "68%")
+
+    plt.plot(Er_true,expected1,label = "Indp_Expected",color ='red',linestyle = '--')
+    plt.plot(Er_true,expected,label = "Dep_Expected",color ='blue')
+    plt.errorbar(bincenters,Percent1,yerr=Error,fmt ='o',label = 'Data', ecolor = 'purple', Linestyle = 'None', capsize=5, capthick=0.5)
+    plt.axhline(68, color='r', linestyle='--',Label = "95%")
     ax1.set_xlabel('Recoil Energy [keV]',size = '18')
     ax1.set_ylabel('Percent of Data Contained in Band',size = '18')
-    ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils Fano =' + str(fano) , size = '15')
+    #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils Fano =' + str(fano) , size = '15')
+    ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils fano = '+str(fano), size = '15')
+
     plt.xticks(bins)
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     ax1.legend(loc=1,prop={'size':12})
-    plt.savefig('Notes/Dist_fits/Eer_Error_Fano =' + str(fano)+'.png')
+    plt.savefig('/Users/Mitch 1/Desktop/plots/dep_inde_fano=013.png')
+    #plt.savefig('Notes/Dist_fits/Eer_Error_Fano =' + str(fano)+'.png')
     plt.show()
     
 
