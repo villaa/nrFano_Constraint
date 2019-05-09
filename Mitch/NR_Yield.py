@@ -42,7 +42,7 @@ def Yield_NR(Er_True):
  
     Enr = np.sort(Er_True)
 
-    Y = ynr_mu(Enr)
+    Y = ynr_mu(Enr) #calculates Linhard yield for a given Er 
     print(Y)
 
     a = 0.16

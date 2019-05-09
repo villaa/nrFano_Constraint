@@ -21,7 +21,7 @@ def dist_check_v1(Yield,EP,EQ,sigP,sigQ,k):
     res_q = mu_q/sig_q
     r = sig_p/sig_q
 
-    prob = PD.ratio_dist(Yield, res_p, res_q, r, k)
+    prob = PD.ratio_dist_v1(Yield, res_p, res_q, r, k)
 
     return prob
 
@@ -36,7 +36,7 @@ def dist_check_v2(Yield,E,N_mean,Sp_mean,Sq_mean,SN):
     Sq = np.mean(Sq_mean)
     SN = np.mean(SN)
 
-    prob = PD.ratio_dist_fano(Yield,Er,N_mean,Sp,Sq,SN,V/1000,0.0033)
+    prob = PD.ratio_dist_v2(Yield,Er,N_mean,Sp,Sq,SN,V/1000,0.0033)
     
     return prob 
 
