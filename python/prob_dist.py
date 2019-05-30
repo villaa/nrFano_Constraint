@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.special import erf
 import math 
+from scipy.integrate import quad
 
 
 # returns the probability of z, where z is the yield
@@ -51,5 +52,71 @@ def ratio_dist_v2(x, Er, meanN, sdP, sdQ, sdN, V,e):
 
     return ans
 
+def YErSpec_v2_2D(f,alpha=(1/100)):
 
+    pnr = lambda Er: alpha*np.exp(-alpha*Er)
 
+    Y_Erdist = lambda Er,Y,Etr: f(Y,Etr,Er)*pnr(Er)
+    Y_Er = lambda Y,Etr: quad(Y_Erdist, 0, 300,limit=100,args=(Y,Etr,))[0]
+
+    return Y_Er
+
+def YEr_v2_2D(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
+    #F=5.0
+    Eqbar = lambda Er: ynr(Er)*Er
+    Et = lambda Er: (1+(V/(eps*1000))*ynr(Er))*Er
+    Ensig = lambda Er: np.sqrt(F*Eqbar(Er)/eps)
+    
+    Npqn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigq(Eqbar(Er))**2)) \
+    *(1/np.sqrt(2*np.pi*sigp(Et(Er))**2))
+    
+   
+    #print(Npqn(10))
+    #print(eps*Ensig(10))
+    #print(sigp(Et(10)))
+    #print(sigq(Eqbar(10)))
+    Y_ErMeas_4D = lambda dQ,Y,Etr,Er: Npqn(Er)*(np.abs(Etr)/eps) \
+    *np.exp(-(Etr-Er+(V/(1000*eps))*dQ)**2/(2*sigp(Et(Er))**2)) \
+    *np.exp(-(dQ)**2/(2*sigq(Eqbar(Er))**2)) \
+    *np.exp(-((ynr(Er)*Er/eps)-(Y*Etr/eps)+(dQ/eps))**2/(2*Ensig(Er)**2))
+    
+    #print(Y_ErMeas_4D(0,0.3,40,40))
+   
+    #@Memoize 
+    Y_ErMeas = lambda Y,Etr,Er: quad(Y_ErMeas_4D,-np.inf,np.inf,args=(Y,Etr,Er,))[0]
+
+    return Y_ErMeas
+
+def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
+    #F=5.0
+    Eqbar = lambda Er: ynr(Er)*Er
+    Et = lambda Er: (1+(V/(eps*1000))*ynr(Er))*Er
+    Ensig = lambda Er: np.sqrt(F*Eqbar(Er)/eps)
+    
+    Npqn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigq(Eqbar(Er))**2)) \
+    *(1/np.sqrt(2*np.pi*sigp(Et(Er))**2))
+   
+    C = lambda Y,Etr,Er: Npqn(Er)*(np.abs(Etr)/eps) \
+    *np.exp(-(Etr-Er)**2/(2*sigp(Et(Er))**2)) \
+    *np.exp(-((ynr(Er)*Er/eps)-(Y*Etr/eps))**2/(2*Ensig(Er)**2))
+
+    C0 = lambda Y,Etr,Er: Npqn(Er)*(np.abs(Etr)/eps) 
+
+    Cexp = lambda Y,Etr,Er: -(Etr-Er)**2/(2*sigp(Et(Er))**2) -((ynr(Er)*Er/eps)-(Y*Etr/eps))**2/(2*Ensig(Er)**2)
+
+    a = lambda Y,Etr,Er: (2*(V/(1000*eps))*(Etr-Er))/(2*sigp(Et(Er)))+(2*(ynr(Er)*Er-Y*Etr))/(2*eps**2*Ensig(Er)**2)
+
+    b = lambda Y,Etr,Er: ((V/(1000*eps))**2/(2*sigp(Et(Er))**2) + 1/(2*sigq(Eqbar(Er))**2) + 1/(2*eps**2*Ensig(Er)**2))
+
+    ABexp = lambda Y,Etr,Er: a(Y,Etr,Er)**2/(4*b(Y,Etr,Er))
+  
+
+    print(Cexp(0.25,40,40))
+    print(a(0.25,40,40)**2/(4*b(0.25,40,40)))
+    #print(Npqn(10))
+    #print(eps*Ensig(10))
+    #print(sigp(Et(10)))
+    #print(sigq(Eqbar(10)))
+
+    #return lambda Y,Etr,Er: C(Y,Etr,Er)*np.exp(a(Y,Etr,Er)**2/(4*b(Y,Etr,Er)))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
+    return lambda Y,Etr,Er: C0(Y,Etr,Er)*np.exp(Cexp(Y,Etr,Er)+ABexp(Y,Etr,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
