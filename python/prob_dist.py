@@ -2,6 +2,10 @@ import numpy as np
 from scipy.special import erf
 import math 
 from scipy.integrate import quad
+import resfuncRead as rfr
+import scipy.optimize as so
+
+
 
 
 # returns the probability of z, where z is the yield
@@ -56,8 +60,17 @@ def YErSpec_v2_2D(f,alpha=(1/100)):
 
     pnr = lambda Er: alpha*np.exp(-alpha*Er)
 
+
+    #only integrate over important part of distribution around Etr
+    #I empirically found in analysis/misc/nrFano_Constraint/extract_Edw_Fano_v2.ipynb
+    #that at Etr=10keV the width should be 3 keV and at 40 keV it should be 10 keV
+    m = (10-3.0)/(40-10)
+    b = 3-m*10
+    width = lambda Etr: m*Etr + b
+
     Y_Erdist = lambda Er,Y,Etr: f(Y,Etr,Er)*pnr(Er)
-    Y_Er = lambda Y,Etr: quad(Y_Erdist, 0, 300,limit=100,args=(Y,Etr,))[0]
+    #Y_Er = lambda Y,Etr: quad(Y_Erdist, 0.1, np.inf,limit=100,args=(Y,Etr,))[0]
+    Y_Er = lambda Y,Etr: quad(Y_Erdist, Etr-width(Etr), Etr+width(Etr),limit=100,args=(Y,Etr,))[0]
 
     return Y_Er
 
@@ -111,8 +124,8 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     ABexp = lambda Y,Etr,Er: a(Y,Etr,Er)**2/(4*b(Y,Etr,Er))
   
 
-    print(Cexp(0.25,40,40))
-    print(a(0.25,40,40)**2/(4*b(0.25,40,40)))
+    #print(Cexp(0.25,40,40))
+    #print(a(0.25,40,40)**2/(4*b(0.25,40,40)))
     #print(Npqn(10))
     #print(eps*Ensig(10))
     #print(sigp(Et(10)))
@@ -120,3 +133,33 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
 
     #return lambda Y,Etr,Er: C(Y,Etr,Er)*np.exp(a(Y,Etr,Er)**2/(4*b(Y,Etr,Er)))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
     return lambda Y,Etr,Er: C0(Y,Etr,Er)*np.exp(Cexp(Y,Etr,Er)+ABexp(Y,Etr,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
+
+def sigroot(F,Er):
+
+    ptres = rfr.getRFunc('/home/phys/villaa/analysis/misc/nrFano_Constraint/data/jardin_ptres.txt')
+    qres = rfr.getRFunc('/home/phys/villaa/analysis/misc/nrFano_Constraint/data/jardin_qsummaxres.txt')
+    sigp = rfr.makeRFunc(ptres[1]['sqrt'])
+    sigq = rfr.makeRFunc(qres[1]['lin'],True)
+
+    #f0 = YEr_v2_2D_fast(sigp,sigq,4,(3.3/1000),0.0001)
+    fF = YEr_v2_2D_fast(sigp,sigq,4,(3.3/1000),F)
+
+    #g0 = YErSpec_v2_2D(f0)
+    gF = YErSpec_v2_2D(fF)
+
+    ynr = lambda x: 0.16*x**0.18
+
+    #norm0 = lambda Er: quad(g0,-0.1,1,limit=100,args=(Er,))[0]
+    #inty0 = lambda a,Er: quad(g0,ynr(Er)-a,ynr(Er)+a,limit=100,args=(Er,))[0]/norm0(Er)
+
+    normF = lambda Er: quad(gF,-0.1,1,limit=100,args=(Er,))[0]
+    intyF = lambda a,Er: quad(gF,ynr(Er)-a,ynr(Er)+a,limit=100,args=(Er,))[0]/normF(Er)
+
+
+    #minsig0 = lambda a,Er: inty0(a,Er) - 0.6827 #one sigma
+    #root0 = so.brentq(minsig0,0,1,rtol=0.001,maxiter=100,args=(Er,))
+    minsigF = lambda a,Er: intyF(a,Er) - 0.6827 #one sigma
+    rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100,args=(Er,))
+
+    return rootF 
+

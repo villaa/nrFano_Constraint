@@ -56,30 +56,41 @@ if __name__ == "__main__":
           
           #print(g(0.06,10))
 
+          print('simple sin function: ')
           start = time.time()
           np.sin(30)
           end = time.time()
-          print(end - start)
+          print('{} s'.format(end - start))
 
+          print('pre-integrated P(Y,Etr,Er)')
           start = time.time()
           f(0.25,40,40)
           end = time.time()
-          print(end - start)
+          print('{} s'.format(end - start))
           
+          print('pre-integrated P(Y,Etr,Er) - fast')
           start = time.time()
           ff(0.25,40,40)
           end = time.time()
-          print(end - start)
+          print('{} s'.format(end - start))
 
+          print('integrated P(Y,Etr)')
           start = time.time()
           g(0.07,10)
           end = time.time()
-          print(end - start)
+          print('{} s'.format(end - start))
 
+          print('integrated P(Y,Etr) - fast')
           start = time.time()
           gg(0.07,10)
           end = time.time()
-          print(end - start)
+          print('{} s'.format(end - start))
+
+          print('root search for sigY(Er,F)')
+          start = time.time()
+          pd.sigroot(10,10)
+          end = time.time()
+          print('{} s'.format(end - start))
 
         except KeyboardInterrupt:
           print('Shutdown requested .... exiting')
