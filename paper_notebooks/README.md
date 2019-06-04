@@ -12,6 +12,9 @@ to be named
 == Extraction of NR, ER band countours from 2-dimensional Y, Er joint distribution
 to be named
 
+== Correction to extracted C for multiple scatters
+to be named
+
 == Extraction of the Fano factor from the Edelweiss C
 to be named
 
