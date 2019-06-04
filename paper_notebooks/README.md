@@ -24,5 +24,9 @@ to be named
 == Comparison of Dougherty silicon yield variance measurement to Lindhard
 to be named
 
+== Calculation of the 2-dimensional Ep, Eq joint distribution
+to be named
+
+
 == Dark Matter limit comparison given different Fano estimates
 to be named
