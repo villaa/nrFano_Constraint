@@ -7,7 +7,7 @@ edelweiss_res.ipynb
 edelweiss_C.ipynb
 
 == Calculation of the 2-dimensional Y, Er joint distribution
-to be named
+QEr_2D_joint.ipynb
 
 == Extraction of NR, ER band countours from 2-dimensional Y, Er joint distribution
 to be named
