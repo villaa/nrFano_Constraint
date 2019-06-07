@@ -58,3 +58,11 @@ def get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_h
     sigH = get_heatRes_func(FWHM0_heat, FWHM122_heat, aH)
     
     return partial(get_sig_gamma, sigI, sigH, V)
+
+def get_sig_nuc_func_fit(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None, C = None):
+    def fit_func(E_keVee):
+        sig_nuc_func = get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH)
+
+        return np.sqrt(np.pow(sig_nuc_func(E_keVee),2) + np.pow(C,2))
+
+    return fit_func
