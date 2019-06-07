@@ -116,6 +116,7 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     C0 = lambda Y,Etr,Er: Npqn(Er)*(np.abs(Etr)/eps) 
 
     Cexp = lambda Y,Etr,Er: -(Etr-Er)**2/(2*sigp(Et(Er))**2) -((ynr(Er)*Er/eps)-(Y*Etr/eps))**2/(2*Ensig(Er)**2)
+    Cexp2 = lambda Y,Etr,Er: -((ynr(Er)*Er/eps)-(Y*Etr/eps))**2
 
     a = lambda Y,Etr,Er: (2*(V/(1000*eps))*(Etr-Er))/(2*sigp(Et(Er)))+(2*(ynr(Er)*Er-Y*Etr))/(2*eps**2*Ensig(Er)**2)
 
@@ -124,12 +125,6 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     ABexp = lambda Y,Etr,Er: a(Y,Etr,Er)**2/(4*b(Y,Etr,Er))
   
 
-    #print(Cexp(0.25,40,40))
-    #print(a(0.25,40,40)**2/(4*b(0.25,40,40)))
-    #print(Npqn(10))
-    #print(eps*Ensig(10))
-    #print(sigp(Et(10)))
-    #print(sigq(Eqbar(10)))
 
     #return lambda Y,Etr,Er: C(Y,Etr,Er)*np.exp(a(Y,Etr,Er)**2/(4*b(Y,Etr,Er)))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
     return lambda Y,Etr,Er: C0(Y,Etr,Er)*np.exp(Cexp(Y,Etr,Er)+ABexp(Y,Etr,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
@@ -137,7 +132,7 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
 def QEr_v2_2D_fast(sigh,sigi,V,eps,F=0.0001,Qbar=lambda x: 0.16*x**0.18):
    
     #new resolution functions 
-    Ehee = lambda Er: ((1+(V/eps)*Qbar(Er))*Er)/(1+(V/eps))
+    Ehee = lambda Er: ((1+(V/(1000*eps))*Qbar(Er))*Er)/(1+(V/(1000*eps)))
     EIee = lambda Er: Qbar(Er)*Er
     EIbar = lambda Er: Qbar(Er)*Er
     Ensig = lambda Er: np.sqrt(F*EIbar(Er)/eps)
@@ -145,18 +140,19 @@ def QEr_v2_2D_fast(sigh,sigi,V,eps,F=0.0001,Qbar=lambda x: 0.16*x**0.18):
 
     sigh_Er = lambda Er: sigh(Ehee(Er))
     sigi_Er = lambda Er: sigi(EIee(Er))
-    sigp_Er = lambda Er: (1+(V/eps))*sigh_Er(Er)
+    sigp_Er = lambda Er: (1+(V/(1000*eps)))*sigh_Er(Er)
 
     Nihn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigi_Er(Er)**2)) \
     *(1/np.sqrt(2*np.pi*sigh_Er(Er)**2))
    
-    C = lambda Q,Etr,Er: Nihn(Er)*(np.abs(Etr)/eps)*(1/(1+(V/eps))) \
+    C = lambda Q,Etr,Er: Nihn(Er)*(np.abs(Etr)/eps)*(1/(1+(V/(1000*eps)))) \
     *np.exp(-(Etr-Er)**2/(2*sigp_Er(Er)**2)) \
     *np.exp(-((Qbar(Er)*Er/eps)-(Q*Etr/eps))**2/(2*Ensig(Er)**2))
 
-    C0 = lambda Q,Etr,Er: Nihn(Er)*(np.abs(Etr)/eps) 
+    C0 = lambda Q,Etr,Er: Nihn(Er)*(np.abs(Etr)/eps)*(1/(1+(V/(1000*eps))))
 
     Cexp = lambda Q,Etr,Er: -(Etr-Er)**2/(2*sigp_Er(Er)**2) -((Qbar(Er)*Er/eps)-(Q*Etr/eps))**2/(2*Ensig(Er)**2)
+    Cexp2 = lambda Q,Etr,Er:  -((Qbar(Er)*Er/eps)-(Q*Etr/eps))**2
 
     a = lambda Q,Etr,Er: (2*(V/(1000*eps))*(Etr-Er))/(2*sigp_Er(Er))+(2*(Qbar(Er)*Er-Q*Etr))/(2*eps**2*Ensig(Er)**2)
 
