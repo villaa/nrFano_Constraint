@@ -56,9 +56,9 @@ def ratio_dist_v2(x, Er, meanN, sdP, sdQ, sdN, V,e):
 
     return ans
 
-def YErSpec_v2_2D(f,alpha=(1/100)):
+def expband_2D(f,alpha=(1/100)):
 
-    pnr = lambda Er: alpha*np.exp(-alpha*Er)
+    pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
 
 
     #only integrate over important part of distribution around Etr
@@ -68,9 +68,11 @@ def YErSpec_v2_2D(f,alpha=(1/100)):
     b = 3-m*10
     width = lambda Etr: m*Etr + b
 
+    new_width = lambda r: np.piecewise(np.float(r), [r<=0, r > 0], [lambda r: 0.0, lambda r: r*m + b])
+
     Y_Erdist = lambda Er,Y,Etr: f(Y,Etr,Er)*pnr(Er)
     #Y_Er = lambda Y,Etr: quad(Y_Erdist, 0.1, np.inf,limit=100,args=(Y,Etr,))[0]
-    Y_Er = lambda Y,Etr: quad(Y_Erdist, Etr-width(Etr), Etr+width(Etr),limit=100,args=(Y,Etr,))[0]
+    Y_Er = lambda Y,Etr: quad(Y_Erdist, Etr-new_width(Etr), Etr+new_width(Etr),limit=100,args=(Y,Etr,))[0]
 
     return Y_Er
 
@@ -104,7 +106,7 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     #F=5.0
     Eqbar = lambda Er: ynr(Er)*Er
     Et = lambda Er: (1+(V/(eps*1000))*ynr(Er))*Er
-    Ensig = lambda Er: np.sqrt(F*Eqbar(Er)/eps)
+    Ensig = lambda Er: np.sqrt(F*(Eqbar(Er)/eps+1)) #add one pair to avoid divide-by-zero errors
     
     Npqn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigq(Eqbar(Er))**2)) \
     *(1/np.sqrt(2*np.pi*sigp(Et(Er))**2))
@@ -135,7 +137,7 @@ def QEr_v2_2D_fast(sigh,sigi,V,eps,F=0.0001,Qbar=lambda x: 0.16*x**0.18):
     Ehee = lambda Er: ((1+(V/(1000*eps))*Qbar(Er))*Er)/(1+(V/(1000*eps)))
     EIee = lambda Er: Qbar(Er)*Er
     EIbar = lambda Er: Qbar(Er)*Er
-    Ensig = lambda Er: np.sqrt(F*EIbar(Er)/eps)
+    Ensig = lambda Er: np.sqrt(F*(EIbar(Er)/eps+1)) #add one pair to avoid divide-by-zero errors
     
 
     sigh_Er = lambda Er: sigh(Ehee(Er))
