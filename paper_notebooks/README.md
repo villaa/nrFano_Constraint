@@ -8,9 +8,11 @@ edelweiss_C.ipynb
 
 == Calculation of the 2-dimensional Y, Er joint distribution
 QEr_2D_joint.ipynb
+addendum -- check normalization against Arvind's function
+addendum -- do the Er integral analytically
 
 == Extraction of NR, ER band countours from 2-dimensional Y, Er joint distribution
-to be named
+ERNR_bands.ipynb
 
 == Correction to extracted C for multiple scatters
 to be named
