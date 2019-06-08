@@ -56,7 +56,7 @@ def ratio_dist_v2(x, Er, meanN, sdP, sdQ, sdN, V,e):
 
     return ans
 
-def expband_2D(f,alpha=(1/100)):
+def expband_2D(f,alpha=(1/100),widthfac=1):
 
     pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
 
@@ -72,7 +72,7 @@ def expband_2D(f,alpha=(1/100)):
 
     Y_Erdist = lambda Er,Y,Etr: f(Y,Etr,Er)*pnr(Er)
     #Y_Er = lambda Y,Etr: quad(Y_Erdist, 0.1, np.inf,limit=100,args=(Y,Etr,))[0]
-    Y_Er = lambda Y,Etr: quad(Y_Erdist, Etr-new_width(Etr), Etr+new_width(Etr),limit=100,args=(Y,Etr,))[0]
+    Y_Er = lambda Y,Etr: quad(Y_Erdist, Etr-widthfac*new_width(Etr), Etr+widthfac*new_width(Etr),limit=100,args=(Y,Etr,))[0]
 
     return Y_Er
 
