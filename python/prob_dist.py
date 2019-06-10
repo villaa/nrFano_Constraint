@@ -224,7 +224,7 @@ def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18):
       gF = expband_2D(fF,alpha,1.5)
 
     norm = quad(gF,0,4,args=(Er,))[0]
-    print(norm)
+    #print(norm)
 
     Qdist = lambda Q: (1/norm)*gF(Q,Er)
 
