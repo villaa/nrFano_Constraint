@@ -4,6 +4,7 @@ import math
 from scipy.integrate import quad
 import resfuncRead as rfr
 import scipy.optimize as so
+import EdwRes as er
 
 
 
@@ -192,6 +193,48 @@ def sigroot(F,Er):
     #root0 = so.brentq(minsig0,0,1,rtol=0.001,maxiter=100,args=(Er,))
     minsigF = lambda a,Er: intyF(a,Er) - 0.6827 #one sigma
     rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100,args=(Er,))
+
+    return rootF 
+
+#set the Edelweiss sigma definition to default to NR band
+def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18):
+
+    fh2 = er.get_heatRes_func(0.4, 2.7)
+    heatRes_GGA3 = lambda x:(1/2.355)*fh2(x)
+
+    fi2 = er.get_ionRes_func(1.3, 1.5, 3.1)
+    sigI_GGA3 = lambda x:(1/2.355)*fi2(x)
+
+    #new resolution functions 
+    Ehee = lambda Er: ((1+(V/eps)*Qbar(Er))*Er)/(1+(V/eps))
+    EIee = lambda Er: Qbar(Er)*Er
+
+    heatRes_GGA3_Er = lambda Er: heatRes_GGA3(Ehee(Er))
+
+    sigI_GGA3_Er = lambda Er: sigI_GGA3(EIee(Er))
+
+    #f0 = YEr_v2_2D_fast(sigp,sigq,4,(3.3/1000),0.0001)
+    fF = QEr_v2_2D_fast(heatRes_GGA3_Er,sigI_GGA3_Er,V,eps,F,Qbar)
+
+    #g0 = YErSpec_v2_2D(f0)
+    #crude check for ER band
+    if Qbar(10)>0.8:
+      gF = expband_2D(fF,alpha,3)
+    else:
+      gF = expband_2D(fF,alpha,1.5)
+
+    norm = quad(gF,0,4,args=(Er,))[0]
+    print(norm)
+
+    Qdist = lambda Q: (1/norm)*gF(Q,Er)
+
+    intyF = lambda a: quad(Qdist,Qbar(Er)-a,Qbar(Er)+a,limit=100)[0]
+
+
+    #minsig0 = lambda a,Er: inty0(a,Er) - 0.6827 #one sigma
+    #root0 = so.brentq(minsig0,0,1,rtol=0.001,maxiter=100,args=(Er,))
+    minsigF = lambda a: intyF(a) - 0.6827 #one sigma
+    rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100)
 
     return rootF 
 
