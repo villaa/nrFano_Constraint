@@ -38,7 +38,7 @@ def writeFano(file='fanoout.h5'):
   of.close()
   return
 
-def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18):
+def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,path='./'):
 
   Er = np.linspace(7,100,n)
   emin = np.min(Er)
@@ -54,9 +54,9 @@ def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18
   filename='EdwYieldWidths-emin{}-n{}-F{}-V{}-eps{}-alpha{}-type{}.h5'.format(emin,n,F,V,epslabel,alpha,rtype)
 
   out=[]
-  if(os.path.exists('data/{}'.format(filename))):
+  if(os.path.exists('{}data/{}'.format(path,filename))):
     #just open it and return the array 
-    f = h5py.File('data/{}'.format(filename),"r")
+    f = h5py.File('{}data/{}'.format(path,filename),"r")
     out = np.asarray(f['sigma'])
     
 
@@ -67,7 +67,7 @@ def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18
       print('calculating {} of {} points (for filename {})'.format(i+1,n,filename))
       out[i] = pd.sigrootEdw(F,E,V,eps,alpha,Qbar) 
 
-    f = h5py.File('data/{}'.format(filename),"w")
+    f = h5py.File('{}data/{}'.format(path,filename),"w")
     dset = f.create_dataset('sigma',np.shape(out),dtype=np.dtype('float64').type,compression="gzip",compression_opts=9)
     dset[...] = out
     dset = f.create_dataset('Er',np.shape(out),dtype=np.dtype('float64').type,compression="gzip",compression_opts=9)
