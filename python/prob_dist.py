@@ -199,7 +199,8 @@ def sigroot(F,Er):
 #set the Edelweiss sigma definition to default to NR band
 def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18):
 
-    fh2 = er.get_heatRes_func(0.4, 2.7)
+    #fh2 = er.get_heatRes_func(0.4, 2.7,0.035)
+    fh2 = er.get_heatRes_func(1.3, 2.7,0.035)
     heatRes_GGA3 = lambda x:(1/2.355)*fh2(x)
 
     fi2 = er.get_ionRes_func(1.3, 1.5, 3.1)
