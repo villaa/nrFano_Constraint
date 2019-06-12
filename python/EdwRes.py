@@ -38,6 +38,13 @@ def Q_avg(E_keV):
 def get_sig_gamma(sigI, sigH, V, E_keV):
     return ((1+V/3)/E_keV)*np.sqrt((sigI(E_keV)/2.355)**2 + (sigH(E_keV)/2.355)**2)
 
+def get_sig_neutron(sigI, sigH, V, Er_keV):
+    E_keVee_I = np.multiply(Q_avg(Er_keV), Er_keV)
+    E_keVee_H = np.multiply((1+(V/3.0)*Q_avg(Er_keV))/(1+(V/3.0)), Er_keV)
+    #E_keVee_H = np.multiply(Q_avg(Er_keV), Er_keV)
+
+    return ((1+V/3)/Er_keV)*np.sqrt((sigI(E_keVee_I)/2.355)**2 + (sigH(E_keVee_H)/2.355)**2)
+
 def get_sig_gamma_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None):
     # get the ionization resolution function
     sigI = get_ionRes_func(FWHM_center, FWHM_guard, FWHM122_ion)
@@ -47,8 +54,6 @@ def get_sig_gamma_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122
     
     return partial(get_sig_gamma, sigI, sigH, V)
 
-def get_sig_nuc(sigI, sigH, V, E_keV):
-    return ((1+V/3)/E_keV)*np.sqrt((sigI(E_keV)/2.355)**2 + (sigH(E_keV)/2.355)**2)
 
 def get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None):
     # get the ionization resolution function
@@ -57,7 +62,7 @@ def get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_h
     # get the heat resolution function
     sigH = get_heatRes_func(FWHM0_heat, FWHM122_heat, aH)
     
-    return partial(get_sig_gamma, sigI, sigH, V)
+    return partial(get_sig_neutron, sigI, sigH, V)
 
 def get_sig_nuc_func_fit(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None, C = None):
     def fit_func(E_keVee):
