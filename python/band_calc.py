@@ -32,7 +32,7 @@ if __name__ == "__main__":
         args = parser.parse_args()
 
         try:
-          V=4
+          V=4.0
           eps=3/1000.0
           alpha=(1/100)
           alphap=(1/100000)
