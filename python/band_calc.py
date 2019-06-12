@@ -43,8 +43,9 @@ if __name__ == "__main__":
           b=0.18
           Qbar = lambda Er: a*Er**b
           Qer = lambda Er: 1
-          (nrsigma,nrE) = fc.calcQWidth(100,F,V,eps,alpha,Qbar,'../paper_notebooks/')
-          (ersigma,erE) = fc.calcQWidth(100,Fp,V,eps,alphap,Qer,'../paper_notebooks/')
+          aH=0.035
+          (nrsigma,nrE) = fc.calcQWidth(100,F,V,eps,alpha,Qbar,aH,'../paper_notebooks/')
+          (ersigma,erE) = fc.calcQWidth(100,Fp,V,eps,alphap,Qer,aH,'../paper_notebooks/')
         except KeyboardInterrupt:
           print('Shutdown requested .... exiting')
         except Exception:
