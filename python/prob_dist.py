@@ -207,7 +207,7 @@ def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18):
     sigI_GGA3 = lambda x:(1/2.355)*fi2(x)
 
     #new resolution functions 
-    Ehee = lambda Er: ((1+(V/eps)*Qbar(Er))*Er)/(1+(V/eps))
+    Ehee = lambda Er: ((1+(V/(1000*eps))*Qbar(Er))*Er)/(1+(V/(1000*eps)))
     EIee = lambda Er: Qbar(Er)*Er
 
     heatRes_GGA3_Er = lambda Er: heatRes_GGA3(Ehee(Er))
@@ -215,7 +215,7 @@ def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18):
     sigI_GGA3_Er = lambda Er: sigI_GGA3(EIee(Er))
 
     #f0 = YEr_v2_2D_fast(sigp,sigq,4,(3.3/1000),0.0001)
-    fF = QEr_v2_2D_fast(heatRes_GGA3_Er,sigI_GGA3_Er,V,eps,F,Qbar)
+    fF = QEr_v2_2D_fast(heatRes_GGA3,sigI_GGA3,V,eps,F,Qbar)
 
     #g0 = YErSpec_v2_2D(f0)
     #crude check for ER band
