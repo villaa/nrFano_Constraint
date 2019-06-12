@@ -41,9 +41,14 @@ def get_sig_gamma(sigI, sigH, V, E_keV):
 def get_sig_neutron(sigI, sigH, V, Er_keV):
     E_keVee_I = np.multiply(Q_avg(Er_keV), Er_keV)
     E_keVee_H = np.multiply((1+(V/3.0)*Q_avg(Er_keV))/(1+(V/3.0)), Er_keV)
+    # we're pretty sure Edelweiss uses the correct (above) conversion
+    # and not the incorrect (below) conversion
     #E_keVee_H = np.multiply(Q_avg(Er_keV), Er_keV)
 
-    return ((1+V/3)/Er_keV)*np.sqrt((sigI(E_keVee_I)/2.355)**2 + (sigH(E_keVee_H)/2.355)**2)
+    a = np.multiply(1+(V/3)*Q_avg(Er_keV), sigI(E_keVee_I)/2.355)
+    b = np.multiply((1+V/3)*Q_avg(Er_keV), sigH(E_keVee_H)/2.355)
+
+    return (1/Er_keV)*np.sqrt(a**2 + b**2)
 
 def get_sig_gamma_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None):
     # get the ionization resolution function
