@@ -1,5 +1,6 @@
 import numpy as np
 from functools import partial
+FWHM_to_SIG = 1 / (2*np.sqrt(2*np.log(2)))
 
 def get_heatRes(sig0, a, E_keV):
     """return the heat resolution (1 sigma) at energy E_keV.  sig0, E_keV assumed to be in units of keV."""
@@ -17,8 +18,8 @@ def get_heatRes_func(FWHM0, FWHM122, aH=None):
     # note that aH is calculated from the FWHM values
     # in the Edelweiss paper, so the aH values they report
     # are 2.355 times larger than values of a calculated using eq 5
-    sig0 = FWHM0 /2.355
-    sig122 = FWHM122 /2.355
+    sig0 = FWHM0 * FWHM_to_SIG
+    sig122 = FWHM122 * FWHM_to_SIG
     
     # calculate aH, which is unitless
     if aH is None:
