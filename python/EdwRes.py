@@ -15,8 +15,8 @@ def get_heatRes_func(FWHM0, FWHM122, aH=None):
     
     # convert from FWHM to sigma
     # or maybe aH is calculated from the FWHM values?
-    sig0 = FWHM0 #/2.355
-    sig122 = FWHM122 #/2.355
+    sig0 = FWHM0 /2.355
+    sig122 = FWHM122 /2.355
     
     # calculate aH, which is unitless
     if aH is None:
