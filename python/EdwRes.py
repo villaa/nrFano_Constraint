@@ -2,7 +2,7 @@ import numpy as np
 from functools import partial
 
 def get_heatRes(sig0, a, E_keV):
-    """return the heat resolution at energy E_keV.  sig0, E_keV assumed to be in units of keV."""
+    """return the heat resolution (1 sigma) at energy E_keV.  sig0, E_keV assumed to be in units of keV."""
     
     # see eqn (5) in 2004 NIMA Edelweiss paper
     sigH = np.sqrt(sig0**2 + (a*E_keV)**2)
@@ -14,7 +14,9 @@ def get_heatRes_func(FWHM0, FWHM122, aH=None):
     """returns a resolution function given the FWHM values at 0 keV and 122 keV"""
     
     # convert from FWHM to sigma
-    # or maybe aH is calculated from the FWHM values?
+    # note that aH is calculated from the FWHM values
+    # in the Edelweiss paper, so the aH values they report
+    # are 2.355 times larger than values of a calculated using eq 5
     sig0 = FWHM0 /2.355
     sig122 = FWHM122 /2.355
     
@@ -22,7 +24,7 @@ def get_heatRes_func(FWHM0, FWHM122, aH=None):
     if aH is None:
         aH = np.sqrt((sig122**2 - sig0**2)/122**2)
 
-    #print ("aH is: ", aH)
+    print ("aH is: ", aH)
     
     # create function
     return partial(get_heatRes, sig0, aH)
@@ -36,7 +38,7 @@ def Q_avg(E_keV):
     return 0.16*np.power(E_keV,0.18)
 
 def get_sig_gamma(sigI, sigH, V, E_keV):
-    return ((1+V/3)/E_keV)*np.sqrt((sigI(E_keV)/2.355)**2 + (sigH(E_keV)/2.355)**2)
+    return ((1+V/3)/E_keV)*np.sqrt((sigI(E_keV))**2 + (sigH(E_keV))**2)
 
 def get_sig_neutron(sigI, sigH, V, Er_keV):
     E_keVee_I = np.multiply(Q_avg(Er_keV), Er_keV)
@@ -45,8 +47,8 @@ def get_sig_neutron(sigI, sigH, V, Er_keV):
     # and not the incorrect (below) conversion
     #E_keVee_H = np.multiply(Q_avg(Er_keV), Er_keV)
 
-    a = np.multiply(1+(V/3)*Q_avg(Er_keV), sigI(E_keVee_I)/2.355)
-    b = np.multiply((1+V/3)*Q_avg(Er_keV), sigH(E_keVee_H)/2.355)
+    a = np.multiply(1+(V/3)*Q_avg(Er_keV), sigI(E_keVee_I))
+    b = np.multiply((1+V/3)*Q_avg(Er_keV), sigH(E_keVee_H))
 
     return (1/Er_keV)*np.sqrt(a**2 + b**2)
 
