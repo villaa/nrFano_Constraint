@@ -15,7 +15,7 @@ addendum -- do the Er integral analytically
 ERNR_bands.ipynb
 
 == Correction to extracted C for multiple scatters
-to be named
+ms_correction.ipynb
 
 == Extraction of the Fano factor from the Edelweiss C
 to be named

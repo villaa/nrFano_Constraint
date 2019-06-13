@@ -50,11 +50,19 @@ def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18
     rtype='nr'
   else:
     rtype='er'
+
+  emins = '{:01.1f}'.format(emin)
+  ns = '{:04.0f}'.format(n)
+  Fs = '{:03.0f}'.format(F)
+  Vs = '{:2.1f}'.format(V)
+  epss = '{:1.1f}'.format(epslabel)
+  alphas = '{:1.3f}'.format(alpha)
+  aHs = '{:1.3f}'.format(aH)
  
   if(aH==0.035):
-    filename='EdwYieldWidths-emin{}-n{}-F{}-V{}-eps{}-alpha{}-type{}.h5'.format(emin,n,F,V,epslabel,alpha,rtype)
+    filename='EdwYieldWidths-emin{}-n{}-F{}-V{}-eps{}-alpha{}-type{}.h5'.format(emins,ns,Fs,Vs,epss,alphas,rtype)
   else:
-    filename='EdwYieldWidths-emin{}-n{}-F{}-V{}-eps{}-alpha{}-aH{}-type{}.h5'.format(emin,n,F,V,epslabel,alpha,aH,rtype)
+    filename='EdwYieldWidths-emin{}-n{}-F{}-V{}-eps{}-alpha{}-aH{}-type{}.h5'.format(emins,ns,Fs,Vs,epss,alphas,aHs,rtype)
 
   out=[]
   if(os.path.exists('{}data/{}'.format(path,filename))):
