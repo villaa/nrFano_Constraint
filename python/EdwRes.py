@@ -76,6 +76,6 @@ def get_sig_nuc_func_fit(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM1
     def fit_func(E_keVee):
         sig_nuc_func = get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH)
 
-        return np.sqrt(np.pow(sig_nuc_func(E_keVee),2) + np.pow(C,2))
+        return np.sqrt(np.power(sig_nuc_func(E_keVee),2) + np.power(C,2))
 
     return fit_func
