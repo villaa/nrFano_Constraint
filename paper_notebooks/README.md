@@ -16,6 +16,7 @@ ERNR_bands.ipynb
 
 == Correction to extracted C for multiple scatters
 ms_correction.ipynb
+addendum -- resolution comparison (see end of above note)
 
 == Extraction of the Fano factor from the Edelweiss C
 to be named
@@ -27,7 +28,7 @@ to be named
 to be named
 
 == Calculation of the 2-dimensional Ep, Eq joint distribution
-to be named
+EpEq_2D_joint.ipynb
 
 
 == Dark Matter limit comparison given different Fano estimates
