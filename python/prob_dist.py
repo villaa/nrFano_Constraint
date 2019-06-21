@@ -148,19 +148,18 @@ def EpEq_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
 
     C0 = lambda Ep,Eq,Er: Npqn(Er) 
 
-    Cexp = lambda Ep,Eq,Er: -Eq**2/(2*sigq(Eqbar(Er))) -(Ep-Er)**2/(2*sigp(Et(Er))**2) -((ynr(Er)*Er/eps))**2/(2*Ensig(Er)**2)
+    Cexp = lambda Ep,Eq,Er: -Eq**2/(2*sigq(Eqbar(Er))**2) -(Ep-Er)**2/(2*sigp(Et(Er))**2) -((ynr(Er)*Er/eps))**2/(2*Ensig(Er)**2)
 
-    a = lambda Ep,Eq,Er: (2*(V/1000)*(Ep-Er))/(2*sigp(Et(Er))**2)+(2*(ynr(Er)*Er)/eps)/(2*Ensig(Er)**2)+2*eps*Eq/(2*sigq(Eqbar(Er)))
+    a = lambda Ep,Eq,Er: (2*(V/1000)*(Ep-Er))/(2*sigp(Et(Er))**2)+(2*(ynr(Er)*Er)/eps)/(2*Ensig(Er)**2)+2*eps*Eq/(2*sigq(Eqbar(Er))**2)
 
     b = lambda Ep,Eq,Er: (V/1000)**2/(2*sigp(Et(Er))**2) + eps**2/(2*sigq(Eqbar(Er))**2) + 1/(2*Ensig(Er)**2)
 
     ABexp = lambda Ep,Eq,Er: a(Ep,Eq,Er)**2/(4*b(Ep,Eq,Er))
+    #print(ABexp(6.3,1.1,5))
+    #print(Cexp(6.3,1.1,5))
   
 
-    #scipy's definiton of erf is different than Wolframs by an addition of 1. 
-    #in notes I usually use Wolfram's definition to write the analytical function, but here we use scipy's so drop the +1 inside the erf multiplicative
-    #factor
-    return lambda Ep,Eq,Er: C0(Ep,Eq,Er)*np.exp(Cexp(Ep,Eq,Er)+ABexp(Ep,Eq,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Ep,Eq,Er)))*(1/2)*(erf(a(Ep,Eq,Er)/(2*np.sqrt(b(Ep,Eq,Er))))) 
+    return lambda Ep,Eq,Er: C0(Ep,Eq,Er)*np.exp(Cexp(Ep,Eq,Er)+ABexp(Ep,Eq,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Ep,Eq,Er)))*(1/2)*(erf(a(Ep,Eq,Er)/(2*np.sqrt(b(Ep,Eq,Er))))+1) 
 
 def QEr_v2_2D_fast(sigh,sigi,V,eps,F=0.0001,Qbar=lambda x: 0.16*x**0.18):
    
