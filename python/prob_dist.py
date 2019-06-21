@@ -132,6 +132,36 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     #return lambda Y,Etr,Er: C(Y,Etr,Er)*np.exp(a(Y,Etr,Er)**2/(4*b(Y,Etr,Er)))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
     return lambda Y,Etr,Er: C0(Y,Etr,Er)*np.exp(Cexp(Y,Etr,Er)+ABexp(Y,Etr,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
 
+def EpEq_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
+    #F=5.0
+    Eqbar = lambda Er: ynr(Er)*Er
+    Et = lambda Er: (1+(V/(eps*1000))*ynr(Er))*Er
+    Ensig = lambda Er: np.sqrt(F*(Eqbar(Er)/eps+1)) #add one pair to avoid divide-by-zero errors
+    
+    Npqn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigq(Eqbar(Er))**2)) \
+    *(1/np.sqrt(2*np.pi*sigp(Et(Er))**2))
+   
+    C = lambda Ep,Eq,Er: Npqn(Er) \
+    *np.exp(-(Eq)**2/(2*sigq(Eqbar(Er))**2)) \
+    *np.exp(-(Ep-Er)**2/(2*sigp(Et(Er))**2)) \
+    *np.exp(-((ynr(Er)*Er/eps))**2/(2*Ensig(Er)**2))
+
+    C0 = lambda Ep,Eq,Er: Npqn(Er) 
+
+    Cexp = lambda Ep,Eq,Er: -Eq**2/(2*sigq(Eqbar(Er))) -(Ep-Er)**2/(2*sigp(Et(Er))**2) -((ynr(Er)*Er/eps))**2/(2*Ensig(Er)**2)
+
+    a = lambda Ep,Eq,Er: (2*(V/1000)*(Ep-Er))/(2*sigp(Et(Er))**2)+(2*(ynr(Er)*Er)/eps)/(2*Ensig(Er)**2)+2*eps*Eq/(2*sigq(Eqbar(Er)))
+
+    b = lambda Ep,Eq,Er: (V/1000)**2/(2*sigp(Et(Er))**2) + eps**2/(2*sigq(Eqbar(Er))**2) + 1/(2*Ensig(Er)**2)
+
+    ABexp = lambda Ep,Eq,Er: a(Ep,Eq,Er)**2/(4*b(Ep,Eq,Er))
+  
+
+    #scipy's definiton of erf is different than Wolframs by an addition of 1. 
+    #in notes I usually use Wolfram's definition to write the analytical function, but here we use scipy's so drop the +1 inside the erf multiplicative
+    #factor
+    return lambda Ep,Eq,Er: C0(Ep,Eq,Er)*np.exp(Cexp(Ep,Eq,Er)+ABexp(Ep,Eq,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Ep,Eq,Er)))*(1/2)*(erf(a(Ep,Eq,Er)/(2*np.sqrt(b(Ep,Eq,Er))))) 
+
 def QEr_v2_2D_fast(sigh,sigi,V,eps,F=0.0001,Qbar=lambda x: 0.16*x**0.18):
    
     #new resolution functions 
