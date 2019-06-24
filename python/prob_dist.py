@@ -135,7 +135,9 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
 def EpEq_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     #F=5.0
     Eqbar = lambda Er: ynr(Er)*Er
-    Et = lambda Er: (1+(V/(eps*1000))*ynr(Er))*Er
+    #Et = lambda Er: (1+(V/(eps*1000))*ynr(Er))*Er 
+    #note that in this function all resolutions are assumed to be in Eee
+    Et = Eqbar 
     Ensig = lambda Er: np.sqrt(F*(Eqbar(Er)/eps+1)) #add one pair to avoid divide-by-zero errors
     
     Npqn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigq(Eqbar(Er))**2)) \
