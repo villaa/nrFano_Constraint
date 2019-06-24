@@ -1,4 +1,5 @@
 import numpy as np
+import re
 from functools import partial
 FWHM_to_SIG = 1 / (2*np.sqrt(2*np.log(2)))
 
@@ -84,3 +85,92 @@ def get_sig_nuc_func_fit(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM1
         return np.sqrt(np.power(sig_nuc_func(E_keVee),2) + np.power(C,2))
 
     return fit_func
+
+def getEdw_res_pars(infile='data/edw_res_data.txt'):
+
+
+    #open the file return a dictionary with label,FWHM 0keV ion, FWHM 0 keV guard,
+    #FWHM 0 keV heat, FWHM 122 keV ion, FWHM 122 keV heat as elements
+    f = open(infile)
+
+    #make a list for vector identifier 
+    #first two are x-y of histogram-type step function
+    #second two are a sort-of smooth curve to represent the function
+    vecs = ['label','FWHM0_ion','FWHM0_guard','FWHM0_heat','FWHM122_ion','FWHM122_heat']
+
+    #make a dictionary to store the pulses
+    funcs = {}
+
+    #read file N times, is this efficient?
+    regex=re.compile(r'^\s*#.+')
+    #[print(regex.search(x)) for x in f.readlines()]
+    funcs[vecs[0]] = [x.split()[0] for x in f.readlines() if regex.search(x) is None]
+    f.seek(0)
+    funcs[vecs[1]] = [x.split()[1] for x in f.readlines() if regex.search(x) is None]
+    f.seek(0)
+    funcs[vecs[2]] = [x.split()[2] for x in f.readlines() if regex.search(x) is None]
+    f.seek(0)
+    funcs[vecs[3]] = [x.split()[3] for x in f.readlines() if regex.search(x) is None]
+    f.seek(0)
+    funcs[vecs[4]] = [x.split()[4] for x in f.readlines() if regex.search(x) is None]
+    f.seek(0)
+    funcs[vecs[5]] = [x.split()[5] for x in f.readlines() if regex.search(x) is None]
+
+    f.close()
+
+    #convert to floats
+    funcs[vecs[1]] = [float(i) for i in funcs[vecs[1]]]
+    funcs[vecs[2]] = [float(i) for i in funcs[vecs[2]]]
+    funcs[vecs[3]] = [float(i) for i in funcs[vecs[3]]]
+    funcs[vecs[4]] = [float(i) for i in funcs[vecs[4]]]
+    funcs[vecs[5]] = [float(i) for i in funcs[vecs[5]]]
+
+    outdic = {}
+    for i,val in enumerate(funcs['label']):
+      vec = [funcs['FWHM0_ion'][i],funcs['FWHM0_guard'][i],funcs['FWHM0_heat'][i],funcs['FWHM122_ion'][i],funcs['FWHM122_heat'][i]]
+      outdic[funcs['label'][i]] = vec
+
+    return outdic
+
+def getEdw_det_res(label='GGA3',V=4.0,infile='data/edw_res_data.txt',aH=None):
+
+    eps=3.0
+
+    #yield models
+    a=0.16
+    b=0.18
+    Qbar = lambda Er: a*Er**b
+    Qer = lambda Er: 1
+
+    pars = getEdw_res_pars(infile)[label]
+    print(pars)
+
+    if aH is None:
+      sigH = get_heatRes_func(pars[2], pars[4])
+    else:
+      sigH = get_heatRes_func(pars[2], pars[4],aH*FWHM_to_SIG)
+
+    sigI = get_ionRes_func(pars[0], pars[1], pars[3])
+
+
+    #new resolution functions 
+    Ehee = lambda Er: ((1+(V/(eps))*Qbar(Er))*Er)/(1+(V/(eps)))
+    EIee = lambda Er: Qbar(Er)*Er
+
+
+    sigH_NR = lambda Er: sigH(Ehee(Er))
+
+    sigI_NR = lambda Er: sigI(EIee(Er))
+
+    sigQer = lambda Etr: (1/Etr)*np.sqrt((1+(V/(eps))*Qer(Etr))**2*sigI(Etr)**2 + (1+(V/(eps)))**2*Qer(Etr)**2 \
+                                             *sigH(Etr)**2)
+    sigQnr = lambda Etr: (1/Etr)*np.sqrt((1+(V/(eps))*Qbar(Etr))**2*sigI_NR(Etr)**2 + (1+(V/(eps)))**2 \
+                                             *Qbar(Etr)**2*sigH_NR(Etr)**2)
+
+    sigHv = np.vectorize(sigH)
+    sigIv = np.vectorize(sigI)
+    sigH_NRv = np.vectorize(sigH_NR)
+    sigI_NRv = np.vectorize(sigI_NR)
+    sigQerv = np.vectorize(sigQer)
+    sigQnrv = np.vectorize(sigQnr)
+    return (sigHv,sigIv,sigQerv,sigH_NRv,sigI_NRv,sigQnrv)
