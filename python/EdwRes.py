@@ -41,7 +41,7 @@ def Q_avg(E_keV):
 def get_sig_gamma(sigI, sigH, V, E_keV):
     return ((1+V/3)/E_keV)*np.sqrt((sigI(E_keV))**2 + (sigH(E_keV))**2)
 
-def get_sig_neutron(sigI, sigH, V, Er_keV):
+def get_sig_neutron(sigI, sigH, V, C, Er_keV):
     E_keVee_I = np.multiply(Q_avg(Er_keV), Er_keV)
     E_keVee_H = np.multiply((1+(V/3.0)*Q_avg(Er_keV))/(1+(V/3.0)), Er_keV)
     # we're pretty sure Edelweiss uses the correct (above) conversion
@@ -51,9 +51,14 @@ def get_sig_neutron(sigI, sigH, V, Er_keV):
     a = np.multiply(1+(V/3)*Q_avg(Er_keV), sigI(E_keVee_I))
     b = np.multiply((1+V/3)*Q_avg(Er_keV), sigH(E_keVee_H))
 
-    return (1/Er_keV)*np.sqrt(a**2 + b**2)
+    sig_0 = (1/Er_keV)*np.sqrt(a**2 + b**2)
 
-def get_sig_gamma_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None):
+    if C is not None:
+        return np.sqrt(np.power(sig_0,2) + np.power(C,2))
+    else:
+        return sig_0
+
+def get_sig_gamma_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None, C=None):
     # get the ionization resolution function
     sigI = get_ionRes_func(FWHM_center, FWHM_guard, FWHM122_ion)
     
@@ -63,17 +68,17 @@ def get_sig_gamma_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122
     return partial(get_sig_gamma, sigI, sigH, V)
 
 
-def get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None):
+def get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None, C=None):
     # get the ionization resolution function
     sigI = get_ionRes_func(FWHM_center, FWHM_guard, FWHM122_ion)
     
     # get the heat resolution function
     sigH = get_heatRes_func(FWHM0_heat, FWHM122_heat, aH)
     
-    return partial(get_sig_neutron, sigI, sigH, V)
+    return partial(get_sig_neutron, sigI, sigH, V, C)
 
 def get_sig_nuc_func_fit(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None, C = None):
-    def fit_func(E_keVee):
+    def fit_func(E_keVee, C):
         sig_nuc_func = get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH)
 
         return np.sqrt(np.power(sig_nuc_func(E_keVee),2) + np.power(C,2))
