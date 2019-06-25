@@ -77,6 +77,27 @@ def expband_2D(f,alpha=(1/100),widthfac=1):
 
     return Y_Er
 
+def expband_EpEq_2D(f,alpha=(1/100),widthfac=1):
+
+    pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
+
+
+    #only integrate over important part of distribution around Etr
+    #I empirically found in analysis/misc/nrFano_Constraint/extract_Edw_Fano_v2.ipynb
+    #that at Etr=10keV the width should be 3 keV and at 40 keV it should be 10 keV
+    #m = (10-3.0)/(40-10)
+    #b = 3-m*10
+    #width = lambda Etr: m*Etr + b
+
+    #new_width = lambda r: np.piecewise(np.float(r), [r<=0, r > 0], [lambda r: 0.0, lambda r: r*m + b])
+
+    Ep_Eqdist = lambda Er,Ep,Eq: f(Ep,Eq,Er)*pnr(Er)
+    #Y_Er = lambda Y,Etr: quad(Y_Erdist, 0.1, np.inf,limit=100,args=(Y,Etr,))[0]
+    #Ep_Eq = lambda Ep,Eq: quad(Ep_Eqdist, np.amax([Ep-widthfac,0]), Ep+widthfac,limit=100,args=(Ep,Eq,))[0]
+    Ep_Eq = lambda Ep,Eq: quad(Ep_Eqdist, np.amax([Ep-widthfac,0]), 100,limit=100,args=(Ep,Eq,))[0]
+
+    return Ep_Eq
+
 def YEr_v2_2D(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     #F=5.0
     Eqbar = lambda Er: ynr(Er)*Er
