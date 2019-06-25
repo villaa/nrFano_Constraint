@@ -14,22 +14,21 @@ addendum -- do the Er integral analytically <br/>
 == Extraction of NR, ER band countours from 2-dimensional Y, Er joint distribution <br/>
 ERNR_bands.ipynb <br/>
 
-== Correction to extracted C for multiple scatters
-ms_correction.ipynb
-addendum -- resolution comparison (see end of above note)
+== Correction to extracted C for multiple scatters <br/>
+ms_correction.ipynb <br/>
+addendum -- resolution comparison (see end of above note) 
 
-== Extraction of the Fano factor from the Edelweiss C
+== Extraction of the Fano factor from the Edelweiss C <br/>
 to be named
 
-== Calculation of NR Fano factor based on Lindhard
+== Calculation of NR Fano factor based on Lindhard <br/>
 to be named
 
-== Comparison of Dougherty silicon yield variance measurement to Lindhard
+== Comparison of Dougherty silicon yield variance measurement to Lindhard <br/>
 to be named
 
-== Calculation of the 2-dimensional Ep, Eq joint distribution
-EpEq_2D_joint.ipynb
+== Calculation of the 2-dimensional Ep, Eq joint distribution <br/>
+EpEq_2D_joint.ipynb<br/>
 
-
-== Dark Matter limit comparison given different Fano estimates
+== Dark Matter limit comparison given different Fano estimates <br/>
 to be named
