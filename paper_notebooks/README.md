@@ -1,20 +1,18 @@
 # The following notebooks are summaries of the main logic of the NR Fano paper
 
-== Statement, description, and verification of the Edelweiss resolutions
+== Statement, description, and verification of the Edelweiss resolutions <br/>
 edelweiss_res.ipynb
 
-== Extraction of error on Edelweiss "C"
+== Extraction of error on Edelweiss "C" <br/>
 edelweiss_C.ipynb
 
-== Calculation of the 2-dimensional Y, Er joint distribution
-QEr_2D_joint.ipynb
+== Calculation of the 2-dimensional Y, Er joint distribution <br/>
+QEr_2D_joint.ipynb <br/>
+addendum -- check normalization against Arvind's function <br/>
+addendum -- do the Er integral analytically <br/>
 
-addendum -- check normalization against Arvind's function
-
-addendum -- do the Er integral analytically
-
-== Extraction of NR, ER band countours from 2-dimensional Y, Er joint distribution
-ERNR_bands.ipynb
+== Extraction of NR, ER band countours from 2-dimensional Y, Er joint distribution <br/>
+ERNR_bands.ipynb <br/>
 
 == Correction to extracted C for multiple scatters
 ms_correction.ipynb
