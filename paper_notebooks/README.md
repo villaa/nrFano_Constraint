@@ -29,6 +29,7 @@ to be named
 
 == Calculation of the 2-dimensional Ep, Eq joint distribution <br/>
 EpEq_2D_joint.ipynb<br/>
+addendum -- EpEq_calc_contours.ipynb<br/>
 
 == Dark Matter limit comparison given different Fano estimates <br/>
 to be named
