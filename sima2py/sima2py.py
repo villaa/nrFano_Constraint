@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import numpy as np
+import pandas as pd
 import re
 import os
 #===============to suppress h5py warning see:
@@ -75,12 +76,82 @@ def saveh5(ofile='data.h5',path='./',regex=re.compile(r'(.*?)')):
         of.close()
         return
 
+def nrFanoCondense(infile='datain.h5',outfile='data.h5',path='./'):
+
+        f = h5py.File(path+'/'+infile,"r")
+
+        data = f['geant4/hits']
+        #using the examples above let's get byzantine and make a bad-ass data frame.
+
+        #first do some cuts:
+        #first some hit-level cuts
+        cHVDet = np.zeros(np.shape(data)[0],dtype=bool)
+        cZeroEdep = np.zeros(np.shape(data)[0],dtype=bool)
+        cNeutron = np.zeros(np.shape(data)[0],dtype=bool)
+        cGamma = np.zeros(np.shape(data)[0],dtype=bool)
+        cNR = np.zeros(np.shape(data)[0],dtype=bool)
+        
+        cHVDet[data[:,1]==1] = True
+        cZeroEdep[data[:,6]==0] = True
+        cNeutron[data[:,4]==2112] = True
+        cGamma[data[:,4]==22] = True
+        cNR[data[:,4]>3000] = True
+        
+        #now make a dataframe with the restricted data
+        nr_data = data[:,[0,4,5,6,21]]
+        nr_data = nr_data[cHVDet&~cZeroEdep&cNR,:]
+        nr_dataframe = pd.DataFrame(data=nr_data)
+        
+        #print(nr_dataframe)
+
+
+        groupbyvec=[0]
+        #print(np.max(nr_dataframe.groupby([0,1],axis=0).size()))
+        max_vec = np.max(nr_dataframe.groupby(groupbyvec,axis=0).size())
+        
+        evec = np.zeros((0,max_vec))
+        nhit = np.zeros((0,1))
+        
+        for i in nr_dataframe.groupby(groupbyvec,axis=0)[3].apply(list):
+            #print(i)
+            #print(np.shape(i))
+            vector = np.zeros((1,max_vec))
+            #print(np.shape(vector[0,0:np.shape(i)[0]]))
+            vector[0,0:np.shape(i)[0]] = np.transpose(np.asarray(i))
+            evec = np.append(evec,vector,0)
+            nhit = np.append(nhit,np.shape(i)[0])
+            
+        print(np.shape(evec))
+        print(np.shape(nhit))
+        #print(max_vec)
+        #print(np.sum(evec,1))
+        print(np.sum(nhit[nhit==1]))
+        
+
+        #open and write file
+        print(outfile)
+        of = h5py.File(outfile, 'w')
+        
+        d = evec 
+        #hits dataset
+        dset_hits = of.create_dataset("nr_Fano/nr_energies", np.shape(d), dtype=np.dtype('float64').type, compression="gzip", compression_opts=9)
+        dset_hits[...] = d
+        
+        d = nhit
+        dset_hits = of.create_dataset("nr_Fano/nr_hits", np.shape(d), dtype=np.dtype('float64').type, compression="gzip", compression_opts=9)
+        dset_hits[...] = d
+        
+        of.close()
+
+        return
+        
 #the stuff below is so this functionality can be used as a script
 ########################################################################
 if __name__ == "__main__":
 
         #make a parser for the input
         parser = argparse.ArgumentParser(description='Input processing specifications')
+        parser.add_argument('-i','--infile', type=str, dest='infile', default=None, help='file to pre-process like ms_simulation_yield.ipynb')
         parser.add_argument('-d','--filedir', type=str, dest='filedir', default='./', help='directory to look for files')
         parser.add_argument('-x','--regex', type=str, dest='regstr', default=r'(.*?)', help='regex for picking up files')
         parser.add_argument('-o','--outfile', type=str, dest='outfile', default='data.h5', help='output file for data')
@@ -94,7 +165,10 @@ if __name__ == "__main__":
           print(args.filedir)
           print(args.regstr)
           print(args.outfile)
-          saveh5(args.outfile,args.filedir,re.compile(args.regstr))
+          if(args.infile==None):
+            saveh5(args.outfile,args.filedir,re.compile(args.regstr))
+          else:
+            nrFanoCondense(infile=args.infile,outfile=args.outfile,path=args.filedir) 
         except KeyboardInterrupt:
           print('Shutdown requested .... exiting')
         except Exception:

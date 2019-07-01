@@ -16,7 +16,7 @@ ERNR_bands.ipynb <br/>
 
 == Correction to extracted C for multiple scatters <br/>
 ms_correction.ipynb <br/>
-addendum -- resolution comparison (see end of above note) 
+rescompare.ipynb <br/> 
 
 == Extraction of the Fano factor from the Edelweiss C <br/>
 to be named
