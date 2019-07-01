@@ -4,7 +4,7 @@ import math
 from scipy.integrate import quad
 import resfuncRead as rfr
 import scipy.optimize as so
-import EdwRes as er
+#import EdwRes as er
 
 
 

@@ -1,6 +1,6 @@
 {
     "python.linting.pylintEnabled": true,
-    "workbench.colorTheme": "Nord",
+    "workbench.colorTheme": "Dark Candy",
     "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 
 
