@@ -4,7 +4,7 @@ import math
 from scipy.integrate import quad
 import resfuncRead as rfr
 import scipy.optimize as so
-import EdwRes as er
+#import EdwRes as er
 
 
 
@@ -77,24 +77,62 @@ def expband_2D(f,alpha=(1/100),widthfac=1):
 
     return Y_Er
 
-def expband_EpEq_2D(f,alpha=(1/100),widthfac=1):
-
-    pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
+def expband_EpEq_2D_slow(Ep0,Eq0,f,alpha=(1/100),widthfac=5,V=4.0,eps=3.3/1000.0,sigp=lambda Er: 0.1):
 
 
-    #only integrate over important part of distribution around Etr
-    #I empirically found in analysis/misc/nrFano_Constraint/extract_Edw_Fano_v2.ipynb
-    #that at Etr=10keV the width should be 3 keV and at 40 keV it should be 10 keV
-    #m = (10-3.0)/(40-10)
-    #b = 3-m*10
-    #width = lambda Etr: m*Etr + b
+    #it doesn't matter which one of the below we use because we're only integrating from zero to inf
+    #I tried the piecewise function to test that. 
+    #pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
+    pnr = lambda Er: np.piecewise(Er,[Er<0,Er>=0],[lambda Er: 0, lambda Er: (1/alpha)*np.exp(-alpha*Er)])
 
-    #new_width = lambda r: np.piecewise(np.float(r), [r<=0, r > 0], [lambda r: 0.0, lambda r: r*m + b])
 
+    #get the central value for Er
+    Erec = lambda Ep,Eq: np.amax([Ep-(V/(1000*eps))*Eq,0])
+    width = lambda Ep,Eq: widthfac*sigp(Erec(Ep,Eq))
+
+    #get the full distribution
     Ep_Eqdist = lambda Er,Ep,Eq: f(Ep,Eq,Er)*pnr(Er)
-    #Y_Er = lambda Y,Etr: quad(Y_Erdist, 0.1, np.inf,limit=100,args=(Y,Etr,))[0]
-    #Ep_Eq = lambda Ep,Eq: quad(Ep_Eqdist, np.amax([Ep-widthfac,0]), Ep+widthfac,limit=100,args=(Ep,Eq,))[0]
-    Ep_Eq = lambda Ep,Eq: quad(Ep_Eqdist, np.amax([Ep-widthfac,0]), 100,limit=100,args=(Ep,Eq,))[0]
+
+    #Ep_Eq = lambda Ep,Eq: quad(Ep_Eqdist, np.amax([Erec(Ep,Eq)-width(Ep,Eq),0]), Erec(Ep,Eq)+width(Ep,Eq),limit=100,args=(Ep,Eq,))[0]
+
+    intlow = np.amax([Erec(Ep0,Eq0)-width(Ep0,Eq0),0])
+    inthigh = Erec(Ep0,Eq0)+width(Ep0,Eq0)
+
+    print([intlow,inthigh])
+    funcmin = lambda x,y: -quad(Ep_Eqdist,x,y,limit=100,args=(Ep0,Eq0,))[0]
+    #f = lambda x,y: -quadrature(Ep_Eqdist,x,y,maxiter=100,args=(Ep0,Eq0,))[0]
+
+    def fvec(x,f=funcmin):
+      if(x[0]>=0):
+        return f(x[0],x[1])
+      elif(x[0]<0):
+        return f(0,x[1])
+ 
+    #print(funcmin(intlow,inthigh))
+    
+    (mini,fmini,a,b,c) = so.fmin(fvec,[intlow,inthigh],disp=False,full_output=True)
+    print(mini)
+    #print(fmini)
+    return -fmini 
+
+
+def expband_EpEq_2D(f,alpha=(1/100),widthfac=5,V=4.0,eps=3.3/1000.0,sigp=lambda Er: 0.1):
+
+
+    #it doesn't matter which one of the below we use because we're only integrating from zero to inf
+    #I tried the piecewise function to test that. 
+    #pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
+    pnr = lambda Er: np.piecewise(Er,[Er<0,Er>=0],[lambda Er: 0, lambda Er: (1/alpha)*np.exp(-alpha*Er)])
+
+
+    #get the central value for Er
+    Erec = lambda Ep,Eq: np.amax([Ep-(V/(1000*eps))*Eq,0])
+    width = lambda Ep,Eq: widthfac*sigp(Erec(Ep,Eq))
+
+    #get the full distribution
+    Ep_Eqdist = lambda Er,Ep,Eq: f(Ep,Eq,Er)*pnr(Er)
+
+    Ep_Eq = lambda Ep,Eq: quad(Ep_Eqdist, np.amax([Erec(Ep,Eq)-width(Ep,Eq),0]), Erec(Ep,Eq)+width(Ep,Eq),limit=100,args=(Ep,Eq,))[0]
 
     return Ep_Eq
 

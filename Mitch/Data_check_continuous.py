@@ -14,7 +14,7 @@ from Hist_plot import *
 
     
         
-def continuous_containment(df,s,band_type):
+def continuous_containment(df,df2,s,band_type):
     
     V = 4
     eps = 0.0033
@@ -33,17 +33,17 @@ def continuous_containment(df,s,band_type):
     x = np.array(df.Yield) # Yield 
     y = np.array(df.upper) #upper bound
     z = np.array(df.lower) #lower bound
-    Ep_mean = np.array(df.Ep_mean)
-    Eq_mean = np.array(df.Eq_mean)
+    Ep_mean = np.array(df.Ep_true)
+    Eq_mean = np.array(df.Eq_true)
 
     '''For Independent PDF'''
-    Sp_v1 = np.array(df.sigp_v1) #Sigma_p
-    Sq_v1 = np.array(df.sigq_v1)
+    Sp_v1 = np.array(df.sigp) #Sigma_p
+    Sq_v1 = np.array(df.sigq)
 
     '''For Dependent pdf '''
-    Sp_v2 = np.array(df.sigp_v2) #Sigma_p
-    Sq_v2 = np.array(df.sigq_v2)
-    SN = np.array(df.sig_N)
+    Sp_v2 = np.array(df2.sigp_expected) #Sigma_p
+    Sq_v2 = np.array(df2.sigq_expected)
+    SN = np.array(df2.sig_N)
    
 
 
