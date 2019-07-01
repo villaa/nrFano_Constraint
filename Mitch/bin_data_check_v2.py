@@ -18,7 +18,7 @@ import scipy.stats as stats
 
     
         
-def bin_check(df,s,band_func,bins,cut_idx,expected_v1,expected_v2,Er_true,fano,u):
+def bin_check_v2(df,s,band_func,bins,cut_idx,expected_v2,Er_true,fano,u):
     
     V = 4
     eps = 0.0033
@@ -35,6 +35,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected_v1,expected_v2,Er_true,fano,u
     
    # print("before sort Er_true is:",Er_true)
     recoil_type, upper,lower = band_func(df.E_true,s)
+    print(recoil_type)
     df1 = pd.DataFrame({'upper':upper,'lower':lower})
     df = pd.concat([df,df1],axis=1)
     df['bin'] = pd.cut(df[cut_idx],bins)
@@ -54,35 +55,32 @@ def bin_check(df,s,band_func,bins,cut_idx,expected_v1,expected_v2,Er_true,fano,u
             Yield = np.array(bin_data.Yield) # Yield 
             upper_bound = np.array(bin_data.upper) #upper bound
             lower_bound = np.array(bin_data.lower) #lower bound
-            Ep_mean = np.array(bin_data.Ep_mean)
-            Eq_mean = np.array(bin_data.Eq_mean) #EQ
+            Ep_true = np.array(bin_data.Ep_true)
+            Eq_true = np.array(bin_data.Eq_true) #EQ
             N_mean = np.array(bin_data.N_mean)
 
-            '''For Independent pdf'''
-            Sp_v1 = np.array(bin_data.sigp_v1) #Sigma_p
-            Sq_v1 = np.array(bin_data.sigq_v1)
-             #Sigma_q
-            '''For Dependent pdf'''
-            Sp_v2 = np.array(bin_data.sigp_v2) #Sigma_p
-            Sq_v2 = np.array(bin_data.sigq_v2)            
-            SN = np.array(bin_data.sig_N)
+  
              
-
+            '''For Dependent pdf'''
+            Sp_v2 = np.array(bin_data.sigp_expected) #Sigma_p
+            Sq_v2 = np.array(bin_data.sigq_expected)            
+            SN = np.array(bin_data.sig_N)
 
             bincenters.append(np.mean(E_true))
             bin_center = bin_name.mid
 
         
             k= (V/eps/1000)
-            pdf_v1 = dist_check_v1(u,Ep_mean,Eq_mean,Sp_v1,Sq_v1,k) #amy's defined PDF 
+
             pdf_v2 = dist_check_v2(u,E_true,N_mean,Sp_v2,Sq_v2,SN)
 
-            #hist_plot(Yield,prob,u,bin_name,fano)  #for new distribution 
-            hist_plot(Yield,pdf_v2,pdf_v1,u,bin_name,fano,recoil_type) #for normal Distribution 
+          
 
-            stat_analysis(Yield,pdf_v2,bin_name)
-    
-            #g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
+            #hist_plot(Yield,prob,u,bin_name,fano)  #for new distribution 
+            #hist_plot(Yield,pdf_v2,u,bin_name,fano) #for normal Distribution 
+
+            #stat_analysis(Yield,pdf_v2,bin_name)
+
             g = integrate.quad(lambda x: dist_check_v2(x,E_true,N_mean,Sp_v2,Sq_v2,SN),np.mean(upper_bound),np.mean(lower_bound))
             H =g[0]*100
             expected11.append(H) #binned (for data points)
@@ -139,23 +137,22 @@ def bin_check(df,s,band_func,bins,cut_idx,expected_v1,expected_v2,Er_true,fano,u
     ax1 = axes
 
 
-    plt.plot(Er_true,expected_v1,label = "Indp_Expected",color ='magenta',linestyle = '--')
-    plt.plot(Er_true,expected_v2,label = "Dep_Expected",color ='blue')
-    plt.errorbar(bincenters,Percent1,yerr=Error,fmt ='o',label = 'Data', ecolor = 'purple', Linestyle = 'None', capsize=5, capthick=0.5)
+    #plt.plot(Er_true,expected_v2,label = "Expected-V2",color ='black',linestyle = '--')
+    plt.errorbar(bincenters,Percent1,yerr=Error,fmt ='o',label = 'Percent Contained', ecolor = 'purple', Linestyle = 'None', capsize=5, capthick=0.5)
     plt.axhline(68, color='r', linestyle='--',Label = "68%")
     ax1.set_xlabel('Recoil Energy [keV]',size = '18')
     ax1.set_ylabel('Percent of Data Contained in Band',size = '18')
     #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils Fano =' + str(fano) , size = '15')
-    ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils fano = '+str(fano), size = '15')
+    #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils fano = '+str(fano), size = '15')
     #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils')
 
-    #ax1.set_title('1$\sigma$ Containment Fraction for Nuclear Recoils Edelweiss Fano', size = '15')    
+    ax1.set_title('1$\sigma$ Containment Fraction for Nuclear Recoils', size = '15')    
     plt.xticks(bins)
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
-    ax1.legend(loc=1,prop={'size':12})
-    plt.savefig('/Users/Mitch 1/Desktop/Thesis_Plots/NRContainment_expected.png')
-    #plt.savefig('/Users/Mitch 1/Desktop/NRContainment.png')
+    ax1.legend(loc=2,prop={'size':12})
+    #plt.savefig('/Users/Mitch 1/Desktop/Chapter2_plots/ERContainment_F=0.13_v2.png')
+    plt.savefig('/Users/Mitch 1/Desktop/Chapter2_plots/NRContainment_F=EDW_V2.png')
     #plt.savefig('Notes/Dist_fits/Eer_Error_Fano =' + str(fano)+'.png')
     plt.show()
     

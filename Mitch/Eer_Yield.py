@@ -38,33 +38,20 @@ q_gamma = 9.52576*10**(-5)
 
 
 
-def Yield_NR(Er_True):
+def Yield_Er(Er_True,fano):
     
     
  
-    Enr = np.sort(Er_True)
+    Eer = np.sort(Er_True)
 
-    Y = ynr_mu(Enr) #calculates Linhard yield for a given Er 
-    #print(Y)
-    
-    a = 0.16
-    b = 0.18 
-    c = 0.04
-    A = Enr**(1-b)
-    B = Enr**(1-2*b)
-    C = Enr**(1-3*b)
-
-    fano = c**2/((eps*a/(A))+(2*V*a**2/(B*1000))+(2*(V/1000)**2*a**3/(eps*C))) #edelweiss fano
-    #fano = 0
-    
 
     '''For generating data for version 1 of our simulation. Here, the fano factor is accounted for in the resolutions.'''
 
-    N_mean = Y*Enr/eps
+    N_mean = Eer/eps
 
     sigN = np.sqrt(N_mean * fano) 
 
-    Ep_true_v1 = Enr+(V/1000)*N_mean
+    Ep_true_v1 = Eer+(V/1000)*N_mean
     Eq_true_v1 = N_mean*eps
 
 
@@ -81,12 +68,7 @@ def Yield_NR(Er_True):
     Er_v1 = np.sort(Er_v1)
 
 
-    df_v1 = pd.DataFrame({'E_true':Enr,'N_mean':N_mean,'Ep_true':Ep_true_v1,'Eq_true':Eq_true_v1,'sigp':sig_p_v1,'sigq':sig_q_v1,'Ep_measured':Ep_measured_v1,'Eq_measured':Eq_measured_v1,'E_measured':Er_v1,'Yield':Yield_v1})
-
-
-
-
-
+    df_v1 = pd.DataFrame({'E_true':Eer,'N_mean':N_mean,'Ep_true':Ep_true_v1,'Eq_true':Eq_true_v1,'sigp':sig_p_v1,'sigq':sig_q_v1,'Ep_measured':Ep_measured_v1,'Eq_measured':Eq_measured_v1,'E_measured':Er_v1,'Yield':Yield_v1})
 
 
  
@@ -100,7 +82,7 @@ def Yield_NR(Er_True):
     N_var = np.random.normal(0,sigN) + N_mean
     #N_var =  N_mean
 
-    Ep_true_v2 = Enr+ (V/1000)*N_var
+    Ep_true_v2 = Eer+ (V/1000)*N_var
     Eq_true_v2 = N_var*eps #with Fano
 
 
@@ -119,7 +101,7 @@ def Yield_NR(Er_True):
     Er_v2 = np.sort(Er_v2)
 
 
-    df_v2 = pd.DataFrame({'E_true':Enr,'N_mean':N_mean,'N_var':N_var, 'sig_N':sigN, 'Ep_true':Ep_true_v2,'Eq_true':Eq_true_v2,'sigp':sig_p_v2,'sigq':sig_q_v2,'Ep_measured':Ep_measured_v2,'Eq_measured':Eq_measured_v2,'E_measured':Er_v2,'Yield':Yield_v2,'sigp_expected':sig_p_expected,'sigq_expected':sig_q_expected})
+    df_v2 = pd.DataFrame({'E_true':Eer,'N_mean':N_mean,'N_var':N_var, 'sig_N':sigN, 'Ep_true':Ep_true_v2,'Eq_true':Eq_true_v2,'sigp':sig_p_v2,'sigq':sig_q_v2,'Ep_measured':Ep_measured_v2,'Eq_measured':Eq_measured_v2,'E_measured':Er_v2,'Yield':Yield_v2,'sigp_expected':sig_p_expected,'sigq_expected':sig_q_expected})
 
 
     return df_v1,df_v2

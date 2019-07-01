@@ -18,7 +18,7 @@ ynr_sig = rfr.makeBFunc(bpar_nr[1]['sig'],True)
 ynr_sigv = np.vectorize(ynr_sig)
 
 
-def NR_band_plot(df):
+def NR_band_plot(df,version):
     
     Enr = df.E_measured
     a = df.Yield
@@ -27,45 +27,50 @@ def NR_band_plot(df):
     
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
-    xy = np.vstack([Enr,a])
-    z = gaussian_kde(xy)(xy)
+    #xy = np.vstack([Enr,a])
+    #z = gaussian_kde(xy)(xy)
     
     
-    #ax1.plot(Enr,a,'+',color='b',linewidth=2,markersize=3)
-    cm = plt.cm.get_cmap('nipy_spectral')
-    cax = ax1.scatter(Enr, a, c=z, s=10, cmap = cm)
+    ax1.plot(Enr,a,'+',color='b',linewidth=2,markersize=3,alpha = 0.5)
+    #cm = plt.cm.get_cmap('nipy_spectral')
+    #cax = ax1.scatter(Enr, a, c=z, s=10, cmap = cm)
     
-    ax1.plot(X,ynr_muv(X),color='yellow',linestyle='--',label = 'Mean')
-    ax1.plot(X,ynr_mu(X)+1*ynr_sig(X),'r-',label = '1 $\sigma$')
-    ax1.plot(X,ynr_mu(X)-1*ynr_sig(X),'r-')
+    ax1.plot(X,ynr_muv(X),color='red',linestyle='--',label = 'Mean')
+    ax1.plot(X,ynr_mu(X)+1*ynr_sig(X),'k-',label = '1 $\sigma$')
+    ax1.plot(X,ynr_mu(X)-1*ynr_sig(X),'k-')
     
     
 
-    ax1.plot(X,ynr_mu(X)+2*ynr_sig(X),'m-',label = '2 $\sigma$')
-    ax1.plot(X,ynr_mu(X)-2*ynr_sig(X),'m-')
+    #ax1.plot(X,ynr_mu(X)+2*ynr_sig(X),color='magenta',linestyle='-',label = '2 $\sigma$')
+    #ax1.plot(X,ynr_mu(X)-2*ynr_sig(X),color='magenta',linestyle='-')
 
-    ax1.plot(X,ynr_mu(X)+3*ynr_sig(X),'k-',label = '3 $\sigma$')
-    ax1.plot(X,ynr_mu(X)-3*ynr_sig(X),'k-')
+    #ax1.plot(X,ynr_mu(X)+3*ynr_sig(X),color='black',linestyle='-',label = '3 $\sigma$')
+    #ax1.plot(X,ynr_mu(X)-3*ynr_sig(X),color='black',linestyle='-')
 
     ax1.plot()
     ax1.set_ylim(0.1,.5)
-    ax1.set_xlim(0,160)
+    ax1.set_xlim(0,130)
     
     
-    ax1.set_xlabel('$E_R$(keV)',size = '18')
-    ax1.set_ylabel('Yield',size = '18')
-    ax1.set_title('Data Check NR Band C = 0.04', size = '20')
+    ax1.set_xlabel('Recoil Energy (keV)',size = '18')
+    ax1.set_ylabel('Ionization Yield',size = '18')
+    ax1.set_title('Simulated Nuclear Recoil Band Model', size = '20')
     ax1.tick_params(axis='both', labelsize = '20')
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     
 
     ax1.legend(loc=1,prop={'size':12})
-    plt.savefig('figures/ENr_band_edelweissfano1.png')
+    #plt.savefig('figures/ENr_band_edelweissfano1.png')
+    #plt.savefig('/Users/Mitch 1/Desktop/Thesis_Plots/Sim_NRband_f=0.png')
+    plt.savefig('/Users/Mitch 1/Desktop/Chapter2_plots/NR_band_F=EDW_binned_V2.png')
+    #plt.savefig('/Users/Mitch 1/Desktop/Thesis_Plots/Sim_NRband_edelFano.png') 
+    #plt.savefig('/Users/Mitch 1/Desktop/Thesis_Plots/Sim_NRband_edelFano_binned.png') 
+
     plt.show()
     
     
-def ER_band_plot(df,N):
+def ER_band_plot(df,version):
     import time
     start_time = time.time()
     
@@ -103,28 +108,31 @@ def ER_band_plot(df,N):
     x = np.ones(len(Y))
     
     
-    ax1.plot(Erer,x,color='y',linestyle='--',linewidth = 3,label = 'Mean')
+    ax1.plot(Erer,x,color='r',linestyle='--',linewidth = 2,label = 'Mean')
     
-    ax1.plot(Erer,1+1*yer_sig(Erer),color='red',linestyle='-',label = '1 $\sigma$')
-    ax1.plot(Erer,1-1*yer_sig(Erer),color='red',linestyle='-')
+    ax1.plot(Erer,1+1*yer_sig(Erer),color='black',linestyle='-',label = '1 $\sigma$')
+    ax1.plot(Erer,1-1*yer_sig(Erer),color='black',linestyle='-')
 
+    '''
     ax1.plot(Erer,1+2*yer_sig(Erer),color='magenta',linestyle='-',label = '2 $\sigma$')
     ax1.plot(Erer,1-2*yer_sig(Erer),'m-')
 
     ax1.plot(Erer,1+3*yer_sig(Erer),color='black',linestyle='-',label = '3 $\sigma$')
     ax1.plot(Erer,1-3*yer_sig(Erer),'k-')
-    
+    '''
     
     #plt.axvline(10, color='r', linestyle='-')
 
     ax1.plot()
-    ax1.set_ylim(0.7,1.3)
-    ax1.set_xlim(0,120)
+    ax1.set_ylim(0.5,1.5)
+    ax1.set_xlim(0,130)
     
     
     ax1.set_xlabel('$E_R$(keV)',size = '18')
-    ax1.set_ylabel('Yield',size = '18')
-    ax1.set_title('Electron Recoil Band Cf252', size = '20')
+    ax1.set_ylabel('Ionization Yield',size = '18')
+    ax1.set_title('Simulated Electron Recoil Band', size = '20')
+    #ax1.set_title('Electron Recoil Band V'+str(version), size = '20')
+
     ax1.tick_params(axis='both', labelsize = '20')
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
@@ -133,7 +141,7 @@ def ER_band_plot(df,N):
     ax1.legend(loc=1,prop={'size':12})
     
     #fig.colorbar(cax)
-    plt.savefig('/Users/Mitch 1/Desktop/ER_band.png')
+    plt.savefig('/Users/Mitch 1/Desktop/Chapter2_plots/ER_band_F=0.13_binned_V2.png')
     plt.show()
     
     print("My program took", (time.time() - start_time), " seconds to run")
