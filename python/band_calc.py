@@ -33,6 +33,7 @@ if __name__ == "__main__":
 
         try:
           V=4.0
+          FWHM_to_SIG = 1 / (2*np.sqrt(2*np.log(2)))
           eps=3/1000.0
           alpha=(1/100)
           alphap=(1/100000)
