@@ -22,7 +22,7 @@ def QEr_Ebin(Q, Ernr, bins=[5, 10, 20, 30, 40, 50, 70,150]):
 
     #print stats in each bin
     s = nr_df.groupby(pds.cut(nr_df['energy'], bins=bins)).size()
-    #print (s)
+    print (s)
 
     #create list of vectors for histogrammin'
     bindf = nr_df.groupby(pds.cut(nr_df['energy'], bins=bins))['yield'].apply(list)
