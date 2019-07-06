@@ -1,8 +1,8 @@
 image: continuumio/miniconda3:latest
 
 stages:
-  -build
-  -test
+  - build
+  - test
 
 install:
   stage: build
