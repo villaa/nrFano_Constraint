@@ -1,31 +1,24 @@
-#language: python
-#python:
-#  - "3.7"
-language: python
-python: 3.7
-dist: xenial
-sudo: true
+image: continuumio/miniconda3:latest
+
+stages:
+  -build
+  -test
+
 install:
-  - sudo apt-get update
-  # We do this conditionally because it saves us some downloading if the
-  # version is the same.
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    fi
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
-  # Useful for debugging any issues with conda
-  - conda info -a
+  stage: build
+  script: 
+    - apt-get update -q -y
+    - apt-get install -y build-essential
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    # Useful for debugging any issues with conda
+    - conda info -a
 
-  - conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f nr_fano_env.yml 
-  - source activate test-environment
+    - conda env create -f nr_fano_env.yml
+    - source activate nr_fano 
 
-before_script: cd paper_notebooks
-
-script:
-- py.test
+unittest:
+   stage: test
+   before_script: cd paper_notebooks
+   script:
+     - py.test
