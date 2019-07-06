@@ -19,6 +19,7 @@ install:
 
 unittest:
    stage: test
-   before_script: cd paper_notebooks
+   before_script: 
+     - cd paper_notebooks
    script:
      - py.test
