@@ -1,11 +1,12 @@
 image: continuumio/miniconda3:latest
 
 stages:
-  - build
-  - test
+  - nbunit 
 
 install:
-  stage: build
+  stage: nbunit 
+  before_script: 
+    - cd paper_notebooks
   script: 
     - apt-get update -q -y
     - apt-get install -y build-essential
@@ -16,11 +17,4 @@ install:
 
     - conda env create -f nr_fano_env.yml
     - source activate nr_fano 
-
-unittest:
-  stage: test
-  before_script: 
-    - cd paper_notebooks
-    - source activate nr_fano
-  script:
     - py.test
