@@ -15,6 +15,6 @@ install:
     # Useful for debugging any issues with conda
     - conda info -a
 
-    - conda env create -f nr_fano_env.yml
+    - conda env create -f ../nr_fano_env.yml
     - source activate nr_fano 
     - py.test
