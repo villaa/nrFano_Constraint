@@ -15,12 +15,12 @@ install:
     - conda info -a
 
     - conda env create -f nr_fano_env.yml
-    - conda activate nr_fano 
+    - source activate nr_fano 
 
 unittest:
-   stage: test
-   before_script: 
-     - cd paper_notebooks
-     - conda activate nr_fano
-   script:
-     - py.test
+  stage: test
+  before_script: 
+    - cd paper_notebooks
+    - source activate nr_fano
+  script:
+    - py.test
