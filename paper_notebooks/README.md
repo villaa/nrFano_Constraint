@@ -1,6 +1,4 @@
-# The following nortebooks are summaries of the main logic of the NR Fano paper [![Build status](https://gitlab.com/villano-lab/nrFano_Constraint/badges/master/build.svg)](https://gitlab.com/villano-lab/nrFano_Constraint)
-
-[//]: # [![Build Status](https://travis-ci.com/villaa/nrFano_Constraint.svg?token=dDJNAzywngCDqUAtL9D9&branch=master)](https://travis-ci.com/villaa/nrFano_Constraint)
+# The following nortebooks are summaries of the main logic of the NR Fano paper [![Build Status](https://travis-ci.com/villaa/nrFano_Constraint.svg?token=dDJNAzywngCDqUAtL9D9&branch=master)](https://travis-ci.com/villaa/nrFano_Constraint)
 
 ## Statement, description, and verification of the Edelweiss resolutions <br/>
 edelweiss_res.ipynb

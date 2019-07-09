@@ -63,3 +63,17 @@ def largestErr_fast():
 
   err = np.asarray(err)
   return err
+
+#function to tell if two vectors of values are in range of a "true" value
+def inRange(val,mu,sig):
+
+  if (np.shape(mu) != np.shape(sig)):
+    raise Exception('mu and val vectors must have the same shape')
+
+  diff = np.abs(mu-val)
+
+  truth = sig>=diff
+  perc = np.float(np.sum(truth==1))/np.float(np.shape(truth)[0])
+
+  return truth,perc
+

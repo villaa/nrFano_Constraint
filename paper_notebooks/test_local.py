@@ -17,5 +17,6 @@ def test():
     _exec_notebook('ERNR_bands.ipynb')
     _exec_notebook('ms_correction.ipynb')
     _exec_notebook('yield_width_compare.ipynb')
+    _exec_notebook('fitting_errors.ipynb')
     _exec_notebook('EpEq_2D_joint.ipynb')
     _exec_notebook('EpEq_calc_contours.ipynb')
