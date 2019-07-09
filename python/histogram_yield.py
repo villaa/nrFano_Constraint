@@ -6,6 +6,7 @@ import resfuncRead as rfr
 import scipy.optimize as so
 import pandas as pds
 import lmfit as lmf
+import nrfano_stats as nfs
 
 
 
@@ -37,13 +38,23 @@ def QEr_Qhist(bindf, qbins=np.linspace(0,0.6,40)):
 
     qhistos = np.zeros((np.shape(qbins)[0]-1,0))
     qerrs = np.zeros((np.shape(qbins)[0]-1,0))
+
+    #get errors for 0-20 here
+    fcerrs = nfs.largestErr_fast()
    
     for i,Qv in enumerate(bindf):
       n,nx = np.histogram(Qv,bins=qbins)
       n = np.reshape(n,(np.shape(n)[0],1))
       qhistos = np.append(qhistos,n,axis=1)
-      qerrs = np.append(qerrs,np.sqrt(n),axis=1)
-      qerrs[qerrs==0]=1
+      qerrs0 = np.sqrt(n)
+      qerrs0[n<=20] = fcerrs[n[n<=20]]
+      qerrs = np.append(qerrs,qerrs0,axis=1)
+      #qerrs[n<=20] = fcerrs[n[n<=20]] 
+      #use gaussian errors
+      #qerrs = np.append(qerrs,np.sqrt(n),axis=1)
+      #qerrs[qerrs==0]=1
+      #use FC poissonian errors
+      #qerrs = np.append(qerrs,nfs.largestErr(n),axis=1)
 
     return qhistos,qerrs
 
