@@ -90,11 +90,19 @@ def QEr_Qfit(qhistos,qerrs, qbins=np.linspace(0,0.6,40),damps=0.1,dmu=1.0,dsig=0
         print('lmfit results')
         print(lmf.report_fit(lmfout.params))
       qamps[i] = lmfout.params['amp'].value
-      qampserrs[i] = np.sqrt(lmfout.covar[0,0])
       qmus[i] = lmfout.params['mean'].value
-      qmuerrs[i] = np.sqrt(lmfout.covar[1,1])
       qsigs[i] = lmfout.params['sig'].value
-      qsigerrs[i] = np.sqrt(lmfout.covar[2,2])
+ 
+      #somtimes covariance doesn't exist (if bad fit)
+      try: 
+        qampserrs[i] = np.sqrt(lmfout.covar[0,0])
+        qmuerrs[i] = np.sqrt(lmfout.covar[1,1])
+        qsigerrs[i] = np.sqrt(lmfout.covar[2,2])
+      except:
+        print('bad fit')
+        qampserrs[i] = -1 
+        qmuerrs[i] = -1 
+        qsigerrs[i] = -1 
 
     if not silent:
       print(qsigs)
