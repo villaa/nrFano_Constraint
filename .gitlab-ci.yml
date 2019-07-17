@@ -1,0 +1,20 @@
+image: continuumio/miniconda3:latest
+
+stages:
+  - nbunit 
+
+before_script:
+    - apt-get update -q -y
+    - apt-get install -y build-essential
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    # Useful for debugging any issues with conda
+    - conda info -a
+    - conda env create -f nr_fano_env.yml
+    - source activate nr_fano 
+    - cd paper_notebooks
+
+install:
+  stage: nbunit 
+  script: 
+    - py.test

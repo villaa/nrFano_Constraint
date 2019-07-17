@@ -7,6 +7,7 @@ dependencies:
   - emcee
   - pandas
   - astropy::gammapy
+  - astropy::corner
   - matplotlib
   - mpld3
   - tabulate
@@ -14,6 +15,8 @@ dependencies:
   - lmfit
   - ipykernel
   - nb_conda_kernels
+  - anaconda::pytest
   - pip
   - pip:
     - svgpathtools
+    - bootstrapped 
