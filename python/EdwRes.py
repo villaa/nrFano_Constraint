@@ -24,7 +24,7 @@ def get_heatRes_func(FWHM0, FWHM122, aH=None):
     
     # calculate aH, which is unitless
     if aH is None:
-        aH = np.sqrt((sig122**2 - sig0**2)/122**2)
+        aH = np.sqrt((sig122**2 - sig0**2)/sig122**2)
 
     #print ("aH is: ", aH)
     
