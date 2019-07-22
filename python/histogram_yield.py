@@ -7,6 +7,7 @@ import scipy.optimize as so
 import pandas as pds
 import lmfit as lmf
 import nrfano_stats as nfs
+import copy
 
 
 
@@ -119,3 +120,48 @@ def gauss_residual(params, x, data, eps_data):
     model = amp * np.exp(-(x-mean)**2/(2*sig**2))
 
     return (data-model) / eps_data
+
+#a bin-centering correction
+def bc_corr(E,sig,n=10,Qbar=lambda E: 0.16*E**(0.18)):
+
+
+    Ev = np.linspace(np.amin(E),np.amax(E),n) 
+    Ec = (Ev[:-1] + Ev[1:]) / 2
+
+    #create a dataframe
+    df = pds.DataFrame(data={'energy':E})
+
+    s = df.groupby(pds.cut(df['energy'], bins=Ev)).size()[:]
+    s = np.asarray(s)
+    s = s/np.sum(s)
+    #print(s)
+
+    #make a function
+    func = {} 
+    for i,Er in enumerate(Ec):
+      idx = 'f{}'.format(i)
+      idx = str(idx)
+      prefac = copy.copy(s[i])
+      #func[idx] = lambda Q,prefac=prefac,Er=Er: prefac*(1/np.sqrt(2*np.pi*sig(Er)**2))*np.exp(-(Qbar(Er)-Q)**2/(2*sig(Er)**2))
+      func[idx] = (lambda prefac,Er: (lambda Q: prefac*(1/np.sqrt(2*np.pi*sig(Er)**2))*np.exp(-(Qbar(Er)-Q)**2/(2*sig(Er)**2))))(prefac,Er)
+
+    fmean = lambda Q: Q*fsum(Q,func)
+    f2mom = lambda Q: Q**2*fsum(Q,func)
+
+    #print(quad(fsum,-10,10,args=(func,)))
+    mean = quad(fmean,-10,10)[0]
+    tmom = quad(f2mom,-10,10)[0]
+    #print(mean)
+    #print(tmom)
+
+    #print(np.sqrt(tmom-mean**2))
+
+    return (np.sqrt(tmom-mean**2))
+
+def fsum(x,f):
+
+    fsum=0
+    for fi in f:
+      fsum+=f[fi](x)
+
+    return fsum
