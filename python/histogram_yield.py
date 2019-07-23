@@ -9,7 +9,9 @@ import lmfit as lmf
 import nrfano_stats as nfs
 import copy
 
-
+#bootstrapping
+import bootstrapped.bootstrap as bs
+import bootstrapped.stats_functions as bs_stats
 
 
 
@@ -32,6 +34,32 @@ def QEr_Ebin(Q, Ernr, bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
     #print(bindf)
 
     return bindf 
+
+def QEr_Qboot(bindf,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
+    
+    qbootsigs = np.zeros((np.shape(bins)[0]-1,))
+    qbootsigerrsu = np.zeros((np.shape(bins)[0]-1,))
+    qbootsigerrsl = np.zeros((np.shape(bins)[0]-1,))
+
+    for i,Qv in enumerate(bindf):
+      print(np.shape(Qv))
+      Qv = np.asarray(Qv)
+      #print(Qv[0:10])
+      try:
+        bsr = bs.bootstrap(Qv, stat_func=bs_stats.std,iteration_batch_size=100)
+      except MemoryError as e:
+        print('There was a memory error - too much memory to be allocated')
+       
+      print(bsr)
+      qbootsigs[i] = np.std(Qv)
+      qbootsigerrsu[i] = bsr.upper_bound
+      qbootsigerrsl[i] = bsr.lower_bound
+    
+    #change over to size of error bars, not confidence interval 
+    qbootsigerrsu = qbootsigerrsu - qbootsigs
+    qbootsigerrsl = -qbootsigerrsl + qbootsigs
+
+    return qbootsigs,qbootsigerrsl,qbootsigerrsu
 
 def QEr_Qhist(bindf, qbins=np.linspace(0,0.6,40)):
 
