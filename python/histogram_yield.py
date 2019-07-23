@@ -149,8 +149,8 @@ def bc_corr(E,sig,n=10,Qbar=lambda E: 0.16*E**(0.18)):
     f2mom = lambda Q: Q**2*fsum(Q,func)
 
     #print(quad(fsum,-10,10,args=(func,)))
-    mean = quad(fmean,-10,10)[0]
-    tmom = quad(f2mom,-10,10)[0]
+    mean = quad(fmean,-2,2)[0]
+    tmom = quad(f2mom,-2,2)[0]
     #print(mean)
     #print(tmom)
 
