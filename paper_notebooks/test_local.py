@@ -20,3 +20,4 @@ def test():
     _exec_notebook('fitting_errors.ipynb')
     _exec_notebook('EpEq_2D_joint.ipynb')
     _exec_notebook('EpEq_calc_contours.ipynb')
+    _exec_notebook('edelweiss_res.ipynb')
