@@ -31,9 +31,10 @@ def QEr_Ebin(Q, Ernr, bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
 
     #create list of vectors for histogrammin'
     bindf = nr_df.groupby(pds.cut(nr_df['energy'], bins=bins))['yield'].apply(list)
+    bindfE = nr_df.groupby(pds.cut(nr_df['energy'], bins=bins))['energy'].apply(list)
     #print(bindf)
 
-    return bindf 
+    return bindf,bindfE 
 
 def QEr_Qboot(bindf,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
     
@@ -60,6 +61,33 @@ def QEr_Qboot(bindf,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
     qbootsigerrsl = -qbootsigerrsl + qbootsigs
 
     return qbootsigs,qbootsigerrsl,qbootsigerrsu
+
+def QEr_QbootBC(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
+
+    qbootcorrs = np.ones((np.shape(bins)[0]-1,))
+
+    for i,Ev in enumerate(bindf):
+        if((i>0)&(i<(np.shape(qbootsigs)[0]-1))):
+          m = (qbootsigs[i+1] -qbootsigs[i-1])/(qbootEs[i+1]-qbootEs[i-1])
+        elif (i>0):
+          m = (qbootsigs[i] -qbootsigs[i-1])/(qbootEs[i]-qbootEs[i-1])
+        elif (i<(np.shape(qbootsigs)[0]-1)):
+          m = (qbootsigs[i+1] -qbootsigs[i])/(qbootEs[i+1]-qbootEs[i])
+        intercept = qbootsigs[i]
+        #print(xE[i])
+        #print(qbootEs[i])
+        fsig = lambda E: m*(E-qbootEs[i]) + intercept
+        #print(fsig(qbootEs[i]))
+        sigcorr = bc_corr(Ev,fsig,n)
+        #print(qbootsigs[i]/sigcorr)
+        qbootcorrs[i] = (qbootsigs[i]/sigcorr)
+    
+    #first two are absurd because of negative projected sigma (FIXME)
+    qbootcorrs[0] = 1
+    qbootcorrs[1] = 1
+        
+    print(qbootcorrs)
+    return qbootcorrs
 
 def QEr_Qhist(bindf, qbins=np.linspace(0,0.6,40)):
 
