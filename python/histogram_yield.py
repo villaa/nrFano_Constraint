@@ -89,6 +89,18 @@ def QEr_QbootBC(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150
     print(qbootcorrs)
     return qbootcorrs
 
+def QEr_QbootBC_iterative(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
+
+    qbootsigs_cp = copy.deepcopy(qbootsigs)
+    qbootEs_cp = copy.deepcopy(qbootEs)
+
+    for i in np.arange(5):
+      qbootcorrs = QEr_QbootBC(bindf,qbootsigs,qbootEs,n,bins,silent)
+      qbootsigs = qbootsigs*qbootcorrs
+
+    print(qbootsigs/qbootsigs_cp)
+    return qbootsigs/qbootsigs_cp
+
 def QEr_Qhist(bindf, qbins=np.linspace(0,0.6,40)):
 
  
