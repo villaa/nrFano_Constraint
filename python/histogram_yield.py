@@ -9,7 +9,9 @@ import lmfit as lmf
 import nrfano_stats as nfs
 import copy
 
-
+#bootstrapping
+import bootstrapped.bootstrap as bs
+import bootstrapped.stats_functions as bs_stats
 
 
 
@@ -29,9 +31,75 @@ def QEr_Ebin(Q, Ernr, bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
 
     #create list of vectors for histogrammin'
     bindf = nr_df.groupby(pds.cut(nr_df['energy'], bins=bins))['yield'].apply(list)
+    bindfE = nr_df.groupby(pds.cut(nr_df['energy'], bins=bins))['energy'].apply(list)
     #print(bindf)
 
-    return bindf 
+    return bindf,bindfE 
+
+def QEr_Qboot(bindf,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
+    
+    qbootsigs = np.zeros((np.shape(bins)[0]-1,))
+    qbootsigerrsu = np.zeros((np.shape(bins)[0]-1,))
+    qbootsigerrsl = np.zeros((np.shape(bins)[0]-1,))
+
+    for i,Qv in enumerate(bindf):
+      print(np.shape(Qv))
+      Qv = np.asarray(Qv)
+      #print(Qv[0:10])
+      try:
+        bsr = bs.bootstrap(Qv, stat_func=bs_stats.std,iteration_batch_size=100)
+      except MemoryError as e:
+        print('There was a memory error - too much memory to be allocated')
+       
+      print(bsr)
+      qbootsigs[i] = np.std(Qv)
+      qbootsigerrsu[i] = bsr.upper_bound
+      qbootsigerrsl[i] = bsr.lower_bound
+    
+    #change over to size of error bars, not confidence interval 
+    qbootsigerrsu = qbootsigerrsu - qbootsigs
+    qbootsigerrsl = -qbootsigerrsl + qbootsigs
+
+    return qbootsigs,qbootsigerrsl,qbootsigerrsu
+
+def QEr_QbootBC(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
+
+    qbootcorrs = np.ones((np.shape(bins)[0]-1,))
+
+    for i,Ev in enumerate(bindf):
+        if((i>0)&(i<(np.shape(qbootsigs)[0]-1))):
+          m = (qbootsigs[i+1] -qbootsigs[i-1])/(qbootEs[i+1]-qbootEs[i-1])
+        elif (i>0):
+          m = (qbootsigs[i] -qbootsigs[i-1])/(qbootEs[i]-qbootEs[i-1])
+        elif (i<(np.shape(qbootsigs)[0]-1)):
+          m = (qbootsigs[i+1] -qbootsigs[i])/(qbootEs[i+1]-qbootEs[i])
+        intercept = qbootsigs[i]
+        #print(xE[i])
+        #print(qbootEs[i])
+        fsig = lambda E: m*(E-qbootEs[i]) + intercept
+        #print(fsig(qbootEs[i]))
+        sigcorr = bc_corr(Ev,fsig,n)
+        #print(qbootsigs[i]/sigcorr)
+        qbootcorrs[i] = (qbootsigs[i]/sigcorr)
+    
+    #first two are absurd because of negative projected sigma (FIXME)
+    qbootcorrs[0] = 1
+    qbootcorrs[1] = 1
+        
+    print(qbootcorrs)
+    return qbootcorrs
+
+def QEr_QbootBC_iterative(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
+
+    qbootsigs_cp = copy.deepcopy(qbootsigs)
+    qbootEs_cp = copy.deepcopy(qbootEs)
+
+    for i in np.arange(5):
+      qbootcorrs = QEr_QbootBC(bindf,qbootsigs,qbootEs,n,bins,silent)
+      qbootsigs = qbootsigs*qbootcorrs
+
+    print(qbootsigs/qbootsigs_cp)
+    return qbootsigs/qbootsigs_cp
 
 def QEr_Qhist(bindf, qbins=np.linspace(0,0.6,40)):
 
