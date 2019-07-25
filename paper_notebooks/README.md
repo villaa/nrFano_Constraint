@@ -13,6 +13,7 @@ addendum -- do the Er integral analytically <br/>
 
 ## Extraction of NR, ER band countours from 2-dimensional Y, Er joint distribution <br/>
 ERNR_bands.ipynb <br/>
+Qwidth_confirm.ipynb <br/>
 
 ## Correction to extracted C for multiple scatters <br/>
 ms_correction.ipynb <br/>
