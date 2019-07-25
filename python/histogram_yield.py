@@ -74,8 +74,8 @@ def QEr_QbootBC(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150
         elif (i<(np.shape(qbootsigs)[0]-1)):
           m = (qbootsigs[i+1] -qbootsigs[i])/(qbootEs[i+1]-qbootEs[i])
         intercept = qbootsigs[i]
-        #print(xE[i])
         #print(qbootEs[i])
+        #print(qbootsigs[i])
         fsig = lambda E: m*(E-qbootEs[i]) + intercept
         #print(fsig(qbootEs[i]))
         sigcorr = bc_corr(Ev,fsig,n)
@@ -83,8 +83,8 @@ def QEr_QbootBC(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150
         qbootcorrs[i] = (qbootsigs[i]/sigcorr)
     
     #first two are absurd because of negative projected sigma (FIXME)
-    qbootcorrs[0] = 1
-    qbootcorrs[1] = 1
+    #qbootcorrs[0] = 1
+    #qbootcorrs[1] = 1
         
     print(qbootcorrs)
     return qbootcorrs
