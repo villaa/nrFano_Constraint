@@ -43,15 +43,17 @@ def QEr_Qboot(bindf,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
     qbootsigerrsl = np.zeros((np.shape(bins)[0]-1,))
 
     for i,Qv in enumerate(bindf):
-      print(np.shape(Qv))
+      if not silent:
+        print(np.shape(Qv))
       Qv = np.asarray(Qv)
       #print(Qv[0:10])
       try:
         bsr = bs.bootstrap(Qv, stat_func=bs_stats.std,iteration_batch_size=100)
       except MemoryError as e:
         print('There was a memory error - too much memory to be allocated')
-       
-      print(bsr)
+      
+      if not silent:
+        print(bsr)
       qbootsigs[i] = np.std(Qv)
       qbootsigerrsu[i] = bsr.upper_bound
       qbootsigerrsl[i] = bsr.lower_bound

@@ -59,12 +59,12 @@ def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0):
     EH_ss = np.sum(EHhit_ss,1)
     
     #step 8
-    EI = EI + np.random.normal(0.0,sigI_NRv(EI))
-    EI_ss = EI_ss + np.random.normal(0.0,sigI_NRv(EI_ss))
+    EI = EI + np.random.normal(0.0,sigIv(EI))
+    EI_ss = EI_ss + np.random.normal(0.0,sigIv(EI_ss))
     
     #step 9
-    EH = EH + np.random.normal(0.0,sigH_NRv(EH))
-    EH_ss = EH_ss + np.random.normal(0.0,sigH_NRv(EH_ss))
+    EH = EH + np.random.normal(0.0,sigHv(EH))
+    EH_ss = EH_ss + np.random.normal(0.0,sigHv(EH_ss))
     
     #step 10
     Ernr = (1+(V/(1000*eps)))*EH - (V/(1000*eps))*EI
