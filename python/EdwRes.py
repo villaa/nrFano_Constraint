@@ -151,7 +151,7 @@ def getEdw_res_pars(infile='data/edw_res_data.txt'):
 
     return outdic
 
-def getEdw_det_res(label='GGA3',V=4.0,infile='data/edw_res_data.txt',aH=None):
+def getEdw_det_res(label='GGA3',V=4.0,infile='data/edw_res_data.txt',aH=None,C=None):
 
     eps=3.0
 
@@ -183,8 +183,14 @@ def getEdw_det_res(label='GGA3',V=4.0,infile='data/edw_res_data.txt',aH=None):
 
     sigQer = lambda Etr: (1/Etr)*np.sqrt((1+(V/(eps))*Qer(Etr))**2*sigI(Etr)**2 + (1+(V/(eps)))**2*Qer(Etr)**2 \
                                              *sigH(Etr)**2)
-    sigQnr = lambda Etr: (1/Etr)*np.sqrt((1+(V/(eps))*Qbar(Etr))**2*sigI_NR(Etr)**2 + (1+(V/(eps)))**2 \
+    
+    sigQnr_base = lambda Etr: (1/Etr)*np.sqrt((1+(V/(eps))*Qbar(Etr))**2*sigI_NR(Etr)**2 + (1+(V/(eps)))**2 \
                                              *Qbar(Etr)**2*sigH_NR(Etr)**2)
+    #add C if specified
+    if C is not None:
+      sigQnr = lambda Etr: np.sqrt(sigQnr_base(Er)**2 + C**2)
+    else:
+      sigQnr = lambda Etr: np.sqrt(sigQnr_base(Er)**2)
 
     sigHv = np.vectorize(sigH)
     sigIv = np.vectorize(sigI)
