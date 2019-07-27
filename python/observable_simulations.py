@@ -4,14 +4,14 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import h5py
 
-def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0):
+def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0,highstats=True):
 
     #get detector resolution 
     sigHv,sigIv,sigQerv,sigH_NRv,sigI_NRv,sigQnrv = er.getEdw_det_res(label,V, \
     'data/edw_res_data.txt',aH,C) 
 
     eps = 3.0/1000 #keV per pair, I usually use 3.3 for the numerator, but Edw. uses 3.
-    print(sigQnrv)
+    #print(sigQnrv)
 
     #yield models
     a=0.16
@@ -21,7 +21,11 @@ def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0):
     #include a nominal Fano factor
     #F=0.0 #for NRs the factor is probably much higher than this
 
-    f = h5py.File("data/k100_252Cf_shield_Edw_NRs_large.h5","r")
+    if not highstats:
+      print('lowstats !')
+      f = h5py.File("data/k100_252Cf_shield_Edw_NRs.h5","r")
+    else:
+      f = h5py.File("data/k100_252Cf_shield_Edw_NRs_large.h5","r")
 
     #get the data variables
     nr_energies = np.asarray(f['nr_Fano/nr_energies'])
@@ -29,6 +33,9 @@ def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0):
     
     Enr = nr_energies*1000 #initial energies are in MeV
     Enr_ss = nr_energies[nr_hits==1]*1000 #initial energies are in MeV
+
+    Enr_sum = np.sum(Enr,1)
+    Enr_ss_sum = np.sum(Enr_ss,1)
     
     #step 1
     EIhit_av = Qbar(Enr)*Enr
@@ -59,8 +66,12 @@ def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0):
     EH_ss = np.sum(EHhit_ss,1)
     
     #step 8
-    EI = EI + np.random.normal(0.0,sigIv(EI))
-    EI_ss = EI_ss + np.random.normal(0.0,sigIv(EI_ss))
+    if C is not None:
+      EI = EI + np.random.normal(0.0,np.sqrt(sigIv(EI) + C**2*Enr_sum**2))
+      EI_ss = EI_ss + np.random.normal(0.0,np.sqrt(sigIv(EI_ss)+C**2*Enr_ss_sum**2))
+    else:
+      EI = EI + np.random.normal(0.0,sigIv(EI))
+      EI_ss = EI_ss + np.random.normal(0.0,sigIv(EI_ss))
     
     #step 9
     EH = EH + np.random.normal(0.0,sigHv(EH))
@@ -73,5 +84,7 @@ def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0):
     #step 11
     Q = EI/Ernr
     Q_ss = EI_ss/Ernr_ss
+
+    f.close()
 
     return Q,Ernr,Q_ss,Ernr_ss

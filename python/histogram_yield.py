@@ -87,8 +87,9 @@ def QEr_QbootBC(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150
     #first two are absurd because of negative projected sigma (FIXME)
     #qbootcorrs[0] = 1
     #qbootcorrs[1] = 1
-        
-    print(qbootcorrs)
+       
+    if not silent:
+      print(qbootcorrs)
     return qbootcorrs
 
 def QEr_QbootBC_iterative(bindf,qbootsigs,qbootEs,n=10,bins=[5, 10, 20, 30, 40, 50, 70,150],silent=False):
