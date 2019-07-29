@@ -15,6 +15,7 @@ def test():
     print('Testing Jupyter notebooks...')
     _exec_notebook('QEr_2D_joint.ipynb')
     _exec_notebook('ERNR_bands.ipynb')
+    _exec_notebook('Qwidth_confirm.ipynb')
     _exec_notebook('ms_correction.ipynb')
     _exec_notebook('yield_width_compare.ipynb')
     _exec_notebook('fitting_errors.ipynb')

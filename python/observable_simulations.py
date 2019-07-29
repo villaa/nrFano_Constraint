@@ -66,9 +66,10 @@ def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0,highstats=True):
     EH_ss = np.sum(EHhit_ss,1)
     
     #step 8
+    ycorr = np.vectorize(lambda Er: (1+(V/(1000*eps))*Qbar(Er))**2)
     if C is not None:
-      EI = EI + np.random.normal(0.0,np.sqrt(sigIv(EI) + C**2*Enr_sum**2))
-      EI_ss = EI_ss + np.random.normal(0.0,np.sqrt(sigIv(EI_ss)+C**2*Enr_ss_sum**2))
+      EI = EI + np.random.normal(0.0,np.sqrt(sigIv(EI)**2 + (1/ycorr(Enr_sum))*C**2*Enr_sum**2))
+      EI_ss = EI_ss + np.random.normal(0.0,np.sqrt(sigIv(EI_ss)**2+(1/ycorr(Enr_ss_sum))*C**2*Enr_ss_sum**2))
     else:
       EI = EI + np.random.normal(0.0,sigIv(EI))
       EI_ss = EI_ss + np.random.normal(0.0,sigIv(EI_ss))
@@ -88,3 +89,69 @@ def simQEr(label='GGA3',V=4.0,aH=None,C=None,F=0.0,highstats=True):
     f.close()
 
     return Q,Ernr,Q_ss,Ernr_ss
+
+#electron recoil version of same. 
+def simQEr_ER(label='GGA3',V=4.0,aH=None,C=None,F=0.0,HighER=300):
+
+    #get detector resolution 
+    sigHv,sigIv,sigQerv,sigH_NRv,sigI_NRv,sigQnrv = er.getEdw_det_res(label,V, \
+    'data/edw_res_data.txt',aH,C) 
+
+    eps = 3.0/1000 #keV per pair, I usually use 3.3 for the numerator, but Edw. uses 3.
+    #print(sigQnrv)
+
+    #use the same generic shape to get the ER data but modify the number of events
+    Ner = 300000
+
+    #don't really need 4 columns here but keep it around for possibility of later simulating gamma multiples
+    er_energies = np.zeros((Ner,4))
+    er_hits = np.ones((Ner,))
+
+    er_energies[:,0] = np.random.uniform(0,HighER,Ner)
+
+    #print(np.shape(er_energies))
+    #print(np.shape(er_hits))
+    #print(er_energies[0:10,0])
+
+    Eer_ss = er_energies[er_hits==1] #initial energies are in keV
+    Eer_ss_sum = np.sum(Eer_ss,1)
+    
+    #step 1
+    EIerhit_av_ss = Eer_ss
+    
+    #step 2
+    Nerhit_av_ss = EIerhit_av_ss/eps
+    
+    #step 3
+    Nerhit_ss = np.around(np.random.normal(Nerhit_av_ss,np.sqrt(F*Nerhit_av_ss))).astype(np.float)
+    
+    #step 4
+    EHerhit_ss = (Eer_ss + Nerhit_ss*V/1000.0)/(1+(V/(1000*eps)))
+    
+    #step 5
+    EIerhit_ss = eps*Nerhit_ss
+    
+    #step 6
+    EIer_ss = np.sum(EIerhit_ss,1)
+    
+    #step 7
+    EHer_ss = np.sum(EHerhit_ss,1)
+    
+    #step 8
+    ycorr = np.vectorize(lambda Er: (1+(V/(1000*eps)))**2)
+    if C is not None:
+      EIer_ss = EIer_ss + np.random.normal(0.0,np.sqrt(sigIv(EIer_ss)**2+(1/ycorr(Eer_ss_sum))*C**2*Eer_ss_sum**2))
+    else:
+      EIer_ss = EIer_ss + np.random.normal(0.0,sigIv(EIer_ss))
+    
+    #step 9
+    EHer_ss = EHer_ss + np.random.normal(0.0,sigHv(EHer_ss))
+    
+    #step 10
+    Erer_ss = (1+(V/(1000*eps)))*EHer_ss - (V/(1000*eps))*EIer_ss
+    
+    #step 11
+    Qer_ss = EIer_ss/Erer_ss
+
+
+    return Qer_ss,Erer_ss
