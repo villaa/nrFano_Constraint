@@ -86,3 +86,110 @@ def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18
 
   #f.close() 
   return (out,Er)
+
+def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.35,Erv=None,sigv=None,erase=False):
+
+  #n=10
+  #Er = np.linspace(7,100,n)
+  #emin = np.min(Er)
+  #emax = np.max(Er)
+
+  #emins = '{:01.1f}'.format(emin)
+  #ns = '{:04.0f}'.format(n)
+  Fs = '{:03.0f}'.format(F)
+  Vs = '{:2.1f}'.format(V)
+  alphas = '{:1.3E}'.format(alpha)
+  aHs = '{:1.3f}'.format(aH)
+ 
+  path='{}/{}/{}/{}/{}/{}/'.format(det,band,Vs,alphas,aHs,Fs)
+
+  print(path)
+
+  #check for path
+  f = h5py.File(filename,'a')
+  exEr = path+'Er' in f
+  exsig = path+'sig' in f
+  print(exEr)
+ 
+
+  #make some vector
+  if exEr&exsig&~erase:
+    Er = np.asarray(f[path+'Er'])
+    sig = np.asarray(f[path+'sig'])
+  else:
+    Er = np.zeros((0,))
+    sig = np.zeros((0,))
+
+  #add in the data supplied
+  if (Erv is not None)&(sigv is not None):
+    Er = np.append(Er,Erv)
+    sig = np.append(sig,sigv)
+
+  if exEr&exsig:
+    del f[path+'Er']
+    del f[path+'sig']
+
+  #sort the array
+  idxEr = np.argsort(Er)
+  Er = Er[idxEr]
+  sig = sig[idxEr]
+
+  Er,uidx = np.unique(Er,return_index=True)
+  sig = sig[uidx]
+
+  dset = f.create_dataset(path+'Er',np.shape(Er),dtype=np.dtype('float64').type, \
+  compression="gzip",compression_opts=9)
+  dset[...] = Er
+  dset = f.create_dataset(path+'sig',np.shape(Er),dtype=np.dtype('float64').type, \
+  compression="gzip",compression_opts=9)
+  dset[...] = sig
+
+  f.close()
+
+  return (Er,sig)
+
+def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.35,erase=False):
+
+  Er = np.linspace(7,100,n)
+  emin = np.min(Er)
+  emax = np.max(Er)
+
+  Fs = '{:03.0f}'.format(F)
+  Vs = '{:2.1f}'.format(V)
+  alphas = '{:1.3E}'.format(alpha)
+  aHs = '{:1.3f}'.format(aH)
+
+  (Er_stored,sig_stored) = RWCalc(filename,det,band,F,V,alpha,aH)
+  n_stored = np.shape(Er_stored)[0]
+
+  print(Er)
+  print(Er_stored)
+  print(sig_stored)
+
+  #calculate density and overlap
+  emin_stored = np.min(Er_stored)
+  emax_stored = np.max(Er_stored)
+  ovr = (emax_stored-emin_stored)/(emax-emin)
+
+  if ((emax_stored-emin_stored)>0)&((emax-emin)>0):
+    den = (n_stored/(emax_stored-emin_stored))/(n/(emax-emin))
+  else: 
+    den = 0
+
+  print(ovr)
+  print(den)
+
+  idx_needed = ~np.isin(Er,Er_stored)
+  E_needed = Er[idx_needed]
+  print(E_needed)
+
+  sigcalc = np.zeros(np.shape(E_needed))
+  for i,E in enumerate(E_needed):
+    print('Calculating with sigmomEdw for E = {:3.2f} keV'.format(E))
+    sigcalc[i] = pd.sigmomEdw(E,band=band,label=det,F=F,V=V,aH=aH,alpha=alpha)
+    print(sigcalc[i])
+     
+  print(E_needed)
+  print(sigcalc)
+  (Er_new,sig_new) = RWCalc(filename,det,band,F,V,alpha,aH,Ev=E_needed,sigv=sigcalc,erase=erase)
+  return (Er_new,sig_new)

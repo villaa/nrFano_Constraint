@@ -162,7 +162,7 @@ def getEdw_det_res(label='GGA3',V=4.0,infile='data/edw_res_data.txt',aH=None,C=N
     Qer = lambda Er: 1
 
     pars = getEdw_res_pars(infile)[label]
-    print(pars)
+    #print(pars)
 
     if aH is None:
       sigH = get_heatRes_func(pars[2], pars[4])

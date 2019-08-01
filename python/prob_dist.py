@@ -370,19 +370,19 @@ def sigmomEdw(Er,band='ER',label='GGA3',F=0.000001,V=4.0,aH=0.035,alpha=(1/100))
     #the answer--this amplifies numerical uncertainties.
     meanfun = lambda Q: Q*Qdist(Q)
     mean = quad(meanfun,-1,4)[0]
-    print(mean)
+    #print(mean)
 
     intyF = lambda a: quad(Qdist,mean-a,mean+a,limit=100)[0]
 
 
-    minsigF = lambda a: intyF(a) - 0.6827 #one sigma
-    rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100)
+    #minsigF = lambda a: intyF(a) - 0.6827 #one sigma
+    #rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100)
 
     #by integration
     sigfun = lambda Q: Q**2*Qdist(Q)
     q2 = quad(sigfun,-1,4)[0]
 
-    print(sigQerv(Er))
-    return norm,rootF,(np.sqrt(q2-mean**2)) 
-    #return (np.sqrt(q2-mean**2)) 
+    #print(sigQerv(Er))
+    #return norm,rootF,(np.sqrt(q2-mean**2)) 
+    return (np.sqrt(q2-mean**2)) 
 
