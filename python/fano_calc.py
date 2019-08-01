@@ -87,7 +87,7 @@ def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18
   #f.close() 
   return (out,Er)
 
-def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.35,Erv=None,sigv=None,erase=False):
+def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.035,Erv=None,sigv=None,erase=False):
 
   #n=10
   #Er = np.linspace(7,100,n)
@@ -148,7 +148,7 @@ def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/1000
 
   return (Er,sig)
 
-def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.35,erase=False):
+def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.035,erase=False):
 
   Er = np.linspace(7,100,n)
   emin = np.min(Er)
@@ -167,9 +167,14 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
   print(sig_stored)
 
   #calculate density and overlap
-  emin_stored = np.min(Er_stored)
-  emax_stored = np.max(Er_stored)
-  ovr = (emax_stored-emin_stored)/(emax-emin)
+  if n_stored>0:
+    emin_stored = np.min(Er_stored)
+    emax_stored = np.max(Er_stored)
+    ovr = (emax_stored-emin_stored)/(emax-emin)
+  else:
+    emin_stored = 0 
+    emax_stored = 0 
+    ovr = 0
 
   if ((emax_stored-emin_stored)>0)&((emax-emin)>0):
     den = (n_stored/(emax_stored-emin_stored))/(n/(emax-emin))
@@ -179,8 +184,12 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
   print(ovr)
   print(den)
 
-  idx_needed = ~np.isin(Er,Er_stored)
-  E_needed = Er[idx_needed]
+  if erase:
+    E_needed = Er
+  else:
+    idx_needed = ~np.isin(Er,Er_stored)
+    E_needed = Er[idx_needed]
+
   print(E_needed)
 
   sigcalc = np.zeros(np.shape(E_needed))
@@ -191,5 +200,5 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
      
   print(E_needed)
   print(sigcalc)
-  (Er_new,sig_new) = RWCalc(filename,det,band,F,V,alpha,aH,Ev=E_needed,sigv=sigcalc,erase=erase)
+  (Er_new,sig_new) = RWCalc(filename,det,band,F,V,alpha,aH,Erv=E_needed,sigv=sigcalc,erase=erase)
   return (Er_new,sig_new)
