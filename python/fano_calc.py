@@ -148,9 +148,9 @@ def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/1000
 
   return (Er,sig)
 
-def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.035,erase=False):
+def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.035,erase=False,maxEr=100,opt=True):
 
-  Er = np.linspace(7,100,n)
+  Er = np.linspace(7,maxEr,n)
   emin = np.min(Er)
   emax = np.max(Er)
 
@@ -162,9 +162,9 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
   (Er_stored,sig_stored) = RWCalc(filename,det,band,F,V,alpha,aH)
   n_stored = np.shape(Er_stored)[0]
 
-  print(Er)
-  print(Er_stored)
-  print(sig_stored)
+  #print(Er)
+  #print(Er_stored)
+  #print(sig_stored)
 
   #calculate density and overlap
   if n_stored>0:
@@ -184,6 +184,11 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
   print(ovr)
   print(den)
 
+  #if density is comparable in given region
+  if (den>0.8)&(opt):
+    cRemoveRange = (Er<emax_stored)&(Er>=emin_stored)
+    Er = Er[~cRemoveRange]
+
   if erase:
     E_needed = Er
   else:
@@ -198,7 +203,7 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
     sigcalc[i] = pd.sigmomEdw(E,band=band,label=det,F=F,V=V,aH=aH,alpha=alpha)
     print(sigcalc[i])
      
-  print(E_needed)
-  print(sigcalc)
+  #print(E_needed)
+  #print(sigcalc)
   (Er_new,sig_new) = RWCalc(filename,det,band,F,V,alpha,aH,Erv=E_needed,sigv=sigcalc,erase=erase)
   return (Er_new,sig_new)
