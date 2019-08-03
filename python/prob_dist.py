@@ -350,7 +350,7 @@ def sigmomEdw(Er,band='ER',label='GGA3',F=0.000001,V=4.0,aH=0.035,alpha=(1/100))
       gF = expband_2D(fF,alpha,3)
       mean = 1
     else:
-      fF = QEr_v2_2D_fast(sigH_NRv,sigI_NRv,V,eps,F,Qbar=lambda x: 1)
+      fF = QEr_v2_2D_fast(sigHv,sigIv,V,eps,F,Qbar=lambda x: 0.16*x**0.18)
       gF = expband_2D(fF,alpha,1.5)
       mean = 0.16*Er**0.18
 

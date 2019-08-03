@@ -188,9 +188,9 @@ def getEdw_det_res(label='GGA3',V=4.0,infile='data/edw_res_data.txt',aH=None,C=N
                                              *Qbar(Etr)**2*sigH_NR(Etr)**2)
     #add C if specified
     if C is not None:
-      sigQnr = lambda Etr: np.sqrt(sigQnr_base(Er)**2 + C**2)
+      sigQnr = lambda Etr: np.sqrt(sigQnr_base(Etr)**2 + C**2)
     else:
-      sigQnr = lambda Etr: np.sqrt(sigQnr_base(Er)**2)
+      sigQnr = lambda Etr: np.sqrt(sigQnr_base(Etr)**2)
 
     sigHv = np.vectorize(sigH)
     sigIv = np.vectorize(sigI)
