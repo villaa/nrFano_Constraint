@@ -8,6 +8,7 @@ import resfuncRead as rfr
 import scipy.optimize as so
 import prob_dist as pd
 import os
+import scipy.interpolate as inter
 
 
 def writeFano(file='fanoout.h5'):
@@ -38,13 +39,32 @@ def writeFano(file='fanoout.h5'):
   of.close()
   return
 
-def getFanoEdw(E=10,C=0.03):
+def getFanoEdw(E=10,C=0.03,filename='test.f5'):
 
 
   #get the nominal width
-  lowsig = pd.sigmomEdw(E,alpha=(1/18.0))
+  (Er_stored,sig_stored) = RWCalc(filename,band='NR',alpha=(1/18.0))
 
-  findF = lambda F,Er,C: pd.sigmomEdw(Er,F=F,alpha=(1/18.0))**2 - lowsig**2 -C**2
+  emax = None
+  emin = None
+
+  if (np.shape(Er_stored)[0]>=2):
+    emax = np.max(Er_stored)
+    emin = np.min(Er_stored)
+
+  lowsig = 0
+  if (emax is not None)&(emin is not None):
+    if (E>=emin)&(E<=emax):
+      print('interpolating..')
+      f = inter.InterpolatedUnivariateSpline(Er_stored, sig_stored, k=3)
+      lowsig = f(E)
+  else:
+    print('calc baseline')
+    #sigcalc[i] = pd.sigmomEdw(E,band=band,label=det,F=F,V=V,aH=aH,alpha=alpha)
+    lowsig = pd.sigmomEdw(E,band='NR',alpha=(1/18.0))
+  print(lowsig)
+
+  findF = lambda F,Er,C: pd.sigmomEdw(Er,band='NR',F=F,alpha=(1/18.0))**2 - lowsig**2 -C**2
 
   Fout = so.brentq(findF,0.001,200,rtol=0.001,maxiter=100,args=(E,C,))
   print('at energy E = {} keV NRFano is {}'.format(E,Fout))
@@ -230,12 +250,12 @@ def RWCalcF(filename='test.h5',det='GGA3',band='ER',C=0.0346,V=4.0,alpha=(1/1000
 
   #emins = '{:01.1f}'.format(emin)
   #ns = '{:04.0f}'.format(n)
-  Fs = '{:03.0f}'.format(F)
+  Cs = '{:01.4f}'.format(C)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
   aHs = '{:1.3f}'.format(aH)
  
-  path='{}/{}/{}/{}/{}/{}/'.format(det,band,Vs,alphas,aHs,Fs)
+  path='{}/{}/{}/{}/{}/{}/'.format(det,band,Vs,alphas,aHs,Cs)
 
   print(path)
 
@@ -281,3 +301,64 @@ def RWCalcF(filename='test.h5',det='GGA3',band='ER',C=0.0346,V=4.0,alpha=(1/1000
   f.close()
 
   return (ErF,F)
+
+def storeF(n,filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0),aH=0.035,erase=False,maxEr=100,opt=True):
+
+  #def getFanoEdw(E=10,C=0.03,filename='test.f5'):
+  ErF = np.linspace(7,maxEr,n)
+  emin = np.min(ErF)
+  emax = np.max(ErF)
+
+  Cs = '{:01.4f}'.format(C)
+  Vs = '{:2.1f}'.format(V)
+  alphas = '{:1.3E}'.format(alpha)
+  aHs = '{:1.3f}'.format(aH)
+
+  (ErF_stored,F_stored) = RWCalcF(filename,det,band,C,V,alpha,aH)
+  n_stored = np.shape(ErF_stored)[0]
+
+  #print(Er)
+  #print(Er_stored)
+  #print(sig_stored)
+
+  #calculate density and overlap
+  if n_stored>0:
+    emin_stored = np.min(ErF_stored)
+    emax_stored = np.max(ErF_stored)
+    ovr = (emax_stored-emin_stored)/(emax-emin)
+  else:
+    emin_stored = 0 
+    emax_stored = 0 
+    ovr = 0
+
+  if ((emax_stored-emin_stored)>0)&((emax-emin)>0):
+    den = (n_stored/(emax_stored-emin_stored))/(n/(emax-emin))
+  else: 
+    den = 0
+
+  print(ovr)
+  print(den)
+
+  #if density is comparable in given region
+  if (den>0.8)&(opt)&(~erase):
+    cRemoveRange = (ErF<emax_stored)&(ErF>=emin_stored)
+    ErF = ErF[~cRemoveRange]
+
+  if erase:
+    E_needed = ErF
+  else:
+    idx_needed = ~np.isin(ErF,ErF_stored)
+    E_needed = ErF[idx_needed]
+
+  print(E_needed)
+
+  Fcalc = np.zeros(np.shape(E_needed))
+  for i,E in enumerate(E_needed):
+    print('Calculating with Fano for E = {:3.2f} keV'.format(E))
+    Fcalc[i] = getFanoEdw(E,C=C,filename=filename)
+    print(sigcalc[i])
+     
+  #print(E_needed)
+  #print(sigcalc)
+  (Er_new,sig_new) = RWCalcF(filename,det,band,C,V,alpha,aH,Erv=E_needed,sigv=sigcalc,erase=erase)
+  return (Er_new,sig_new)
