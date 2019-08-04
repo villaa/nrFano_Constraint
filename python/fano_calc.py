@@ -356,9 +356,9 @@ def storeF(n,filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.
   for i,E in enumerate(E_needed):
     print('Calculating with Fano for E = {:3.2f} keV'.format(E))
     Fcalc[i] = getFanoEdw(E,C=C,filename=filename)
-    print(sigcalc[i])
+    print(Fcalc[i])
      
   #print(E_needed)
   #print(sigcalc)
-  (Er_new,sig_new) = RWCalcF(filename,det,band,C,V,alpha,aH,Erv=E_needed,sigv=sigcalc,erase=erase)
-  return (Er_new,sig_new)
+  (ErF_new,F_new) = RWCalcF(filename,det,band,C,V,alpha,aH,ErFv=E_needed,Fv=Fcalc,erase=erase)
+  return (ErF_new,F_new)
