@@ -241,7 +241,7 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
   (Er_new,sig_new) = RWCalc(filename,det,band,F,V,alpha,aH,Erv=E_needed,sigv=sigcalc,erase=erase)
   return (Er_new,sig_new)
 
-def RWCalcF(filename='test.h5',det='GGA3',band='ER',C=0.0346,V=4.0,alpha=(1/10000.0),aH=0.035,ErFv=None,Fv=None,erase=False):
+def RWCalcF(filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0),aH=0.035,ErFv=None,Fv=None,erase=False):
 
   #n=10
   #Er = np.linspace(7,100,n)
