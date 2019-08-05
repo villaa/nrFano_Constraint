@@ -1,5 +1,8 @@
 # The following nortebooks are summaries of the main logic of the NR Fano paper [![Build Status](https://travis-ci.com/villaa/nrFano_Constraint.svg?token=dDJNAzywngCDqUAtL9D9&branch=master)](https://travis-ci.com/villaa/nrFano_Constraint)
 
+## Analysis Overview with Paper Figures
+nrFano_paper.ipynb
+
 ## Statement, description, and verification of the Edelweiss resolutions <br/>
 edelweiss_res.ipynb
 
@@ -34,5 +37,6 @@ to be named
 EpEq_2D_joint.ipynb<br/>
 addendum -- EpEq_calc_contours.ipynb<br/>
 
-## Dark Matter limit comparison given different Fano estimates <br/>
-to be named
+[comment]: # the following moved to a subsequent publication
+[comment]: # ## Dark Matter limit comparison given different Fano estimates <br/>
+[comment]: # to be named
