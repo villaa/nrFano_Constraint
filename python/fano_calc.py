@@ -362,3 +362,131 @@ def storeF(n,filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.
   #print(sigcalc)
   (ErF_new,F_new) = RWCalcF(filename,det,band,C,V,alpha,aH,ErFv=E_needed,Fv=Fcalc,erase=erase)
   return (ErF_new,F_new)
+
+def RWCalcFlinear(filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344e-5,V=4.0,alpha=(1/18.0),aH=0.035,ErFv=None,Fv=None,erase=False):
+
+  #n=10
+  #Er = np.linspace(7,100,n)
+  #emin = np.min(Er)
+  #emax = np.max(Er)
+
+  #emins = '{:01.1f}'.format(emin)
+  #ns = '{:04.0f}'.format(n)
+  Cmss = '{:01.4f}'.format(Cms)
+  slopes = '{:01.4E}'.format(slope)
+  Vs = '{:2.1f}'.format(V)
+  alphas = '{:1.3E}'.format(alpha)
+  aHs = '{:1.3f}'.format(aH)
+ 
+  path='{}/{}/{}/{}/{}/{}/{}/'.format(det,band,Vs,alphas,aHs,Cmss,slopes)
+
+  print(path)
+
+  #check for path
+  f = h5py.File(filename,'a')
+  exErF = path+'ErF' in f
+  exF = path+'F' in f
+  print(exErF)
+ 
+
+  #make some vector
+  if exErF&exF&~erase:
+    ErF = np.asarray(f[path+'ErF'])
+    F = np.asarray(f[path+'F'])
+  else:
+    ErF = np.zeros((0,))
+    F = np.zeros((0,))
+
+  #add in the data supplied
+  if (ErF is not None)&(Fv is not None):
+    ErF = np.append(ErF,ErFv)
+    F = np.append(F,Fv)
+
+  if exErF&exF:
+    del f[path+'ErF']
+    del f[path+'F']
+
+  #sort the array
+  idxErF = np.argsort(ErF)
+  ErF = ErF[idxErF]
+  F = F[idxErF]
+
+  ErF,uidx = np.unique(ErF,return_index=True)
+  F = F[uidx]
+
+  dset = f.create_dataset(path+'ErF',np.shape(ErF),dtype=np.dtype('float64').type, \
+  compression="gzip",compression_opts=9)
+  dset[...] = ErF
+  dset = f.create_dataset(path+'F',np.shape(ErF),dtype=np.dtype('float64').type, \
+  compression="gzip",compression_opts=9)
+  dset[...] = F 
+
+  f.close()
+
+  return (ErF,F)
+
+def storeFlinear(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E-5,V=4.0,alpha=(1/18.0),aH=0.035,erase=False,maxEr=100,opt=True):
+
+  #def getFanoEdw(E=10,C=0.03,filename='test.f5'):
+  ErF = np.linspace(7,maxEr,n)
+  emin = np.min(ErF)
+  emax = np.max(ErF)
+
+  #make the function of C as energy
+  C = lambda x: np.sqrt(0.04**2 - (Cms+x*slope)**2)
+
+  Cmss = '{:01.4f}'.format(Cms)
+  slopes = '{:01.4E}'.format(slope)
+  Vs = '{:2.1f}'.format(V)
+  alphas = '{:1.3E}'.format(alpha)
+  aHs = '{:1.3f}'.format(aH)
+
+  (ErF_stored,F_stored) = RWCalcFlinear(filename,det,band,Cms,slope,V,alpha,aH)
+  n_stored = np.shape(ErF_stored)[0]
+
+  #print(Er)
+  #print(Er_stored)
+  #print(sig_stored)
+
+  #calculate density and overlap
+  if n_stored>0:
+    emin_stored = np.min(ErF_stored)
+    emax_stored = np.max(ErF_stored)
+    ovr = (emax_stored-emin_stored)/(emax-emin)
+  else:
+    emin_stored = 0 
+    emax_stored = 0 
+    ovr = 0
+
+  if ((emax_stored-emin_stored)>0)&((emax-emin)>0):
+    den = (n_stored/(emax_stored-emin_stored))/(n/(emax-emin))
+  else: 
+    den = 0
+
+  print(ovr)
+  print(den)
+
+  #if density is comparable in given region
+  if (den>0.8)&(opt)&(~erase):
+    cRemoveRange = (ErF<emax_stored)&(ErF>=emin_stored)
+    ErF = ErF[~cRemoveRange]
+
+  if erase:
+    E_needed = ErF
+  else:
+    idx_needed = ~np.isin(ErF,ErF_stored)
+    E_needed = ErF[idx_needed]
+
+  print(E_needed)
+
+  Fcalc = np.zeros(np.shape(E_needed))
+  for i,E in enumerate(E_needed):
+    print('Calculating with Fano for E = {:3.2f} keV (linear multiples correction with Cms={:1.4f} and slope={:1.4E}: C={:1.4f}'.format(E,Cms,slope,C(E)))
+    thisC = C(E)
+    Fcalc[i] = getFanoEdw(E,C=thisC,filename=filename)
+    print(Fcalc[i])
+     
+  #print(E_needed)
+  #print(sigcalc)
+  (ErF_new,F_new) = RWCalcFlinear(filename,det,band,Cms,slope,V,alpha,aH,ErFv=E_needed,Fv=Fcalc,erase=erase)
+  return (ErF_new,F_new)
