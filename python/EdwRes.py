@@ -1,6 +1,8 @@
 import numpy as np
 import re
 from functools import partial
+
+# note that np.log() is the natural log (base e)
 FWHM_to_SIG = 1 / (2*np.sqrt(2*np.log(2)))
 
 def get_heatRes(sig0, a, E_keV):
