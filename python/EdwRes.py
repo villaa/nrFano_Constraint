@@ -5,6 +5,9 @@ from functools import partial
 # note that np.log() is the natural log (base e)
 FWHM_to_SIG = 1 / (2*np.sqrt(2*np.log(2)))
 
+# EPS_eV, the average energy required to create an e/h pair
+EPS_eV = 3.0
+
 def get_heatRes(sig0, a, E_keV):
     """return the heat resolution (1 sigma) at energy E_keV.  sig0, E_keV assumed to be in units of keV."""
     
@@ -42,18 +45,24 @@ def get_ionRes_func(FWHM_center, FWHM_guard, FWHM122):
 def Q_avg(E_keV):
     return 0.16*np.power(E_keV,0.18)
 
-def get_sig_gamma(sigI, sigH, V, E_keV):
-    return ((1+V/3)/E_keV)*np.sqrt((sigI(E_keV))**2 + (sigH(E_keV))**2)
+def get_sig_gamma(sigI, sigH, pars, E_keV):
+    V = pars['V']
+    eps_eV = pars['eps_eV']
 
-def get_sig_neutron(sigI, sigH, V, C, Er_keV):
+    return ((1+V/eps_eV)/E_keV)*np.sqrt((sigI(E_keV))**2 + (sigH(E_keV))**2)
+
+def get_sig_neutron(sigI, sigH, pars, C, Er_keV):
+    V = pars['V']
+    eps_eV = pars['eps_eV']
+
     E_keVee_I = np.multiply(Q_avg(Er_keV), Er_keV)
-    E_keVee_H = np.multiply((1+(V/3.0)*Q_avg(Er_keV))/(1+(V/3.0)), Er_keV)
+    E_keVee_H = np.multiply((1+(V/eps_eV)*Q_avg(Er_keV))/(1+(V/eps_eV)), Er_keV)
     # we're pretty sure Edelweiss uses the correct (above) conversion
     # and not the incorrect (below) conversion
     #E_keVee_H = np.multiply(Q_avg(Er_keV), Er_keV)
 
-    a = np.multiply(1+(V/3)*Q_avg(Er_keV), sigI(E_keVee_I))
-    b = np.multiply((1+V/3)*Q_avg(Er_keV), sigH(E_keVee_H))
+    a = np.multiply(1+(V/eps_eV)*Q_avg(Er_keV), sigI(E_keVee_I))
+    b = np.multiply((1+V/eps_eV)*Q_avg(Er_keV), sigH(E_keVee_H))
 
     sig_0 = (1/Er_keV)*np.sqrt(a**2 + b**2)
 
@@ -62,15 +71,18 @@ def get_sig_neutron(sigI, sigH, V, C, Er_keV):
     else:
         return sig_0
 
-def get_sig_neutron_alt(sigI, sigH, V, C, m, Er_keV):
+def get_sig_neutron_alt(sigI, sigH, pars, C, m, Er_keV):
+    V = pars['V']
+    eps_eV = pars['eps_eV']
+
     E_keVee_I = np.multiply(Q_avg(Er_keV), Er_keV)
-    E_keVee_H = np.multiply((1+(V/3.0)*Q_avg(Er_keV))/(1+(V/3.0)), Er_keV)
+    E_keVee_H = np.multiply((1+(V/eps_eV)*Q_avg(Er_keV))/(1+(V/eps_eV)), Er_keV)
     # we're pretty sure Edelweiss uses the correct (above) conversion
     # and not the incorrect (below) conversion
     #E_keVee_H = np.multiply(Q_avg(Er_keV), Er_keV)
 
-    a = np.multiply(1+(V/3)*Q_avg(Er_keV), sigI(E_keVee_I))
-    b = np.multiply((1+V/3)*Q_avg(Er_keV), sigH(E_keVee_H))
+    a = np.multiply(1+(V/eps_eV)*Q_avg(Er_keV), sigI(E_keVee_I))
+    b = np.multiply((1+V/eps_eV)*Q_avg(Er_keV), sigH(E_keVee_H))
 
     sig_0 = (1/Er_keV)*np.sqrt(a**2 + b**2)
 
@@ -79,33 +91,33 @@ def get_sig_neutron_alt(sigI, sigH, V, C, m, Er_keV):
     else:
         return sig_0
 
-def get_sig_gamma_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None, C=None):
+def get_sig_gamma_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, pars, aH=None, C=None):    
     # get the ionization resolution function
     sigI = get_ionRes_func(FWHM_center, FWHM_guard, FWHM122_ion)
     
     # get the heat resolution function
     sigH = get_heatRes_func(FWHM0_heat, FWHM122_heat, aH)
     
-    return partial(get_sig_gamma, sigI, sigH, V)
+    return partial(get_sig_gamma, sigI, sigH, pars)
 
 
-def get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None, C=None):
+def get_sig_nuc_func(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, pars, aH=None, C=None):
     # get the ionization resolution function
     sigI = get_ionRes_func(FWHM_center, FWHM_guard, FWHM122_ion)
     
     # get the heat resolution function
     sigH = get_heatRes_func(FWHM0_heat, FWHM122_heat, aH)
     
-    return partial(get_sig_neutron, sigI, sigH, V, C)
+    return partial(get_sig_neutron, sigI, sigH, pars, C)
 
-def get_sig_nuc_func_alt(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, V, aH=None, C=None, m=None):
+def get_sig_nuc_func_alt(FWHM_center, FWHM_guard, FWHM122_ion, FWHM0_heat, FWHM122_heat, pars, aH=None, C=None, m=None):
     # get the ionization resolution function
     sigI = get_ionRes_func(FWHM_center, FWHM_guard, FWHM122_ion)
     
     # get the heat resolution function
     sigH = get_heatRes_func(FWHM0_heat, FWHM122_heat, aH)
 
-    return partial(get_sig_neutron_alt, sigI, sigH, V, C, m)
+    return partial(get_sig_neutron_alt, sigI, sigH, pars, C, m)
 
 def getEdw_res_pars(infile='data/edw_res_data.txt'):
 
