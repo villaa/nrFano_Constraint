@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def hist_plot(data,prob,prob1,array,bins,fano,recoil_type):
+def hist_plot(data,prob,array,bins,fano):
     
     #for x in zip(bin_names):
     
@@ -22,31 +22,31 @@ def hist_plot(data,prob,prob1,array,bins,fano,recoil_type):
     fig,axes = plt.subplots(1,1,figsize=(9.0,8.0),sharex=True)
     ax1 = axes
     
-    ax1.hist(data,density=True,histtype = "step",color ='red',label = 'Data',linewidth="3")
-#    ax1.hist(data,density=True,label = 'Data',linewidth="3")
+    #ax1.hist(data,density=True,histtype = "step",color ='red',label = 'Data',linewidth="3")
+    ax1.hist(data,density=True,label = 'Data',linewidth="3")
 
-    #ax1.plot(bine,Gaussian,linewidth=1, color='r',linestyle = '--',label = 'Gaussian')
-    ax1.plot(array,prob,color ='black',label = 'Expected_dep')
-    ax1.plot(array,prob1,color ='blue',linestyle = '--',label = 'Expected_indep')
+    ax1.plot(bine,Gaussian,linewidth=1, color='r',linestyle = '--',label = 'Gaussian')
+    ax1.plot(array,prob,color ='blue',linestyle = '--',label = 'Expected')
 
 
     y,bined = np.histogram(data, normed = True)
     bin_center = 0.5*(bined[1:]+bined[:-1])
 
 
-    ax1.set_xlabel('Yield',size = '18')
+    ax1.set_xlabel('Ionization Yield',size = '18')
     ax1.set_ylabel('Count',size = '18')
-    ax1.set_title('Electron Recoil Yield Distribution' +str(bins) + ' kev, '  'fano = ' +str(fano))
-   # ax1.set_xlim(0.7,1.3)
+    #ax1.set_title('Electron Recoil Yield Distribution' +str(bins) + ' kev, '  'fano = ' +str(fano))
+    ax1.set_title('Nuclear Recoil Yield Distribution' +str(bins) + ' kev, '  'fano = ' +str(fano))
+    #ax1.set_xlim(0.7,1.3)
 
     ax1.set_ylim(bottom = 0.1)
-    ax1.set_yscale('log')
+    #ax1.set_yscale('log')
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='--')
     ax1.legend()
     ax1.tick_params(axis='both', labelsize = '20')
     #plt.savefig('figures/Dist_fits/nofano'+ str(bin_center)+'.png')
-    plt.savefig('/Users/Mitch 1/Desktop/plots/fano = '+str(fano)+'bin = '+str(bins)+'.png')
+    #plt.savefig('/Users/Mitch 1/Desktop/Thesis_Plots/ER_fano = '+str(fano)+'bin = '+str(bins)+'.png')
 
     plt.show()
 

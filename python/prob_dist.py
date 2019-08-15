@@ -4,6 +4,7 @@ import math
 from scipy.integrate import quad
 import resfuncRead as rfr
 import scipy.optimize as so
+import EdwRes as er
 
 
 
@@ -56,9 +57,9 @@ def ratio_dist_v2(x, Er, meanN, sdP, sdQ, sdN, V,e):
 
     return ans
 
-def YErSpec_v2_2D(f,alpha=(1/100)):
+def expband_2D(f,alpha=(1/100),widthfac=1):
 
-    pnr = lambda Er: alpha*np.exp(-alpha*Er)
+    pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
 
 
     #only integrate over important part of distribution around Etr
@@ -68,11 +69,72 @@ def YErSpec_v2_2D(f,alpha=(1/100)):
     b = 3-m*10
     width = lambda Etr: m*Etr + b
 
+    new_width = lambda r: np.piecewise(np.float(r), [r<=0, r > 0], [lambda r: 0.0, lambda r: r*m + b])
+
     Y_Erdist = lambda Er,Y,Etr: f(Y,Etr,Er)*pnr(Er)
     #Y_Er = lambda Y,Etr: quad(Y_Erdist, 0.1, np.inf,limit=100,args=(Y,Etr,))[0]
-    Y_Er = lambda Y,Etr: quad(Y_Erdist, Etr-width(Etr), Etr+width(Etr),limit=100,args=(Y,Etr,))[0]
+    Y_Er = lambda Y,Etr: quad(Y_Erdist, Etr-widthfac*new_width(Etr), Etr+widthfac*new_width(Etr),limit=100,args=(Y,Etr,))[0]
 
     return Y_Er
+
+def expband_EpEq_2D_slow(Ep0,Eq0,f,alpha=(1/100),widthfac=5,V=4.0,eps=3.3/1000.0,sigp=lambda Er: 0.1):
+
+
+    #it doesn't matter which one of the below we use because we're only integrating from zero to inf
+    #I tried the piecewise function to test that. 
+    #pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
+    pnr = lambda Er: np.piecewise(Er,[Er<0,Er>=0],[lambda Er: 0, lambda Er: (1/alpha)*np.exp(-alpha*Er)])
+
+
+    #get the central value for Er
+    Erec = lambda Ep,Eq: np.amax([Ep-(V/(1000*eps))*Eq,0])
+    width = lambda Ep,Eq: widthfac*sigp(Erec(Ep,Eq))
+
+    #get the full distribution
+    Ep_Eqdist = lambda Er,Ep,Eq: f(Ep,Eq,Er)*pnr(Er)
+
+    #Ep_Eq = lambda Ep,Eq: quad(Ep_Eqdist, np.amax([Erec(Ep,Eq)-width(Ep,Eq),0]), Erec(Ep,Eq)+width(Ep,Eq),limit=100,args=(Ep,Eq,))[0]
+
+    intlow = np.amax([Erec(Ep0,Eq0)-width(Ep0,Eq0),0])
+    inthigh = Erec(Ep0,Eq0)+width(Ep0,Eq0)
+
+    print([intlow,inthigh])
+    funcmin = lambda x,y: -quad(Ep_Eqdist,x,y,limit=100,args=(Ep0,Eq0,))[0]
+    #f = lambda x,y: -quadrature(Ep_Eqdist,x,y,maxiter=100,args=(Ep0,Eq0,))[0]
+
+    def fvec(x,f=funcmin):
+      if(x[0]>=0):
+        return f(x[0],x[1])
+      elif(x[0]<0):
+        return f(0,x[1])
+ 
+    #print(funcmin(intlow,inthigh))
+    
+    (mini,fmini,a,b,c) = so.fmin(fvec,[intlow,inthigh],disp=False,full_output=True)
+    print(mini)
+    #print(fmini)
+    return -fmini 
+
+
+def expband_EpEq_2D(f,alpha=(1/100),widthfac=5,V=4.0,eps=3.3/1000.0,sigp=lambda Er: 0.1):
+
+
+    #it doesn't matter which one of the below we use because we're only integrating from zero to inf
+    #I tried the piecewise function to test that. 
+    #pnr = lambda Er: (1/alpha)*np.exp(-alpha*Er)
+    pnr = lambda Er: np.piecewise(Er,[Er<0,Er>=0],[lambda Er: 0, lambda Er: (1/alpha)*np.exp(-alpha*Er)])
+
+
+    #get the central value for Er
+    Erec = lambda Ep,Eq: np.amax([Ep-(V/(1000*eps))*Eq,0])
+    width = lambda Ep,Eq: widthfac*sigp(Erec(Ep,Eq))
+
+    #get the full distribution
+    Ep_Eqdist = lambda Er,Ep,Eq: f(Ep,Eq,Er)*pnr(Er)
+
+    Ep_Eq = lambda Ep,Eq: quad(Ep_Eqdist, np.amax([Erec(Ep,Eq)-width(Ep,Eq),0]), Erec(Ep,Eq)+width(Ep,Eq),limit=100,args=(Ep,Eq,))[0]
+
+    return Ep_Eq
 
 def YEr_v2_2D(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     #F=5.0
@@ -104,7 +166,7 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     #F=5.0
     Eqbar = lambda Er: ynr(Er)*Er
     Et = lambda Er: (1+(V/(eps*1000))*ynr(Er))*Er
-    Ensig = lambda Er: np.sqrt(F*Eqbar(Er)/eps)
+    Ensig = lambda Er: np.sqrt(F*(Eqbar(Er)/eps+1)) #add one pair to avoid divide-by-zero errors
     
     Npqn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigq(Eqbar(Er))**2)) \
     *(1/np.sqrt(2*np.pi*sigp(Et(Er))**2))
@@ -116,23 +178,84 @@ def YEr_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
     C0 = lambda Y,Etr,Er: Npqn(Er)*(np.abs(Etr)/eps) 
 
     Cexp = lambda Y,Etr,Er: -(Etr-Er)**2/(2*sigp(Et(Er))**2) -((ynr(Er)*Er/eps)-(Y*Etr/eps))**2/(2*Ensig(Er)**2)
+    Cexp2 = lambda Y,Etr,Er: -((ynr(Er)*Er/eps)-(Y*Etr/eps))**2
 
-    a = lambda Y,Etr,Er: (2*(V/(1000*eps))*(Etr-Er))/(2*sigp(Et(Er)))+(2*(ynr(Er)*Er-Y*Etr))/(2*eps**2*Ensig(Er)**2)
+    a = lambda Y,Etr,Er: (2*(V/(1000*eps))*(Etr-Er))/(2*sigp(Et(Er))**2)+(2*(ynr(Er)*Er-Y*Etr))/(2*eps**2*Ensig(Er)**2)
 
     b = lambda Y,Etr,Er: ((V/(1000*eps))**2/(2*sigp(Et(Er))**2) + 1/(2*sigq(Eqbar(Er))**2) + 1/(2*eps**2*Ensig(Er)**2))
 
     ABexp = lambda Y,Etr,Er: a(Y,Etr,Er)**2/(4*b(Y,Etr,Er))
   
 
-    #print(Cexp(0.25,40,40))
-    #print(a(0.25,40,40)**2/(4*b(0.25,40,40)))
-    #print(Npqn(10))
-    #print(eps*Ensig(10))
-    #print(sigp(Et(10)))
-    #print(sigq(Eqbar(10)))
 
     #return lambda Y,Etr,Er: C(Y,Etr,Er)*np.exp(a(Y,Etr,Er)**2/(4*b(Y,Etr,Er)))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
     return lambda Y,Etr,Er: C0(Y,Etr,Er)*np.exp(Cexp(Y,Etr,Er)+ABexp(Y,Etr,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
+
+def EpEq_v2_2D_fast(sigp,sigq,V,eps,F=0.0001,ynr=lambda x: 0.16*x**0.18):
+    #F=5.0
+    Eqbar = lambda Er: ynr(Er)*Er
+    #Et = lambda Er: (1+(V/(eps*1000))*ynr(Er))*Er 
+    #note that in this function all resolutions are assumed to be in Eee
+    Et = Eqbar 
+    Ensig = lambda Er: np.sqrt(F*(Eqbar(Er)/eps+1)) #add one pair to avoid divide-by-zero errors
+    
+    Npqn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigq(Eqbar(Er))**2)) \
+    *(1/np.sqrt(2*np.pi*sigp(Et(Er))**2))
+   
+    C = lambda Ep,Eq,Er: Npqn(Er) \
+    *np.exp(-(Eq)**2/(2*sigq(Eqbar(Er))**2)) \
+    *np.exp(-(Ep-Er)**2/(2*sigp(Et(Er))**2)) \
+    *np.exp(-((ynr(Er)*Er/eps))**2/(2*Ensig(Er)**2))
+
+    C0 = lambda Ep,Eq,Er: Npqn(Er) 
+
+    Cexp = lambda Ep,Eq,Er: -Eq**2/(2*sigq(Eqbar(Er))**2) -(Ep-Er)**2/(2*sigp(Et(Er))**2) -((ynr(Er)*Er/eps))**2/(2*Ensig(Er)**2)
+
+    a = lambda Ep,Eq,Er: (2*(V/1000)*(Ep-Er))/(2*sigp(Et(Er))**2)+(2*(ynr(Er)*Er)/eps)/(2*Ensig(Er)**2)+2*eps*Eq/(2*sigq(Eqbar(Er))**2)
+
+    b = lambda Ep,Eq,Er: (V/1000)**2/(2*sigp(Et(Er))**2) + eps**2/(2*sigq(Eqbar(Er))**2) + 1/(2*Ensig(Er)**2)
+
+    ABexp = lambda Ep,Eq,Er: a(Ep,Eq,Er)**2/(4*b(Ep,Eq,Er))
+    #print(ABexp(6.3,1.1,5))
+    #print(Cexp(6.3,1.1,5))
+  
+
+    return lambda Ep,Eq,Er: C0(Ep,Eq,Er)*np.exp(Cexp(Ep,Eq,Er)+ABexp(Ep,Eq,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Ep,Eq,Er)))*(1/2)*(erf(a(Ep,Eq,Er)/(2*np.sqrt(b(Ep,Eq,Er))))+1) 
+
+def QEr_v2_2D_fast(sigh,sigi,V,eps,F=0.0001,Qbar=lambda x: 0.16*x**0.18):
+   
+    #new resolution functions 
+    Ehee = lambda Er: ((1+(V/(1000*eps))*Qbar(Er))*Er)/(1+(V/(1000*eps)))
+    EIee = lambda Er: Qbar(Er)*Er
+    EIbar = lambda Er: Qbar(Er)*Er
+    Ensig = lambda Er: np.sqrt(F*(EIbar(Er)/eps+1)) #add one pair to avoid divide-by-zero errors
+    
+
+    sigh_Er = lambda Er: sigh(Ehee(Er))
+    sigi_Er = lambda Er: sigi(EIee(Er))
+    sigp_Er = lambda Er: (1+(V/(1000*eps)))*sigh_Er(Er)
+
+    Nihn = lambda Er: (1/np.sqrt(2*np.pi*Ensig(Er)**2))*(1/np.sqrt(2*np.pi*sigi_Er(Er)**2)) \
+    *(1/np.sqrt(2*np.pi*sigh_Er(Er)**2))
+   
+    C = lambda Q,Etr,Er: Nihn(Er)*(np.abs(Etr)/eps)*(1/(1+(V/(1000*eps)))) \
+    *np.exp(-(Etr-Er)**2/(2*sigp_Er(Er)**2)) \
+    *np.exp(-((Qbar(Er)*Er/eps)-(Q*Etr/eps))**2/(2*Ensig(Er)**2))
+
+    C0 = lambda Q,Etr,Er: Nihn(Er)*(np.abs(Etr)/eps)*(1/(1+(V/(1000*eps))))
+
+    Cexp = lambda Q,Etr,Er: -(Etr-Er)**2/(2*sigp_Er(Er)**2) -((Qbar(Er)*Er/eps)-(Q*Etr/eps))**2/(2*Ensig(Er)**2)
+    Cexp2 = lambda Q,Etr,Er:  -((Qbar(Er)*Er/eps)-(Q*Etr/eps))**2
+
+    a = lambda Q,Etr,Er: (2*(V/(1000*eps))*(Etr-Er))/(2*sigp_Er(Er)**2)+(2*(Qbar(Er)*Er-Q*Etr))/(2*eps**2*Ensig(Er)**2)
+
+    b = lambda Q,Etr,Er: ((V/(1000*eps))**2/(2*sigp_Er(Er)**2) + 1/(2*sigi_Er(Er)**2) + 1/(2*eps**2*Ensig(Er)**2))
+
+    ABexp = lambda Q,Etr,Er: a(Q,Etr,Er)**2/(4*b(Q,Etr,Er))
+  
+
+    #return lambda Y,Etr,Er: C(Y,Etr,Er)*np.exp(a(Y,Etr,Er)**2/(4*b(Y,Etr,Er)))*np.sqrt(np.pi)*(1/np.sqrt(b(Y,Etr,Er))) 
+    return lambda Q,Etr,Er: C0(Q,Etr,Er)*np.exp(Cexp(Q,Etr,Er)+ABexp(Q,Etr,Er))*np.sqrt(np.pi)*(1/np.sqrt(b(Q,Etr,Er))) 
 
 def sigroot(F,Er):
 
@@ -162,4 +285,104 @@ def sigroot(F,Er):
     rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100,args=(Er,))
 
     return rootF 
+
+#set the Edelweiss sigma definition to default to NR band
+def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,aH=0.035):
+
+    #fh2 = er.get_heatRes_func(0.4, 2.7,0.035)
+    FWHM_to_SIG = 1 / (2*np.sqrt(2*np.log(2)))
+    fh2 = er.get_heatRes_func(1.3, 3.5,aH*FWHM_to_SIG)
+    heatRes_GGA3 = lambda x:fh2(x)
+
+    fi2 = er.get_ionRes_func(1.3, 1.3, 2.8)
+    sigI_GGA3 = lambda x:fi2(x)
+
+    #new resolution functions 
+    Ehee = lambda Er: ((1+(V/(1000*eps))*Qbar(Er))*Er)/(1+(V/(1000*eps)))
+    EIee = lambda Er: Qbar(Er)*Er
+
+    heatRes_GGA3_Er = lambda Er: heatRes_GGA3(Ehee(Er))
+
+    sigI_GGA3_Er = lambda Er: sigI_GGA3(EIee(Er))
+
+    #f0 = YEr_v2_2D_fast(sigp,sigq,4,(3.3/1000),0.0001)
+    fF = QEr_v2_2D_fast(heatRes_GGA3,sigI_GGA3,V,eps,F,Qbar)
+
+    #g0 = YErSpec_v2_2D(f0)
+    #crude check for ER band
+    if Qbar(10)>0.8:
+      gF = expband_2D(fF,alpha,3)
+    else:
+      gF = expband_2D(fF,alpha,1.5)
+
+    norm = quad(gF,-1,4,args=(Er,))[0]
+    #print(norm)
+
+    Qdist = lambda Q: (1/norm)*gF(Q,Er)
+    #print(Qdist(1))
+
+    intyF = lambda a: quad(Qdist,Qbar(Er)-a,Qbar(Er)+a,limit=100)[0]
+
+
+    #minsig0 = lambda a,Er: inty0(a,Er) - 0.6827 #one sigma
+    #root0 = so.brentq(minsig0,0,1,rtol=0.001,maxiter=100,args=(Er,))
+    minsigF = lambda a: intyF(a) - 0.6827 #one sigma
+    rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100)
+
+    return rootF 
+
+#set the Edelweiss sigma (second central moment) definition to default to NR band
+def sigmomEdw(Er,band='ER',label='GGA3',F=0.000001,V=4.0,aH=0.0386,alpha=(1/100)):
+
+    #get the resolutions
+    sigHv,sigIv,sigQerv,sigH_NRv,sigI_NRv,sigQnrv = \
+    er.getEdw_det_res(label,V,'data/edw_res_data.txt',aH,C=None)
+
+
+    #energy constant
+    eps=3.0/1000.0 #Edelweiss used 3 in the early publication
+
+
+    #g0 = YErSpec_v2_2D(f0)
+    #crude check for ER band
+    if band is 'ER':
+      fF = QEr_v2_2D_fast(sigHv,sigIv,V,eps,F,Qbar=lambda x: 1)
+      gF = expband_2D(fF,alpha,3)
+      mean = 1
+    else:
+      fF = QEr_v2_2D_fast(sigHv,sigIv,V,eps,F,Qbar=lambda x: 0.16*x**0.18)
+      gF = expband_2D(fF,alpha,1.5)
+      mean = 0.16*Er**0.18
+
+    norm = quad(gF,-1,4,args=(Er,))[0]
+    #print(norm)
+
+
+    Qdist = lambda Q: (1/norm)*gF(Q,Er)
+    #print(Qdist(1))
+
+    #get the mean 
+    #NOTE: actually I found the calculation of variance from the definition (NOT 68% containment)
+    #to be VERY sensitive to the mean, for ER band if I use a mean of 1 it was off by a factor
+    #of two compared to the 68% region. But if I used the true mean as calculated above (which was
+    #generally less than 1% off from 1--it came back to being in line
+    #I guess this is because <x^2> and <x>^2 are both "large" and you have to subtract them to get
+    #the answer--this amplifies numerical uncertainties.
+    meanfun = lambda Q: Q*Qdist(Q)
+    mean = quad(meanfun,-1,4)[0]
+    #print(mean)
+
+    intyF = lambda a: quad(Qdist,mean-a,mean+a,limit=100)[0]
+
+
+    #minsigF = lambda a: intyF(a) - 0.6827 #one sigma
+    #rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100)
+
+    #by integration
+    sigfun = lambda Q: Q**2*Qdist(Q)
+    q2 = quad(sigfun,-1,4)[0]
+
+    #print(sigQerv(Er))
+    #return norm,rootF,(np.sqrt(q2-mean**2)) 
+    return (np.sqrt(q2-mean**2)) 
 

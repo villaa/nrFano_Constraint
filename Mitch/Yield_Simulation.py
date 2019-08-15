@@ -13,32 +13,51 @@ import resfuncRead as rfr
 from scipy.stats import kde
 from band_check import *
 from Band_plots import *
-from ER_Yield import Yield_Er
+from Eer_Yield import Yield_Er
 from NR_Yield import Yield_NR
-from bin_data_check import * 
+from bin_data_check_v1 import * 
+from bin_data_check_v2 import * 
 from Dist_check import *  
 from Data_check_continuous import *
+from EpEq_space import * 
+ 
 
 
 #%%
-N = 50000
+N =100000
 s = 1
-fano =5 # 'known' fano factor for electron recoils. 
+#fano =0.13
+fano = 'EDW' # 'known' fano factor for electron recoils. 
+Fano = 0.13 #electron recoil fano factor 
 
-bins = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110])
+bins = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110,])
 bins_cont = np.linspace(10,150,N)
+
+bins_cont = np.random.choice(bins_cont,N)
 
 Eer = np.random.choice(bins,N)
 
-df,DF= Yield_Er(Eer,fano) #Electron Recoil Band with fano (BINNED)
-df_count,df2 = Yield_Er(bins_cont,fano) #indep
+df_er_v1,df_er_v2= Yield_Er(Eer,Fano) #Electron Recoil Band with fano (BINNED)
+df_er_v1_count,df_er_v2_count = Yield_Er(bins_cont,Fano) #indep
 
-#df,DF= Yield_NR(Eer) #Nuclear Recoil Band with fano (BINNED)
-#df_count,df2 = Yield_NR(bins_cont) #NR band for continuos dist of energies 
+#df_nr_v1,df_nr_v2= Yield_NR(Eer) #Nuclear Recoil Band with fano (BINNED)
+#df_nr_v1_count,df_nr_v2_count = Yield_NR(bins_cont) #NR band for continuos dist of energies 
 
 
 #%%
-expected_v1, expected_v2, Er_true = continuous_containment(df_count,s,band_er)
+#NR_band_plot(df_nr_v2,1)
+#NR_band_plot(df_nr_v2_count,2)
+
+#ER_band_plot(df_er_v1,1)
+#ER_band_plot(df_er_v2,2)
+
+
+#%%
+'''For Nuclear Recoils'''
+#expected_v1, expected_v2, Er_true = continuous_containment(df_nr_v1_count,df_nr_v2_count,s,band_nr)
+'''For Electron Recoils '''
+expected_v1, expected_v2, Er_true = continuous_containment(df_er_v1_count,df_er_v2_count,s,band_er)
+
 
 #%%
 
@@ -47,71 +66,49 @@ cut_idx = 'E_true' # True energy
 er = np.arange(0,2,0.002) #electron recoils 
 nr = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
-df,bincenters = bin_check(df,1,band_er,bins,cut_idx,expected_v1,expected_v2,Er_true,fano,er)
+'''For Nuclear Recoils'''
+#df1,bincenters1 = bin_check_v1(df_nr_v1,1,band_nr,bins,cut_idx,expected_v1,Er_true,fano,nr)
+#df2,bincenters2 = bin_check_v2(df_nr_v2,1,band_nr,bins,cut_idx,expected_v2,Er_true,fano,nr)
+'''For Electron Recoils'''
+#df1,bincenters1 = bin_check_v1(df_er_v1,1,band_er,bins,cut_idx,expected_v1,Er_true,Fano,er)
+df2,bincenters2 = bin_check_v2(df_er_v2,1,band_er,bins,cut_idx,expected_v2,Er_true,Fano,er)
 
 
 
 
 
 
-#%%
-'''
-p_alpha = 0.155393
-p_beta = 9.60343*10**(-11)
-p_gamma = 0.000506287
-q_alpha = 0.166004
-q_beta = 0.0023371
-q_gamma = 9.52576*10**(-5)
-
-
-def sigmaq(Eq):
-    return np.sqrt(q_alpha + q_beta*Eq + q_gamma*(Eq**2))
-def sigq_der(Eq):
-    return 0.5*np.power(q_alpha + q_beta*Eq + q_gamma*(Eq**2),-0.5)*(q_beta + 2*q_gamma*(Eq))
-
-def sigmap(Ep):
-    return np.sqrt(p_alpha + p_beta*Ep + p_gamma*(Ep**2))
-def sigp_der(Ep):
-    return 0.5*np.power(p_alpha + p_beta*Ep + p_gamma*(Ep**2),-0.5)*(p_beta + 2*p_gamma*(Ep))
-
-Eq = np.linspace(10,170,100000)
-Ep = np.linspace(20,250,100000)
-
-
-
-
-plt.figure(figsize=(8, 6))
-#plt.plot(Eq,sigq_der(Eq))
-plt.plot(Ep,df_count.sig_p_var,label = 'Varried N')
-plt.plot(Ep,df_count.sigp_mean,label = 'Varried SigP')
-plt.title("simgap compare ")
-plt.ylabel('$\sigma_q^|$')
-plt.xlabel('$E_q$')
-plt.legend()
-plt.grid(True)
-
-
-plt.show()
-'''
 
 #%%
-'''
-m,c,r,p,se1= stats.linregress(df_count.EP_smear,df_count.EQ_smear)
-
-cm1lab="$"+('y=%2.2fx+%2.2f, r^2=%1.2f'%(m,c,r**2))+"$"
-
+'''Continous EQ_EP Space Splot '''
 plt.figure(figsize=(9.0,8.0))
-plt.plot(df_count.EP_smear, m*df_count.EP_smear+c,'r--',label = cm1lab)
-plt.scatter(df_count.EP_smear,df_count.EQ_smear,s= 2.5,label = 'Data')
+plt.scatter(df2_nr.EP,df2_nr.EQ,s = 10,label = 'Nuclear Recoils')
+plt.scatter(df2_er.EP,df2_er.EQ,color = 'black', s = 10,label = 'Electron Recoils')
 
-plt.title('$E_P$ vs. $E_Q$')
-plt.xlabel('$E_P$')
-plt.ylabel('$E_Q$')
+plt.title('Simulated $E_P$ $E_Q$ Space',size = 16)
+plt.xlabel('$E_P$ [keV]',size = 14)
+plt.ylabel('$E_Q$ [keV]',size = 14)
 plt.grid(linestyle='-', linewidth=0.35)
 plt.legend()
 
-plt.savefig('/Users/Mitch 1/Desktop/EP_EQ_FIT.png')
+plt.savefig('/Users/Mitch 1/Desktop/Thesis_Plots/EP_EQ_Space.png')
 
 plt.show()
-'''
+
+
+
+
+#%%
+'''Fano Factor as a Function of ER (edel) plot'''
+plt.figure(figsize=(9.0,8.0))
+plt.plot(df_cont.E_true,df_cont.Fano)
+plt.title('Nuclear Recoil Fano Factor',size = '18')
+plt.xlabel('Recoil Energy [keV]',size = '16')
+plt.ylabel('Fano Factor',size = '16')
+plt.grid(linestyle='-', linewidth=0.35)
+plt.savefig('/Users/Mitch 1/Desktop/Thesis_Plots/Fano_Factor.png')
+plt.show() 
+
+#%%
+
 

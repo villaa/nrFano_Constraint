@@ -25,10 +25,12 @@ V = 4.0 # voltage Bias
 eps = .0033 #keV
 
 #for detector 1
-p_alpha = 0.155393
+#p_alpha = 0.155393
+p_alpha = 0.05
 p_beta = 9.60343*10**(-11)
 p_gamma = 0.000506287
-q_alpha = 0.166004
+#q_alpha = 0.166004
+q_alpha = 0.1
 q_beta = 0.0023371
 q_gamma = 9.52576*10**(-5)
 
@@ -43,8 +45,8 @@ def Yield_NR(Er_True):
     Enr = np.sort(Er_True)
 
     Y = ynr_mu(Enr) #calculates Linhard yield for a given Er 
-    print(Y)
-
+    #print(Y)
+    
     a = 0.16
     b = 0.18 
     c = 0.04
@@ -53,52 +55,74 @@ def Yield_NR(Er_True):
     C = Enr**(1-3*b)
 
     fano = c**2/((eps*a/(A))+(2*V*a**2/(B*1000))+(2*(V/1000)**2*a**3/(eps*C))) #edelweiss fano
+    #fano = 0
+    
 
+    '''For generating data for version 1 of our simulation. Here, the fano factor is accounted for in the resolutions.'''
 
     N_mean = Y*Enr/eps
 
     sigN = np.sqrt(N_mean * fano) 
 
-    E_p_mean = Enr+(V/1000)*N_mean
-    E_q_mean = N_mean*eps
+    Ep_true_v1 = Enr+(V/1000)*N_mean
+    Eq_true_v1 = N_mean*eps
 
-    '''These resolutions are for the independent(v1) pdf'''
-    sig_p_v1= np.sqrt(p_alpha + p_beta*E_p_mean + p_gamma*(E_p_mean**2)+ (V/1000)**2*fano*N_mean)
-    sig_q_v1 = np.sqrt(q_alpha + q_beta*E_q_mean + q_gamma*(E_q_mean**2)+ eps**2*fano*N_mean)
 
-    '''These resolutions are for the dependent(v2) pdf'''
-    sig_p_v2= np.sqrt(p_alpha + p_beta*E_p_mean + p_gamma*(E_p_mean**2))
-    sig_q_v2 = np.sqrt(q_alpha + q_beta*E_q_mean + q_gamma*(E_q_mean**2))
+    sig_p_v1= np.sqrt(p_alpha + p_beta*Ep_true_v1 + p_gamma*(Ep_true_v1**2)+ (V/1000)**2*sigN**2)
+    sig_q_v1 = np.sqrt(q_alpha + q_beta*Eq_true_v1 + q_gamma*(Eq_true_v1**2)+ eps**2*sigN**2)
+
+    Ep_measured_v1 = np.random.normal(Ep_true_v1,sig_p_v1)
+    Eq_measured_v1 = np.random.normal(Eq_true_v1,sig_q_v1)
+
+    Er_v1 = Ep_measured_v1 - (V/eps/1000)*Eq_measured_v1
+
+    Yield_v1 = Eq_measured_v1/Er_v1
+
+    Er_v1 = np.sort(Er_v1)
+
+
+    df_v1 = pd.DataFrame({'E_true':Enr,'N_mean':N_mean,'Ep_true':Ep_true_v1,'Eq_true':Eq_true_v1,'sigp':sig_p_v1,'sigq':sig_q_v1,'Ep_measured':Ep_measured_v1,'Eq_measured':Eq_measured_v1,'E_measured':Er_v1,'Yield':Yield_v1})
+
+
+
+
+
+
 
  
+    '''These resolutions are for the dependent exoected (v2) pdf there is no variation in the resolution. For the data, there will be. So these will not be used for generating (V2) data'''
+    sig_p_expected= np.sqrt(p_alpha + p_beta*Ep_true_v1 + p_gamma*(Ep_true_v1**2))
+    sig_q_expected = np.sqrt(q_alpha + q_beta*Eq_true_v1 + q_gamma*(Eq_true_v1**2))
 
-    '''This section is for generating measured data'''    #for fano varried number of electron hole pairs. 
-    N_var = np.random.normal(0,np.sqrt(fano *N_mean)) + N_mean
+
+    '''This section is for generating measured data v2 fano factor is accounted for in the number of electron hole pairs created for a single recoil energy'''    #for fano varried number of electron hole pairs. 
+
+    N_var = np.random.normal(0,sigN) + N_mean
     #N_var =  N_mean
 
-    E_p_var = Enr+ (V/1000)*N_var
-    E_q_var = N_var*eps #with Fano
+    Ep_true_v2 = Enr+ (V/1000)*N_var
+    Eq_true_v2 = N_var*eps #with Fano
 
 
-    sig_p_var = np.sqrt(p_alpha + p_beta*E_p_var + p_gamma*(E_p_var**2))  
-    sig_q_var = np.sqrt(q_alpha + q_beta*E_q_var + q_gamma*(E_q_var**2))
+    sig_p_v2 = np.sqrt(p_alpha + p_beta*Ep_true_v2 + p_gamma*(Ep_true_v2**2))  
+    sig_q_v2 = np.sqrt(q_alpha + q_beta*Eq_true_v2 + q_gamma*(Eq_true_v2**2))
 
     # find 'measured' Ep and Eq using N_var
-    Ep_smear = np.random.normal(E_p_var,sig_p_var) #smearing 'measured' phonon energy with res that contains fano factor 
-    Eq_smear = np.random.normal(E_q_var,sig_q_var) #smearing 'measured' charge energy with res that contains fano factor 
+    Ep_measured_v2 = np.random.normal(Ep_true_v2,sig_p_v2) #smearing 'measured' phonon energy with res that contains fano factor 
+    Eq_measured_v2 = np.random.normal(Eq_true_v2,sig_q_v2) #smearing 'measured' charge energy with res that contains fano factor 
 
 
-    Er = Ep_smear - (V/eps/1000)*Eq_smear # measured recoil energy 
+    Er_v2 = Ep_measured_v2 - (V/eps/1000)*Eq_measured_v2 # measured recoil energy 
 
-    Yield = Eq_smear/Er # "measured" Ionization Yield
+    Yield_v2 = Eq_measured_v2/Er_v2 # "measured" Ionization Yield
 
-    Er_m = np.sort(Er)
+    Er_v2 = np.sort(Er_v2)
 
 
-    df = pd.DataFrame({'E_measured':Er_m,'E_true':Enr,'N_mean':N_mean,'sig_N':sigN,'Yield':Yield,'Ep_mean':E_p_mean,'Eq_mean':E_q_mean,'sigp_v1':sig_p_v1,'sigq_v1':sig_q_v1,'sigp_v2':sig_p_v2,'sigq_v2':sig_q_v2})
-    df2 = pd.DataFrame({'Yield':Yield,'ER':Er,'EP':Ep_smear,'EQ':Eq_smear,'E_sort':Er_m,'EP_var': E_p_var,'EQ_var':E_q_var})
+    df_v2 = pd.DataFrame({'E_true':Enr,'N_mean':N_mean,'N_var':N_var, 'sig_N':sigN, 'Ep_true':Ep_true_v2,'Eq_true':Eq_true_v2,'sigp':sig_p_v2,'sigq':sig_q_v2,'Ep_measured':Ep_measured_v2,'Eq_measured':Eq_measured_v2,'E_measured':Er_v2,'Yield':Yield_v2,'sigp_expected':sig_p_expected,'sigq_expected':sig_q_expected})
 
-    return df,df2
+
+    return df_v1,df_v2
 
 
 

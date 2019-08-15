@@ -80,7 +80,7 @@ def bin_check(df,s,band_func,bins,cut_idx,expected_v1,expected_v2,Er_true,fano,u
             #hist_plot(Yield,prob,u,bin_name,fano)  #for new distribution 
             hist_plot(Yield,pdf_v2,pdf_v1,u,bin_name,fano,recoil_type) #for normal Distribution 
 
-            #stat_analysis(Yield,pdf_v2,bin_center)
+            stat_analysis(Yield,pdf_v2,bin_name)
     
             #g = integrate.quad(lambda x: dist_check(x,Ep_mean,Eq_mean,Sp_mean,Sq_mean,k),np.mean(upper_bound),np.mean(lower_bound) )
             g = integrate.quad(lambda x: dist_check_v2(x,E_true,N_mean,Sp_v2,Sq_v2,SN),np.mean(upper_bound),np.mean(lower_bound))
@@ -147,12 +147,14 @@ def bin_check(df,s,band_func,bins,cut_idx,expected_v1,expected_v2,Er_true,fano,u
     ax1.set_ylabel('Percent of Data Contained in Band',size = '18')
     #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils Fano =' + str(fano) , size = '15')
     ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils fano = '+str(fano), size = '15')
+    #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils')
+
     #ax1.set_title('1$\sigma$ Containment Fraction for Nuclear Recoils Edelweiss Fano', size = '15')    
     plt.xticks(bins)
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     ax1.legend(loc=1,prop={'size':12})
-    plt.savefig('/Users/Mitch 1/Desktop/ERContainment_f=5.png')
+    plt.savefig('/Users/Mitch 1/Desktop/Thesis_Plots/NRContainment_expected.png')
     #plt.savefig('/Users/Mitch 1/Desktop/NRContainment.png')
     #plt.savefig('Notes/Dist_fits/Eer_Error_Fano =' + str(fano)+'.png')
     plt.show()
