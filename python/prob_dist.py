@@ -315,10 +315,11 @@ def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,aH=0.035):
     else:
       gF = expband_2D(fF,alpha,1.5)
 
-    norm = quad(gF,0,4,args=(Er,))[0]
+    norm = quad(gF,-1,4,args=(Er,))[0]
     #print(norm)
 
     Qdist = lambda Q: (1/norm)*gF(Q,Er)
+    #print(Qdist(1))
 
     intyF = lambda a: quad(Qdist,Qbar(Er)-a,Qbar(Er)+a,limit=100)[0]
 
@@ -329,4 +330,59 @@ def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,aH=0.035):
     rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100)
 
     return rootF 
+
+#set the Edelweiss sigma (second central moment) definition to default to NR band
+def sigmomEdw(Er,band='ER',label='GGA3',F=0.000001,V=4.0,aH=0.0386,alpha=(1/100)):
+
+    #get the resolutions
+    sigHv,sigIv,sigQerv,sigH_NRv,sigI_NRv,sigQnrv = \
+    er.getEdw_det_res(label,V,'data/edw_res_data.txt',aH,C=None)
+
+
+    #energy constant
+    eps=3.0/1000.0 #Edelweiss used 3 in the early publication
+
+
+    #g0 = YErSpec_v2_2D(f0)
+    #crude check for ER band
+    if band is 'ER':
+      fF = QEr_v2_2D_fast(sigHv,sigIv,V,eps,F,Qbar=lambda x: 1)
+      gF = expband_2D(fF,alpha,3)
+      mean = 1
+    else:
+      fF = QEr_v2_2D_fast(sigHv,sigIv,V,eps,F,Qbar=lambda x: 0.16*x**0.18)
+      gF = expband_2D(fF,alpha,1.5)
+      mean = 0.16*Er**0.18
+
+    norm = quad(gF,-1,4,args=(Er,))[0]
+    #print(norm)
+
+
+    Qdist = lambda Q: (1/norm)*gF(Q,Er)
+    #print(Qdist(1))
+
+    #get the mean 
+    #NOTE: actually I found the calculation of variance from the definition (NOT 68% containment)
+    #to be VERY sensitive to the mean, for ER band if I use a mean of 1 it was off by a factor
+    #of two compared to the 68% region. But if I used the true mean as calculated above (which was
+    #generally less than 1% off from 1--it came back to being in line
+    #I guess this is because <x^2> and <x>^2 are both "large" and you have to subtract them to get
+    #the answer--this amplifies numerical uncertainties.
+    meanfun = lambda Q: Q*Qdist(Q)
+    mean = quad(meanfun,-1,4)[0]
+    #print(mean)
+
+    intyF = lambda a: quad(Qdist,mean-a,mean+a,limit=100)[0]
+
+
+    #minsigF = lambda a: intyF(a) - 0.6827 #one sigma
+    #rootF = so.brentq(minsigF,0,1,rtol=0.001,maxiter=100)
+
+    #by integration
+    sigfun = lambda Q: Q**2*Qdist(Q)
+    q2 = quad(sigfun,-1,4)[0]
+
+    #print(sigQerv(Er))
+    #return norm,rootF,(np.sqrt(q2-mean**2)) 
+    return (np.sqrt(q2-mean**2)) 
 
