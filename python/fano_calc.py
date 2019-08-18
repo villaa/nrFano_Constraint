@@ -71,7 +71,7 @@ def getFanoEdw(E=10,C=0.03,filename='test.f5'):
 
   return Fout
 
-def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,aH=0.0386,path='./'):
+def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,aH=0.0381,path='./'):
 
   Er = np.linspace(7,100,n)
   emin = np.min(Er)
@@ -90,9 +90,9 @@ def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18
   Vs = '{:2.1f}'.format(V)
   epss = '{:1.1f}'.format(epslabel)
   alphas = '{:1.3f}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
  
-  if(aH==0.0386):
+  if(aH==0.0381):
     filename='EdwYieldWidths-emin{}-n{}-F{}-V{}-eps{}-alpha{}-type{}.h5'.format(emins,ns,Fs,Vs,epss,alphas,rtype)
   else:
     filename='EdwYieldWidths-emin{}-n{}-F{}-V{}-eps{}-alpha{}-aH{}-type{}.h5'.format(emins,ns,Fs,Vs,epss,alphas,aHs,rtype)
@@ -120,7 +120,7 @@ def calcQWidth(n,F=10,V=4,eps=(3/1000),alpha=(1/100),Qbar=lambda x: 0.16*x**0.18
   #f.close() 
   return (out,Er)
 
-def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.0386,Erv=None,sigv=None,erase=False):
+def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.0381,Erv=None,sigv=None,erase=False):
 
   #n=10
   #Er = np.linspace(7,100,n)
@@ -132,7 +132,7 @@ def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/1000
   Fs = '{:03.0f}'.format(F)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
  
   path='{}/{}/{}/{}/{}/{}/'.format(det,band,Vs,alphas,aHs,Fs)
 
@@ -181,7 +181,7 @@ def RWCalc(filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/1000
 
   return (Er,sig)
 
-def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.0386,erase=False,maxEr=100,opt=True):
+def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=(1/10000.0),aH=0.0381,erase=False,maxEr=100,opt=True):
 
   Er = np.linspace(7,maxEr,n)
   emin = np.min(Er)
@@ -190,7 +190,7 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
   Fs = '{:03.0f}'.format(F)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
 
   (Er_stored,sig_stored) = RWCalc(filename,det,band,F,V,alpha,aH)
   n_stored = np.shape(Er_stored)[0]
@@ -241,7 +241,7 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
   (Er_new,sig_new) = RWCalc(filename,det,band,F,V,alpha,aH,Erv=E_needed,sigv=sigcalc,erase=erase)
   return (Er_new,sig_new)
 
-def RWCalcF(filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0),aH=0.0386,ErFv=None,Fv=None,erase=False):
+def RWCalcF(filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,erase=False):
 
   #n=10
   #Er = np.linspace(7,100,n)
@@ -253,7 +253,7 @@ def RWCalcF(filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0
   Cs = '{:01.4f}'.format(C)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
  
   path='{}/{}/{}/{}/{}/{}/'.format(det,band,Vs,alphas,aHs,Cs)
 
@@ -302,7 +302,7 @@ def RWCalcF(filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0
 
   return (ErF,F)
 
-def storeF(n,filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0),aH=0.0386,erase=False,maxEr=100,opt=True):
+def storeF(n,filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0),aH=0.0381,erase=False,maxEr=100,opt=True):
 
   #def getFanoEdw(E=10,C=0.03,filename='test.f5'):
   ErF = np.linspace(7,maxEr,n)
@@ -312,7 +312,7 @@ def storeF(n,filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.
   Cs = '{:01.4f}'.format(C)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
 
   (ErF_stored,F_stored) = RWCalcF(filename,det,band,C,V,alpha,aH)
   n_stored = np.shape(ErF_stored)[0]
@@ -363,7 +363,7 @@ def storeF(n,filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.
   (ErF_new,F_new) = RWCalcF(filename,det,band,C,V,alpha,aH,ErFv=E_needed,Fv=Fcalc,erase=erase)
   return (ErF_new,F_new)
 
-def RWCalcFlinear(filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344e-5,V=4.0,alpha=(1/18.0),aH=0.0386,ErFv=None,Fv=None,erase=False):
+def RWCalcFlinear(filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344e-5,V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,erase=False):
 
   #n=10
   #Er = np.linspace(7,100,n)
@@ -376,7 +376,7 @@ def RWCalcFlinear(filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344
   slopes = '{:01.4E}'.format(slope)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
  
   path='{}/{}/{}/{}/{}/{}/{}/'.format(det,band,Vs,alphas,aHs,Cmss,slopes)
 
@@ -425,7 +425,7 @@ def RWCalcFlinear(filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344
 
   return (ErF,F)
 
-def storeFlinear(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E-5,V=4.0,alpha=(1/18.0),aH=0.0386,erase=False,maxEr=100,opt=True):
+def storeFlinear(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E-5,V=4.0,alpha=(1/18.0),aH=0.0381,erase=False,maxEr=100,opt=True):
 
   #def getFanoEdw(E=10,C=0.03,filename='test.f5'):
   ErF = np.linspace(7,maxEr,n)
@@ -439,7 +439,7 @@ def storeFlinear(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.34
   slopes = '{:01.4E}'.format(slope)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
 
   (ErF_stored,F_stored) = RWCalcFlinear(filename,det,band,Cms,slope,V,alpha,aH)
   n_stored = np.shape(ErF_stored)[0]
@@ -491,7 +491,7 @@ def storeFlinear(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.34
   (ErF_new,F_new) = RWCalcFlinear(filename,det,band,Cms,slope,V,alpha,aH,ErFv=E_needed,Fv=Fcalc,erase=erase)
   return (ErF_new,F_new)
 
-def RWCalcFMCMC(infile='mcmc_fit.h5',filename='test.h5',det='GGA3',V=4.0,alpha=(1/18.0),aH=0.0386,ErFv=None,Fv=None,erase=False):
+def RWCalcFMCMC(infile='mcmc_fit.h5',filename='test.h5',det='GGA3',V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,erase=False):
 
   #n=10
   #Er = np.linspace(7,100,n)
@@ -502,7 +502,7 @@ def RWCalcFMCMC(infile='mcmc_fit.h5',filename='test.h5',det='GGA3',V=4.0,alpha=(
   #ns = '{:04.0f}'.format(n)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
  
   path='{}/{}/{}/{}/'.format(det,Vs,alphas,aHs)
 
@@ -553,7 +553,7 @@ def RWCalcFMCMC(infile='mcmc_fit.h5',filename='test.h5',det='GGA3',V=4.0,alpha=(
 
   return (ErF,F)
 
-def storeFMCMC(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E-5,V=4.0,alpha=(1/18.0),aH=0.0386,erase=False,maxEr=100,opt=True):
+def storeFMCMC(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E-5,V=4.0,alpha=(1/18.0),aH=0.0381,erase=False,maxEr=100,opt=True):
 
   #def getFanoEdw(E=10,C=0.03,filename='test.f5'):
   ErF = np.linspace(7,maxEr,n)
@@ -567,7 +567,7 @@ def storeFMCMC(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E
   slopes = '{:01.4E}'.format(slope)
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
-  aHs = '{:1.3f}'.format(aH)
+  aHs = '{:1.4f}'.format(aH)
 
   (ErF_stored,F_stored) = RWCalcFlinear(filename,det,band,Cms,slope,V,alpha,aH)
   n_stored = np.shape(ErF_stored)[0]

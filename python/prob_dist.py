@@ -287,7 +287,7 @@ def sigroot(F,Er):
     return rootF 
 
 #set the Edelweiss sigma definition to default to NR band
-def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,aH=0.035):
+def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,aH=0.0381):
 
     #fh2 = er.get_heatRes_func(0.4, 2.7,0.035)
     FWHM_to_SIG = 1 / (2*np.sqrt(2*np.log(2)))
@@ -332,7 +332,7 @@ def sigrootEdw(F,Er,V,eps,alpha=(1/100),Qbar=lambda x: 0.16*x**0.18,aH=0.035):
     return rootF 
 
 #set the Edelweiss sigma (second central moment) definition to default to NR band
-def sigmomEdw(Er,band='ER',label='GGA3',F=0.000001,V=4.0,aH=0.0386,alpha=(1/100)):
+def sigmomEdw(Er,band='ER',label='GGA3',F=0.000001,V=4.0,aH=0.0381,alpha=(1/100)):
 
     #get the resolutions
     sigHv,sigIv,sigQerv,sigH_NRv,sigI_NRv,sigQnrv = \
