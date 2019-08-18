@@ -136,23 +136,23 @@ def bin_check_v1(df,s,band_func,bins,cut_idx,expected_v1,Er_true,fano,u):
     ax1 = axes
 
 
-    plt.plot(Er_true,expected_v1,label = "Expected-V1",color ='black',linestyle = '--')
+    #plt.plot(Er_true,expected_v1,label = "Expected-V1",color ='black',linestyle = '--')
     plt.errorbar(bincenters,Percent1,yerr=Error,fmt ='o',label = 'Percent Contained', ecolor = 'purple', Linestyle = 'None', capsize=5, capthick=0.5)
-    plt.axhline(68, color='r', linestyle='--',Label = "68%")
+    plt.axhline(68.27, color='r', linestyle='--',Label = "68.27%")
     ax1.set_xlabel('Recoil Energy [keV]',size = '18')
     ax1.set_ylabel('Percent of Data Contained in Band',size = '18')
     #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils Fano =' + str(fano) , size = '15')
-    #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils fano = '+str(fano), size = '15')
-    ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils')
+    #ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils fano = '+str(fano), size = '18')
+    ax1.set_title('1$\sigma$ Containment Fraction for Electron Recoils', size = 18)
 
-    ax1.set_title('1$\sigma$ Containment Fraction for Nuclear Recoils', size = '15')    
+    #ax1.set_title('1$\sigma$ Containment Fraction for Nuclear Recoils', size = '18')    
     plt.xticks(bins)
     ax1.grid(True)
     ax1.yaxis.grid(True,which='minor',linestyle='-')
     ax1.legend(loc=1,prop={'size':12})
-    #plt.ylim(75,110)
-    #plt.savefig('/Users/Mitch 1/Desktop/Chapter2_plots/ERContainment_F=0.png')
-    plt.savefig('/Users/Mitch 1/Desktop/Chapter2_plots/NRContainment_Expected_F=Edw.png')
+    plt.ylim(66,85)
+    plt.savefig('/Users/Mitch 1/Desktop/New_Plots/ERContainment_V1.png')
+    #plt.savefig('/Users/Mitch 1/Desktop/Chapter2_plots/NRContainment_Expected_F=Edw.png')
     #plt.savefig('Notes/Dist_fits/Eer_Error_Fano =' + str(fano)+'.png')
     plt.show()
     

@@ -28,7 +28,7 @@ N =100000
 s = 1
 #fano =0.13
 fano = 'EDW' # 'known' fano factor for electron recoils. 
-Fano = 0 #electron recoil fano factor 
+Fano = 0.13 #electron recoil fano factor 
 
 bins = np.array([10,13.4,18.1,24.5,33.1,44.8,60.6,80.2,110,])
 bins_cont = np.linspace(10,150,N)
@@ -37,15 +37,15 @@ bins_cont = np.random.choice(bins_cont,N)
 
 Eer = np.random.choice(bins,N)
 
-#df_er_v1,df_er_v2= Yield_Er(Eer,Fano) #Electron Recoil Band with fano (BINNED)
-#df_er_v1_count,df_er_v2_count = Yield_Er(bins_cont,Fano) #indep
+df_er_v1,df_er_v2= Yield_Er(Eer,Fano) #Electron Recoil Band with fano (BINNED)
+df_er_v1_count,df_er_v2_count = Yield_Er(bins_cont,Fano) #indep
 
-df_nr_v1,df_nr_v2= Yield_NR(Eer) #Nuclear Recoil Band with fano (BINNED)
-df_nr_v1_count,df_nr_v2_count = Yield_NR(bins_cont) #NR band for continuos dist of energies 
+#df_nr_v1,df_nr_v2= Yield_NR(Eer) #Nuclear Recoil Band with fano (BINNED)
+#df_nr_v1_count,df_nr_v2_count = Yield_NR(bins_cont) #NR band for continuos dist of energies 
 
 
 #%%
-NR_band_plot(df_nr_v2,1)
+#NR_band_plot(df_nr_v2,1)
 #NR_band_plot(df_nr_v2_count,2)
 
 #ER_band_plot(df_er_v1,1)
@@ -54,9 +54,9 @@ NR_band_plot(df_nr_v2,1)
 
 #%%
 '''For Nuclear Recoils'''
-expected_v1, expected_v2, Er_true = continuous_containment(df_nr_v1_count,df_nr_v2_count,s,band_nr)
+#expected_v1, expected_v2, Er_true = continuous_containment(df_nr_v1_count,df_nr_v2_count,s,band_nr)
 '''For Electron Recoils '''
-#expected_v1, expected_v2, Er_true = continuous_containment(df_er_v1_count,df_er_v2_count,s,band_er)
+expected_v1, expected_v2, Er_true = continuous_containment(df_er_v1_count,df_er_v2_count,s,band_er)
 
 
 #%%
@@ -67,11 +67,11 @@ er = np.arange(0,2,0.002) #electron recoils
 nr = np.linspace(0.1,0.5,1000) #for nuclear recoils. 
 
 '''For Nuclear Recoils'''
-df1,bincenters1 = bin_check_v1(df_nr_v1,1,band_nr,bins,cut_idx,expected_v1,Er_true,fano,nr)
+#df1,bincenters1 = bin_check_v1(df_nr_v1,1,band_nr,bins,cut_idx,expected_v1,Er_true,fano,nr)
 #df2,bincenters2 = bin_check_v2(df_nr_v2,1,band_nr,bins,cut_idx,expected_v2,Er_true,fano,nr)
 '''For Electron Recoils'''
 #df1,bincenters1 = bin_check_v1(df_er_v1,1,band_er,bins,cut_idx,expected_v1,Er_true,Fano,er)
-#df2,bincenters2 = bin_check_v2(df_er_v2,1,band_er,bins,cut_idx,expected_v2,Er_true,Fano,er)
+df2,bincenters2 = bin_check_v2(df_er_v2,1,band_er,bins,cut_idx,expected_v2,Er_true,Fano,er)
 
 
 
