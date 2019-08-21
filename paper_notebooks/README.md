@@ -26,6 +26,7 @@ bin_centering_correction.ipynb <br/>
 
 ## Extraction of the Fano factor from the Edelweiss C <br/>
 stat_uncertainty_C.ipynb <br/>
+extracted_Fano.ipynb <br/>
 
 ## Calculation of NR Fano factor based on Lindhard <br/>
 to be named
