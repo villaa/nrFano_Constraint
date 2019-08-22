@@ -66,7 +66,7 @@ def getFanoEdw(E=10,C=0.03,filename='test.f5'):
 
   findF = lambda F,Er,C: pd.sigmomEdw(Er,band='NR',F=F,alpha=(1/18.0))**2 - lowsig**2 -C**2
 
-  Fout = so.brentq(findF,0.001,200,rtol=0.001,maxiter=100,args=(E,C,))
+  Fout = so.brentq(findF,0.001,600,rtol=0.001,maxiter=100,args=(E,C,))
   print('at energy E = {} keV NRFano is {}'.format(E,Fout))
 
   return Fout
@@ -491,7 +491,7 @@ def storeFlinear(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.34
   (ErF_new,F_new) = RWCalcFlinear(filename,det,band,Cms,slope,V,alpha,aH,ErFv=E_needed,Fv=Fcalc,erase=erase)
   return (ErF_new,F_new)
 
-def RWCalcFMCMC(infile='mcmc_fit.h5',filename='test.h5',det='GGA3',V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,erase=False):
+def RWCalcFMCMC(filename='test.h5',det='GGA3',V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,Fupv=None,Fdnv=None,erase=False):
 
   #n=10
   #Er = np.linspace(7,100,n)
@@ -518,29 +518,41 @@ def RWCalcFMCMC(infile='mcmc_fit.h5',filename='test.h5',det='GGA3',V=4.0,alpha=(
  
 
   #make some vector
-  if exErF&exF&~erase:
+  if exErF&exF&exFup&exFdn&~erase:
     ErF = np.asarray(f[path+'ErF'])
     F = np.asarray(f[path+'F'])
+    Fup = np.asarray(f[path+'Fup'])
+    Fdn = np.asarray(f[path+'Fdn'])
   else:
     ErF = np.zeros((0,))
     F = np.zeros((0,))
+    Fup = np.zeros((0,))
+    Fdn = np.zeros((0,))
 
   #add in the data supplied
-  if (ErF is not None)&(Fv is not None):
+  if (ErF is not None)&(Fv is not None)&(Fupv is not None)&(Fdnv is not None):
     ErF = np.append(ErF,ErFv)
     F = np.append(F,Fv)
+    Fup = np.append(Fup,Fupv)
+    Fdn = np.append(Fdn,Fdnv)
 
-  if exErF&exF:
+  if exErF&exF&exFup&exFdn:
     del f[path+'ErF']
     del f[path+'F']
+    del f[path+'Fup']
+    del f[path+'Fdn']
 
   #sort the array
   idxErF = np.argsort(ErF)
   ErF = ErF[idxErF]
   F = F[idxErF]
+  Fup = Fup[idxErF]
+  Fdn = Fdn[idxErF]
 
   ErF,uidx = np.unique(ErF,return_index=True)
   F = F[uidx]
+  Fup = Fup[uidx]
+  Fdn = Fdn[uidx]
 
   dset = f.create_dataset(path+'ErF',np.shape(ErF),dtype=np.dtype('float64').type, \
   compression="gzip",compression_opts=9)
@@ -548,12 +560,18 @@ def RWCalcFMCMC(infile='mcmc_fit.h5',filename='test.h5',det='GGA3',V=4.0,alpha=(
   dset = f.create_dataset(path+'F',np.shape(ErF),dtype=np.dtype('float64').type, \
   compression="gzip",compression_opts=9)
   dset[...] = F 
+  dset = f.create_dataset(path+'Fup',np.shape(ErF),dtype=np.dtype('float64').type, \
+  compression="gzip",compression_opts=9)
+  dset[...] = Fup 
+  dset = f.create_dataset(path+'Fdn',np.shape(ErF),dtype=np.dtype('float64').type, \
+  compression="gzip",compression_opts=9)
+  dset[...] = Fdn 
 
   f.close()
 
-  return (ErF,F)
+  return (ErF,F,Fup,Fdn)
 
-def storeFMCMC(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E-5,V=4.0,alpha=(1/18.0),aH=0.0381,erase=False,maxEr=100,opt=True):
+def storeFMCMC(n,infile='data/mcmc_fits.h5',filename='test.h5',det='GGA3',Cms=0.0201,slope=5.344E-5,V=4.0,alpha=(1/18.0),aH=0.0381,erase=False,maxEr=200,opt=True):
 
   #def getFanoEdw(E=10,C=0.03,filename='test.f5'):
   ErF = np.linspace(7,maxEr,n)
@@ -561,17 +579,64 @@ def storeFMCMC(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E
   emax = np.max(ErF)
 
   #make the function of C as energy
-  C = lambda x: np.sqrt(0.04**2 - (Cms+x*slope)**2)
+  #C = lambda x: np.sqrt(0.04**2 - (Cms+x*slope)**2)
 
-  Cmss = '{:01.4f}'.format(Cms)
-  slopes = '{:01.4E}'.format(slope)
+  #read the infile with mcmc results
+  fin = h5py.File(infile,'r')
+
+  #save the results for the Edw fit
+  path='{}/{}/'.format('mcmc','edwdata')
+
+  Cms_edw = np.asarray(fin[path+'Cms'])
+  slope_edw = np.asarray(fin[path+'m'])
+  xl_edw = np.asarray(fin[path+'Er'])
+  upvec_edw = np.asarray(fin[path+'Csig_u'])
+  dnvec_edw = np.asarray(fin[path+'Csig_l'])
+  Sigss_edw = np.asarray(fin[path+'Sigss'])
+
+  edw_sigss = inter.InterpolatedUnivariateSpline(xl_edw, Sigss_edw, k=3)
+  edw_mid = lambda x: np.sqrt(edw_sigss(x)**2 + (Cms_edw + slope_edw*x)**2) 
+  edw_mid_v = np.vectorize(edw_mid)
+  edw_up = inter.InterpolatedUnivariateSpline(xl_edw, upvec_edw, k=3)
+  edw_up_v = np.vectorize(edw_up)
+  edw_dn = inter.InterpolatedUnivariateSpline(xl_edw, dnvec_edw, k=3)
+  edw_dn_v = np.vectorize(edw_dn)
+
+  path='{}/{}/'.format('mcmc','multiples')
+
+  Cms_ms = np.asarray(fin[path+'Cms'])
+  slope_ms = np.asarray(fin[path+'m'])
+  xl_ms = np.asarray(fin[path+'Er'])
+  upvec_ms = np.asarray(fin[path+'Csig_u'])
+  dnvec_ms = np.asarray(fin[path+'Csig_l'])
+  Sigss_ms = np.asarray(fin[path+'Sigss'])
+
+  ms_sigss = inter.InterpolatedUnivariateSpline(xl_ms, Sigss_ms, k=3)
+  ms_mid = lambda x: np.sqrt(ms_sigss(x)**2 + (Cms_ms + slope_ms*x)**2) 
+  ms_mid_v = np.vectorize(ms_mid)
+  ms_up = inter.InterpolatedUnivariateSpline(xl_ms, upvec_ms, k=3)
+  ms_up_v = np.vectorize(ms_up)
+  ms_dn = inter.InterpolatedUnivariateSpline(xl_ms, dnvec_ms, k=3)
+  ms_dn_v = np.vectorize(ms_dn)
+
+  fin.close()
+
+
   Vs = '{:2.1f}'.format(V)
   alphas = '{:1.3E}'.format(alpha)
   aHs = '{:1.4f}'.format(aH)
 
-  (ErF_stored,F_stored) = RWCalcFlinear(filename,det,band,Cms,slope,V,alpha,aH)
+  #def RWCalcFMCMC(filename='test.h5',det='GGA3',V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,Fupv=None,Fdnv=None,erase=False):
+  (ErF_stored,F_stored,Fup_stored,Fdn_stored) = RWCalcFMCMC(filename,det,V,alpha,aH)
   n_stored = np.shape(ErF_stored)[0]
 
+  print(ErF_stored)
+  print(F_stored)
+  print(Fup_stored)
+  print(Fdn_stored)
+
+  print(ms_mid(50))
+  print(edw_mid(50))
   #print(Er)
   #print(Er_stored)
   #print(sig_stored)
@@ -608,13 +673,31 @@ def storeFMCMC(n,filename='test.h5',det='GGA3',band='NR',Cms=0.0201,slope=5.344E
   print(E_needed)
 
   Fcalc = np.zeros(np.shape(E_needed))
+  Fupcalc = np.zeros(np.shape(E_needed))
+  Fdncalc = np.zeros(np.shape(E_needed))
   for i,E in enumerate(E_needed):
-    print('Calculating with Fano for E = {:3.2f} keV (linear multiples correction with Cms={:1.4f} and slope={:1.4E}: C={:1.4f}'.format(E,Cms,slope,C(E)))
-    thisC = C(E)
-    Fcalc[i] = getFanoEdw(E,C=thisC,filename=filename)
+    sig_edw = (edw_up(E) - edw_dn(E))/2.0
+    sig_ms = (ms_up(E) - ms_dn(E))/2.0
+    sig_C = np.sqrt(sig_edw**2 + sig_ms**2)
+    midC = np.sqrt(edw_mid(E)**2 - ms_mid(E)**2)
+    upC = midC + sig_C
+    dnC = midC - sig_C
+    print('num {}'.format(i))
+    #print(midC)
+    #print(upC)
+    #print(dnC)
+    print('Calculating with middle Fano for E = {:3.2f} keV '.format(E))
+    Fcalc[i] = getFanoEdw(E,C=midC,filename=filename)
+    print('Calculating with upper Fano for E = {:3.2f} keV '.format(E))
+    Fupcalc[i] = getFanoEdw(E,C=upC,filename=filename)
+    print('Calculating with lower Fano for E = {:3.2f} keV '.format(E))
+    Fdncalc[i] = getFanoEdw(E,C=dnC,filename=filename)
     print(Fcalc[i])
-     
+    print(Fupcalc[i])
+    print(Fdncalc[i])
+ 
   #print(E_needed)
   #print(sigcalc)
-  (ErF_new,F_new) = RWCalcFlinear(filename,det,band,Cms,slope,V,alpha,aH,ErFv=E_needed,Fv=Fcalc,erase=erase)
-  return (ErF_new,F_new)
+  #def RWCalcFMCMC(filename='test.h5',det='GGA3',V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,Fupv=None,Fdnv=None,erase=False):
+  (ErF_new,F_new,Fup_new,Fdn_new) = RWCalcFMCMC(filename,det,V,alpha,aH,ErFv=E_needed,Fv=Fcalc,Fupv=Fupcalc,Fdnv=Fdncalc,erase=erase)
+  return (ErF_new,F_new,Fup_new,Fdn_new)
