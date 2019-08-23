@@ -678,7 +678,10 @@ def storeFMCMC(n,infile='data/mcmc_fits.h5',filename='test.h5',det='GGA3',Cms=0.
   for i,E in enumerate(E_needed):
     sig_edw = (edw_up(E) - edw_dn(E))/2.0
     sig_ms = (ms_up(E) - ms_dn(E))/2.0
-    sig_C = np.sqrt(sig_edw**2 + sig_ms**2)
+
+    sig_C_old = np.sqrt(sig_edw**2 + sig_ms**2)
+    sig_C = np.sqrt(edw_mid(E)**2*sig_edw**2 + ms_mid(E)**2*sig_ms**2)/np.sqrt(edw_mid(E)**2 - ms_mid(E)**2)
+    print('old sigC: {}; new sigC {}'.format(sig_C_old,sig_C))
     midC = np.sqrt(edw_mid(E)**2 - ms_mid(E)**2)
     upC = midC + sig_C
     dnC = midC - sig_C
