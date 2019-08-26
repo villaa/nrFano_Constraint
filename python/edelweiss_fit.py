@@ -37,6 +37,13 @@ def residualER(params, x, data, eps_data, par_dict):
     
     return (data-model) / eps_data
 
+def lmf_fit(params, par_dict, Erecoil, sigma, sigma_err, res_func):
+    lmfoutER = lmf.minimize(res_func, params, \
+                            args=(Erecoil, sigma, sigma_err, par_dict))
+
+
+# pars = {'V' : 4.0, 'eps_eV' : 3.0}
+# returns ER_fit, NR_fit
 def edelweiss_fit(pars, ER_data, NR_data):
     # GGA3 parameters from Edelweiss tables
     ion_center_0keV = 1.3
@@ -44,12 +51,8 @@ def edelweiss_fit(pars, ER_data, NR_data):
     heat_0keV = 0.4
     ion_122keV = 3.1 
     heat_122keV = 2.7
-    aH = 0.0157
-    pars = {
-        'V' : 4.0,
-        'eps_eV' : 3.0
-        }
-
+    #aH = 0.0157
+    
     # first Edelweiss fits the ER band to get aH
     paramsER = lmf.Parameters()
     paramsER.add('ion_center_0keV', value=ion_center_0keV, vary=False)
@@ -59,9 +62,8 @@ def edelweiss_fit(pars, ER_data, NR_data):
     paramsER.add('heat_122keV', value=heat_122keV, vary=False)
     paramsER.add('aH', value=0.01638)
 
-    ER_band_fit = edelweiss_fit_ER(paramsER, pars, \
-                                   ER_data['Erecoil'], ER_data['sigma'], ER_data['sigma_err'], \
-                                   residualER)
+    ER_band_fit = lmf.minimize(residualER, paramsER, \
+                               args=(ER_data['Erecoil'], ER_data['sigma'], ER_data['sigma_err'], pars))
 
     # then Edelweiss fits the NR band to get C (and we get m)
     # aH is fixed to the value determined in the ER band fit
@@ -71,8 +73,11 @@ def edelweiss_fit(pars, ER_data, NR_data):
     paramsNR.add('ion_122keV', value=ion_122keV, vary=False)
     paramsNR.add('heat_0keV', value=heat_0keV, vary=False)
     paramsNR.add('heat_122keV', value=heat_122keV, vary=False)
-    paramsNR.add('aH', value=0.03808, vary=False)
+    paramsNR.add('aH', value=ER_band_fit.params['aH'], vary=False)
     paramsNR.add('C', value=0.04)
     paramsNR.add('m', value=0)
     
-    NR_band_fit = edelweiss_fit_NR()
+    NR_band_fit = lmf.minimize(residualNR, paramsNR, \
+                               args=(NR_data['Erecoil'], NR_data['sigma'], NR_data['sigma_err'], pars))
+
+    return ER_band_fit, NR_band_fit
