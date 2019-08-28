@@ -241,6 +241,90 @@ def storeQWidth(n,filename='test.h5',det='GGA3',band='ER',F=0.00001,V=4.0,alpha=
   (Er_new,sig_new) = RWCalc(filename,det,band,F,V,alpha,aH,Erv=E_needed,sigv=sigcalc,erase=erase)
   return (Er_new,sig_new)
 
+def storeQWidthVaryF(n,filename='test.h5',det='GGA3',band='ER',MSfile='data/mcmc_fits.h5',Ffile='data/mcmc_fano.h5',V=4.0,alpha=(1/10000.0),aH=0.0381,erase=False,maxEr=100,opt=True):
+
+  Er = np.linspace(7,maxEr,n)
+  emin = np.min(Er)
+  emax = np.max(Er)
+
+  #grab the MS correction
+  f = h5py.File(MSfile,'r')
+
+  #save the results for the Edw fit
+  path='{}/{}/'.format('mcmc','multiples')
+
+  Cms = np.asarray(f[path+'Cms'])
+  slope = np.asarray(f[path+'m'])
+
+  f.close()
+
+  #grab the calculated Fano
+  #def RWCalcFMCMC(filename='test.h5',det='GGA3',V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,Fupv=None,Fdnv=None,erase=False):
+  (ErF,F,Fup,Fdn) = RWCalcFMCMC(Ffile,det=det,V=V,alpha=alpha,aH=aH)
+
+  if(np.shape(F)[0]<10):
+    print('Fano vector not large enough')
+    return None
+
+  Fx = inter.InterpolatedUnivariateSpline(ErF, F, k=3)
+  Fv = np.vectorize(Fx)
+
+  F = 999
+  Fs = '{:03.0f}'.format(F)
+  Vs = '{:2.1f}'.format(V)
+  alphas = '{:1.3E}'.format(alpha)
+  aHs = '{:1.4f}'.format(aH)
+
+  (Er_stored,sig_stored) = RWCalc(filename,det,band,F,V,alpha,aH)
+  n_stored = np.shape(Er_stored)[0]
+
+  #print(Er)
+  #print(Er_stored)
+  #print(sig_stored)
+
+  #calculate density and overlap
+  if n_stored>0:
+    emin_stored = np.min(Er_stored)
+    emax_stored = np.max(Er_stored)
+    ovr = (emax_stored-emin_stored)/(emax-emin)
+  else:
+    emin_stored = 0 
+    emax_stored = 0 
+    ovr = 0
+
+  if ((emax_stored-emin_stored)>0)&((emax-emin)>0):
+    den = (n_stored/(emax_stored-emin_stored))/(n/(emax-emin))
+  else: 
+    den = 0
+
+  print(ovr)
+  print(den)
+
+  #if density is comparable in given region
+  if (den>0.8)&(opt)&(~erase):
+    cRemoveRange = (Er<emax_stored)&(Er>=emin_stored)
+    Er = Er[~cRemoveRange]
+
+  if erase:
+    E_needed = Er
+  else:
+    idx_needed = ~np.isin(Er,Er_stored)
+    E_needed = Er[idx_needed]
+
+  print(E_needed)
+
+  sigcalc = np.zeros(np.shape(E_needed))
+  for i,E in enumerate(E_needed):
+    print('Calculating with sigmomEdw for E = {:3.2f} keV'.format(E))
+    sigcalc[i] = np.sqrt(pd.sigmomEdw(E,band=band,label=det,F=Fx(E),V=V,aH=aH,alpha=alpha)**2 \
+        + (Cms+slope*E)**2)
+    print(sigcalc[i])
+     
+  #print(E_needed)
+  #print(sigcalc)
+  (Er_new,sig_new) = RWCalc(filename,det,band,F,V,alpha,aH,Erv=E_needed,sigv=sigcalc,erase=erase)
+  return (Er_new,sig_new)
+
 def RWCalcF(filename='test.h5',det='GGA3',band='NR',C=0.0346,V=4.0,alpha=(1/18.0),aH=0.0381,ErFv=None,Fv=None,erase=False):
 
   #n=10

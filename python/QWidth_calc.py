@@ -35,6 +35,7 @@ if __name__ == "__main__":
           fc.storeQWidth(200,filename='../paper_notebooks/data/res_calc.h5',maxEr=200)
           fc.storeQWidth(200,filename='../paper_notebooks/data/res_calc.h5',band='NR',alpha=(1/18.0),maxEr=200)
           fc.storeQWidth(200,filename='../paper_notebooks/data/res_calc.h5',band='NR',maxEr=200)
+          fc.storeQWidthVaryF(200,filename='../paper_notebooks/data/res_calc.h5',MSfile='../paper_notebooks/data/mcmc_fits.h5',Ffile='../paper_notebooks/data/mcmc_fano.h5',band='NR',alpha=(1/18.0),maxEr=200,erase=True)
         except KeyboardInterrupt:
           print('Shutdown requested .... exiting')
         except Exception:
