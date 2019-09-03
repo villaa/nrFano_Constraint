@@ -80,4 +80,11 @@ def edelweiss_fit(pars, ER_data, NR_data):
     NR_band_fit = lmf.minimize(residualNR, paramsNR, \
                                args=(NR_data['Erecoil'], NR_data['sigma'], NR_data['sigma_err'], pars))
 
+    # this part is just reporting
+    resER = residualER(paramsER, ER_data['Erecoil'], ER_data['sigma'], ER_data['sigma_err'], pars)
+    resNR = residualNR(paramsNR, NR_data['Erecoil'], NR_data['sigma'], NR_data['sigma_err'], pars)
+
+    print("chisq for ER: ", np.sum(np.square(resER)))
+    print("chisq for NR: ", np.sum(np.square(resNR)))
+
     return ER_band_fit, NR_band_fit
