@@ -85,6 +85,10 @@ def edelweiss_fit(pars, ER_data, NR_data):
     resNR = residualNR(paramsNR, NR_data['Erecoil'], NR_data['sigma'], NR_data['sigma_err'], pars)
 
     print("chisq for ER: ", np.sum(np.square(resER)))
+    print(np.square(resER))
+
     print("chisq for NR: ", np.sum(np.square(resNR)))
+    print(np.square(resNR))
+    print("total chisq: ", np.sum(np.square(resER)) + np.sum(np.square(resNR)))
 
     return ER_band_fit, NR_band_fit
