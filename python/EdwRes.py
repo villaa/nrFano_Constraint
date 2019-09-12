@@ -42,8 +42,14 @@ def get_ionRes_func(FWHM_center, FWHM_guard, FWHM122):
     
     return get_heatRes_func(FWHM0, FWHM122)
 
-def Q_avg(E_keV):
-    return 0.16*np.power(E_keV,0.18)
+def Q_avg(E_keV, a=None, b=None):
+    if a is None:
+      a = 0.16
+    if b is None:
+      b = 0.18
+
+    #print ("in Q_avg", a,b)
+    return a*np.power(E_keV,b)
 
 def get_sig_gamma(sigI, sigH, pars, E_keV):
     V = pars['V']
@@ -54,15 +60,18 @@ def get_sig_gamma(sigI, sigH, pars, E_keV):
 def get_sig_neutron(sigI, sigH, pars, C, Er_keV):
     V = pars['V']
     eps_eV = pars['eps_eV']
+    A = pars.get('a')
+    B = pars.get('b')
+    #print ("in get_sig_neutron", A, B)
 
-    E_keVee_I = np.multiply(Q_avg(Er_keV), Er_keV)
-    E_keVee_H = np.multiply((1+(V/eps_eV)*Q_avg(Er_keV))/(1+(V/eps_eV)), Er_keV)
+    E_keVee_I = np.multiply(Q_avg(Er_keV, A, B), Er_keV)
+    E_keVee_H = np.multiply((1+(V/eps_eV)*Q_avg(Er_keV, A, B))/(1+(V/eps_eV)), Er_keV)
     # we're pretty sure Edelweiss uses the correct (above) conversion
     # and not the incorrect (below) conversion
-    #E_keVee_H = np.multiply(Q_avg(Er_keV), Er_keV)
+    #E_keVee_H = np.multiply(Q_avg(Er_keV, a, b), Er_keV)
 
-    a = np.multiply(1+(V/eps_eV)*Q_avg(Er_keV), sigI(E_keVee_I))
-    b = np.multiply((1+V/eps_eV)*Q_avg(Er_keV), sigH(E_keVee_H))
+    a = np.multiply(1+(V/eps_eV)*Q_avg(Er_keV, A, B), sigI(E_keVee_I))
+    b = np.multiply((1+V/eps_eV)*Q_avg(Er_keV, A, B), sigH(E_keVee_H))
 
     sig_0 = (1/Er_keV)*np.sqrt(a**2 + b**2)
 
@@ -74,15 +83,17 @@ def get_sig_neutron(sigI, sigH, pars, C, Er_keV):
 def get_sig_neutron_alt(sigI, sigH, pars, C, m, Er_keV):
     V = pars['V']
     eps_eV = pars['eps_eV']
+    A = pars.get('a')
+    B = pars.get('b')
 
-    E_keVee_I = np.multiply(Q_avg(Er_keV), Er_keV)
-    E_keVee_H = np.multiply((1+(V/eps_eV)*Q_avg(Er_keV))/(1+(V/eps_eV)), Er_keV)
+    E_keVee_I = np.multiply(Q_avg(Er_keV, A, B), Er_keV)
+    E_keVee_H = np.multiply((1+(V/eps_eV)*Q_avg(Er_keV, A, B))/(1+(V/eps_eV)), Er_keV)
     # we're pretty sure Edelweiss uses the correct (above) conversion
     # and not the incorrect (below) conversion
-    #E_keVee_H = np.multiply(Q_avg(Er_keV), Er_keV)
+    #E_keVee_H = np.multiply(Q_avg(Er_keV, a, b), Er_keV)
 
-    a = np.multiply(1+(V/eps_eV)*Q_avg(Er_keV), sigI(E_keVee_I))
-    b = np.multiply((1+V/eps_eV)*Q_avg(Er_keV), sigH(E_keVee_H))
+    a = np.multiply(1+(V/eps_eV)*Q_avg(Er_keV, A, B), sigI(E_keVee_I))
+    b = np.multiply((1+V/eps_eV)*Q_avg(Er_keV, A, B), sigH(E_keVee_H))
 
     sig_0 = (1/Er_keV)*np.sqrt(a**2 + b**2)
 
