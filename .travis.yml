@@ -28,4 +28,4 @@ install:
 before_script: cd paper_notebooks
 
 script:
-- travis_wait 40 py.test
+- travis_wait 50 py.test
