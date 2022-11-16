@@ -1,0 +1,196 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6520,        188]
+NotebookOptionsPosition[      5233,        159]
+NotebookOutlinePosition[      5627,        175]
+CellTagsIndexPosition[      5584,        172]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ "Useful Integrals for ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["E", 
+    RowBox[{"p", " "}]], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "4cae4f3e-3eb7-4be5-885d-54f305ed0eb6"],
+ "- ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["E", 
+    RowBox[{"q", " "}]], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "c98045a4-89b9-4a95-8096-93ea1b64dc6f"],
+ "Distributions\[LineSeparator]"
+}], "Section",
+ CellChangeTimes->{{3.8776271654017553`*^9, 
+  3.8776272448623533`*^9}},ExpressionUUID->"240faeff-b40c-477c-9303-\
+c4bf8fbc2f1c"],
+
+Cell["\<\
+I\[CloseCurlyQuote]m going to try to do some Gaussian-like integrals but with \
+some polynomial functions where the Gaussian \[OpenCurlyDoubleQuote]width\
+\[CloseCurlyDoubleQuote] normally is. Let\[CloseCurlyQuote]s see if \
+Mathematica can do them symbolically. My bet is a lot of erfs around. \
+\>", "Text",
+ CellChangeTimes->{{3.877627268882844*^9, 
+  3.877627347597224*^9}},ExpressionUUID->"f728f852-d2eb-4b83-84c3-\
+dadd93a92aab"],
+
+Cell[BoxData[
+ RowBox[{"<<", "Notation`"}]], "Input",
+ CellChangeTimes->{{3.877627354839094*^9, 3.8776273583179617`*^9}},
+ CellLabel->"In[55]:=",ExpressionUUID->"867384f8-95c1-4793-95ee-ece7dfbe5a23"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"f", "[", "x_", "]"}], ":=", " ", 
+  RowBox[{"\[Alpha]", " ", "+", " ", 
+   RowBox[{"\[Beta]", "*", "x"}], " ", "+", " ", 
+   RowBox[{"\[Gamma]", "*", 
+    RowBox[{"x", "^", "2"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.8776274178936987`*^9, 3.877627445505884*^9}},
+ CellLabel->"In[58]:=",ExpressionUUID->"84368e7c-295d-4c5a-9863-4427aa01cebf"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ingr", "[", "x_", "]"}], ":=", " ", 
+  RowBox[{
+   RowBox[{"exp", "[", 
+    RowBox[{
+     RowBox[{"-", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"A", "-", "x"}], ")"}], "^", "2"}]}], "/", 
+     RowBox[{"f", "[", "x", "]"}]}], "]"}], "*", 
+   RowBox[{"exp", "[", 
+    RowBox[{
+     RowBox[{"-", "a"}], "*", "x"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.877627482790107*^9, 3.8776275970151033`*^9}},
+ CellLabel->"In[59]:=",ExpressionUUID->"763a9386-6296-40bd-9b11-331768698f4f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Integrate", "[", 
+  RowBox[{"ingr", ",", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", "\[Epsilon]", ",", "Infinity"}], "}"}], ",", 
+   RowBox[{"Assumptions", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"a", ">", "0"}], ",", 
+      RowBox[{"\[Alpha]", ">", "0"}], ",", 
+      RowBox[{"\[Beta]", ">", "0"}], ",", 
+      RowBox[{"\[Gamma]", ">", "0"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.877627600650687*^9, 3.8776276094776487`*^9}, {
+  3.877627745579129*^9, 3.8776278408707457`*^9}},
+ CellLabel->"In[63]:=",ExpressionUUID->"d63e8323-e9ba-49a9-b732-680bf6176c81"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Integrate", "idiv", 
+   "\"Integral of \\!\\(\\*RowBox[{\\\"ingr\\\"}]\\) does not converge on \\!\
+\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"\[Epsilon]\\\", \\\",\\\", \\\"\
+\[Infinity]\\\"}], \\\"}\\\"}]\\).\"", 2, 63, 7, 30726609484100849682, 
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.877627826122389*^9, 3.877627844345194*^9}},
+ CellLabel->
+  "During evaluation of \
+In[63]:=",ExpressionUUID->"1584d762-bb27-4e62-a200-c3db2615814f"],
+
+Cell[BoxData[
+ RowBox[{"Integrate", "[", 
+  RowBox[{"ingr", ",", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", "\[Epsilon]", ",", "\[Infinity]"}], "}"}], ",", 
+   RowBox[{"Assumptions", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"a", ">", "0"}], ",", 
+      RowBox[{"\[Alpha]", ">", "0"}], ",", 
+      RowBox[{"\[Beta]", ">", "0"}], ",", 
+      RowBox[{"\[Gamma]", ">", "0"}]}], "}"}]}]}], "]"}]], "Output",
+ CellChangeTimes->{{3.87762782613167*^9, 3.877627844353496*^9}},
+ CellLabel->"Out[63]=",ExpressionUUID->"f0d04de3-bdd5-4521-9966-d54c58b4f8ab"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ingr", "[", "5", "]"}]], "Input",
+ CellChangeTimes->{{3.877627852921472*^9, 3.877627856496957*^9}},
+ CellLabel->"In[64]:=",ExpressionUUID->"fd5d1c36-afde-46e8-8153-e3e8f2501aaa"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"exp", "[", 
+   RowBox[{
+    RowBox[{"-", "5"}], " ", "a"}], "]"}], " ", 
+  RowBox[{"exp", "[", 
+   RowBox[{"-", 
+    FractionBox[
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "5"}], "+", "A"}], ")"}], "2"], 
+     RowBox[{"\[Alpha]", "+", 
+      RowBox[{"5", " ", "\[Beta]"}], "+", 
+      RowBox[{"25", " ", "\[Gamma]"}]}]]}], "]"}]}]], "Output",
+ CellChangeTimes->{3.877627857128986*^9},
+ CellLabel->"Out[64]=",ExpressionUUID->"0911e60c-552e-43dd-9bfa-984bbe3b41a5"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 791},
+WindowMargins->{{303, Automatic}, {15, Automatic}},
+FrontEndVersion->"13.1 for Mac OS X ARM (64-bit) (June 16, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"5aa06f02-62d1-4fc1-8530-d27a5112bdee"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 590, 19, 108, "Section",ExpressionUUID->"240faeff-b40c-477c-9303-c4bf8fbc2f1c"],
+Cell[1173, 43, 445, 8, 58, "Text",ExpressionUUID->"f728f852-d2eb-4b83-84c3-dadd93a92aab"],
+Cell[1621, 53, 200, 3, 30, "Input",ExpressionUUID->"867384f8-95c1-4793-95ee-ece7dfbe5a23"],
+Cell[1824, 58, 377, 8, 30, "Input",ExpressionUUID->"84368e7c-295d-4c5a-9863-4427aa01cebf"],
+Cell[2204, 68, 526, 15, 30, "Input",ExpressionUUID->"763a9386-6296-40bd-9b11-331768698f4f"],
+Cell[CellGroupData[{
+Cell[2755, 87, 610, 14, 30, "Input",ExpressionUUID->"d63e8323-e9ba-49a9-b732-680bf6176c81"],
+Cell[3368, 103, 498, 11, 28, "Message",ExpressionUUID->"1584d762-bb27-4e62-a200-c3db2615814f"],
+Cell[3869, 116, 560, 13, 34, "Output",ExpressionUUID->"f0d04de3-bdd5-4521-9966-d54c58b4f8ab"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4466, 134, 202, 3, 30, "Input",ExpressionUUID->"fd5d1c36-afde-46e8-8153-e3e8f2501aaa"],
+Cell[4671, 139, 534, 16, 77, "Output",ExpressionUUID->"0911e60c-552e-43dd-9bfa-984bbe3b41a5"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
